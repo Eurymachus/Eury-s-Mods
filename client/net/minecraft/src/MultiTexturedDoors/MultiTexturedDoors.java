@@ -86,7 +86,7 @@ public class MultiTexturedDoors implements IMod
          });
         ModLoader.addRecipe(new ItemStack(mtDoorItem, 1, 2), new Object[]
                 {
-            "X","Y", Character.valueOf('X'), Item.diamond, Character.valueOf('Y'), Block.pressurePlateStone
+            "XXX","Y", Character.valueOf('X'), Block.dirt
          });
         FurnaceRecipes.smelting().addSmelting(mtDoorBlockID, 0, new ItemStack(Item.ingotIron, 1));
         FurnaceRecipes.smelting().addSmelting(mtDoorBlockID, 1, new ItemStack(Item.ingotGold, 1));
