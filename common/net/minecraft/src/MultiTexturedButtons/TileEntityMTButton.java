@@ -1,4 +1,4 @@
-package net.minecraft.src.MultiTexturedDoors;
+package net.minecraft.src.MultiTexturedButtons;
 
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.NBTTagCompound;
@@ -6,38 +6,33 @@ import net.minecraft.src.Packet;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.EurysMods.network.PacketPayload;
-import net.minecraft.src.MultiTexturedDoors.network.PacketUpdateMTDoor;
+import net.minecraft.src.EurysMods.network.PacketUpdate;
+import net.minecraft.src.MultiTexturedButtons.network.PacketUpdateMTButton;
 
-public class TileEntityMTDoor extends TileEntity
+public class TileEntityMTButton extends TileEntity
 {
 	public int metaValue;
-    public int doorPiece;
 	public int getMetaValue() { return this.metaValue; }
 	public void setMetaValue(int meta) { this.metaValue = meta; }
-	public int getDoorPiece() { return this.doorPiece; }
-	public void setDoorPiece(int piece) { this.doorPiece = piece; }
 	
 	public void writeToNBT(NBTTagCompound nbttagcompound)
     {
         super.writeToNBT(nbttagcompound);
-        nbttagcompound.setInteger("metaValue", this.getMetaValue());
-        nbttagcompound.setInteger("doorPiece", this.getDoorPiece());
+        nbttagcompound.setInteger("metaValue", this.metaValue);
     }
 	
     public void readFromNBT(NBTTagCompound nbttagcompound)
     {
         super.readFromNBT(nbttagcompound);
         this.setMetaValue(nbttagcompound.getInteger("metaValue"));
-        this.setDoorPiece(nbttagcompound.getInteger("doorPiece"));
     }
     
 	public PacketPayload getPacketPayload() {
 
-		int[] dataInt = new int[2];
+		int[] dataInt = new int[1];
 		float[] dataFloat = new float[1];
 		String[] dataString = new String[1];
 		dataInt[0] = this.metaValue;
-		dataInt[1] = this.doorPiece;
 		dataFloat[0] = 0;
 		dataString[0] = "";
 		PacketPayload p = new PacketPayload();
@@ -54,14 +49,14 @@ public class TileEntityMTDoor extends TileEntity
 	
 	public Packet getUpdatePacket()
 	{
-		return new PacketUpdateMTDoor(this).getPacket();
+		return new PacketUpdateMTButton(this).getPacket();
 	}
 	
-	public void handleUpdatePacket(PacketUpdateMTDoor packet, World world)
+	public void handleUpdatePacket(PacketUpdate packet, World world)
 	{
-		this.setMetaValue(packet.getItemDamage());
-		this.setDoorPiece(packet.getDoorPiece());
+		PacketUpdateMTButton bp = (PacketUpdateMTButton)packet;
+		this.setMetaValue(bp.getItemDamage());
 		this.onInventoryChanged();
-		world.markBlockNeedsUpdate(packet.xPosition, packet.yPosition, packet.zPosition);
+        world.markBlockNeedsUpdate(packet.xPosition, packet.yPosition, packet.zPosition);
 	}
 }
