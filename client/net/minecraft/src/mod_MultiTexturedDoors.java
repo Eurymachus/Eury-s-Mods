@@ -1,6 +1,7 @@
 package net.minecraft.src;
 
 import net.minecraft.src.MultiTexturedDoors.MTDCore;
+import net.minecraft.src.MultiTexturedDoors.RenderMTDoor;
 import net.minecraft.src.forge.NetworkMod;
 
 public class mod_MultiTexturedDoors extends NetworkMod
@@ -30,10 +31,9 @@ public class mod_MultiTexturedDoors extends NetworkMod
     {
     }
     
-    @Override
     public boolean renderWorldBlock(RenderBlocks renderblocks, IBlockAccess iblockaccess, int i, int j, int k, Block block, int l)
     {
-    	return MTDCore.renderWorldBlock(renderblocks, iblockaccess, i, j, k, block, l);
+    	return RenderMTDoor.renderWorldBlock(renderblocks, iblockaccess, i, j, k, block, l);
     }
 
 	@Override

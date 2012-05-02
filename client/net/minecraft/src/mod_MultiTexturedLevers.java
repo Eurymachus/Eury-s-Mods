@@ -3,6 +3,7 @@ package net.minecraft.src;
 import java.io.File;
 
 import net.minecraft.src.MultiTexturedLevers.MTLCore;
+import net.minecraft.src.MultiTexturedLevers.RenderMTLever;
 import net.minecraft.src.forge.NetworkMod;
 
 public class mod_MultiTexturedLevers extends NetworkMod
@@ -35,7 +36,7 @@ public class mod_MultiTexturedLevers extends NetworkMod
     @Override
     public boolean renderWorldBlock(RenderBlocks renderblocks, IBlockAccess iblockaccess, int i, int j, int k, Block block, int l)
     {
-    	return MTLCore.renderWorldBlock(renderblocks, iblockaccess, i, j, k, block, l);
+    	return RenderMTLever.renderWorldBlock(renderblocks, iblockaccess, i, j, k, block, l);
     }
     
 	@Override
