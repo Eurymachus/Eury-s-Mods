@@ -16,25 +16,7 @@ import net.minecraft.src.forge.NetworkMod;
 public class ServerProxy implements IProxy
 {
 	@Override
-	public boolean isClient(World world)
-	{
-		return world.isRemote;
-	}
-
-	@Override
-	public boolean isServer(World world)
-	{
-		return false;
-	}
-
-	@Override
-	public boolean isSingleplayer(World world)
-	{
-	    return !world.isRemote;
-	}
-
-	@Override
-	public PacketPayload getTileEntityPayload(int[] dataInt, float[] dataFloat, String[] dataString)
+	public PacketPayload getPayload(int[] dataInt, float[] dataFloat, String[] dataString)
 	{
         PacketPayload payload = new PacketPayload();
         payload.intPayload = dataInt;
@@ -70,12 +52,5 @@ public class ServerProxy implements IProxy
 				}
 			}
 		}
-	}
-
-	@Override
-	public PacketPayload getTileEntityPacket(TileEntity te, int[] dataInt,
-			float[] dataFloat, String[] dataString) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

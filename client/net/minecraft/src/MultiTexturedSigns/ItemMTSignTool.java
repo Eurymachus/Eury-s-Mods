@@ -33,7 +33,7 @@ public class ItemMTSignTool extends Item implements ITextureProvider
 		        TileEntityMTSign mtstileentitysign = (TileEntityMTSign)tileentity;
 		        if (mtstileentitysign != null)
 		        {
-		        	MTSCore.displaymtsGuiEditSign(entityplayer, mtstileentitysign);
+		        	MultiTexturedSigns.displaymtsGuiEditSign(entityplayer, mtstileentitysign);
 		        	itemstack.damageItem(5, entityplayer);
 		        }
         	}

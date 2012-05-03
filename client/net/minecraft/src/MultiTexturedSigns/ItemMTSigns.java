@@ -100,7 +100,7 @@ public class ItemMTSigns extends Item implements ITextureProvider
         {
             TileEntityMTSign tileentitymtsign = (TileEntityMTSign)tileentity;
 	        tileentitymtsign.setMetaValue(itemstack.getItemDamage());
-	        MTSCore.displaymtsGuiEditSign(entityplayer, tileentitymtsign);
+	        MultiTexturedSigns.displaymtsGuiEditSign(entityplayer, tileentitymtsign);
         }
         return true;
     }

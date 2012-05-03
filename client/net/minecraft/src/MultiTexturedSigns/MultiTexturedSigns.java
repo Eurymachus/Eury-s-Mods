@@ -58,6 +58,11 @@ public class MultiTexturedSigns implements IMod
         }
         return texture;
 	}
+
+	public static void displaymtsGuiEditSign(EntityPlayer entityplayer, TileEntityMTSign tileentitymtsign)
+    {
+        ModLoader.openGUI(entityplayer, new GuiEditMTSign(tileentitymtsign));
+    }
     
 	public void initialize()
 	{

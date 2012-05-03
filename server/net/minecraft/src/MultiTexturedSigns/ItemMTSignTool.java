@@ -36,7 +36,7 @@ public class ItemMTSignTool extends Item
 		        if (tileentitymtsign != null)
 		        {
 		        	PacketOpenGui gui = new PacketOpenGui(tileentitymtsign.xCoord, tileentitymtsign.yCoord, tileentitymtsign.zCoord);
-		        	MTSCore.displaymtsGuiEditSign(entityplayer, gui);
+		        	MultiTexturedSigns.displaymtsGuiEditSign(entityplayer, gui);
 		        	itemstack.damageItem(5, entityplayer);
 		        }
 		        return true;

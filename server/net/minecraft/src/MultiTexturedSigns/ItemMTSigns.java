@@ -97,7 +97,7 @@ public class ItemMTSigns extends Item
         	TileEntityMTSign tileentitymtsign = (TileEntityMTSign)tileentity;
 	        tileentitymtsign.setMetaValue(itemstack.getItemDamage());
         	PacketOpenGui gui = new PacketOpenGui(tileentitymtsign.xCoord, tileentitymtsign.yCoord, tileentitymtsign.zCoord);
-        	MTSCore.displaymtsGuiEditSign(entityplayer, gui);
+        	MultiTexturedSigns.displaymtsGuiEditSign(entityplayer, gui);
         }
         return true;
     }

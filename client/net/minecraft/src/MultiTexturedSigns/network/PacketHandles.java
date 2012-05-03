@@ -44,7 +44,7 @@ public class PacketHandles implements IPacketHandling
 	        if ((tileentity != null) && (tileentity instanceof TileEntityMTSign))
 	        {
 	            TileEntityMTSign tileentitymtsign = (TileEntityMTSign)tileentity;
-	            MTSCore.displaymtsGuiEditSign(entityplayer, tileentitymtsign);
+	            MultiTexturedSigns.displaymtsGuiEditSign(entityplayer, tileentitymtsign);
 	        }
 		}
 	}

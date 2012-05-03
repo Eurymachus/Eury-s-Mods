@@ -1,6 +1,7 @@
 package net.minecraft.src.EurysMods;
 
 import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.ModLoader;
 import net.minecraft.src.Packet;
 import net.minecraft.src.Packet250CustomPayload;
 import net.minecraft.src.TileEntity;
@@ -13,47 +14,24 @@ import net.minecraft.src.forge.NetworkMod;
 
 public class ClientProxy implements IProxy
 {
-	public boolean isClient(World world)
+	@Override
+	public PacketPayload getPayload(int[] dataInt, float[] dataFloat, String[] dataString)
 	{
-		return world.isRemote;
+        PacketPayload payload = new PacketPayload();
+        payload.intPayload = dataInt;
+        payload.floatPayload = dataFloat;
+        payload.stringPayload = dataString;
+        return payload;
 	}
 	
-	public boolean isServer(World world)
+	@Override
+	public void sendPacket(EntityPlayer entityplayer, Packet packet)
 	{
-		return false;
-	}
-	
-	public boolean isSingleplayer(World world)
-	{
-	    return !world.isRemote;
-	}
-	  
-	public PacketPayload getTileEntityPacket(TileEntity te, int[] dataInt, float[] dataFloat, String[] dataString)
-	{
-	    return null;
-	}
-	  
-	public void sendPacketToServer(Packet250CustomPayload packet)
-	{
+		ModLoader.getMinecraftInstance().getSendQueue().addToSendQueue(packet);
 	}
 
 	@Override
-	public PacketPayload getTileEntityPayload(int[] dataInt, float[] dataFloat,
-			String[] dataString) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void sendPacket(EntityPlayer entityplayer, Packet packet) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void sendPacketToAll(Packet packet, int x, int y, int z,
-			int maxDistance, NetworkMod mod) {
-		// TODO Auto-generated method stub
-		
+	public void sendPacketToAll(Packet packet, int x, int y, int z,	int maxDistance, NetworkMod mod)
+	{
 	}
 }

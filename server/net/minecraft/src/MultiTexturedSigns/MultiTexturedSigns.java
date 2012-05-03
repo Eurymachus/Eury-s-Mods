@@ -33,7 +33,20 @@ public class MultiTexturedSigns implements IMod
     public static ItemStack ironCladSign, goldPlatedSign, diamondLatheredSign;
     public static ICore MTSCore;
 	private static boolean initialized = false;
-    
+
+	public static void displaymtsGuiEditSign(EntityPlayer entityplayer, PacketUpdate pu)
+    {
+		if (entityplayer != null && entityplayer instanceof EntityPlayerMP)
+		{
+			EntityPlayerMP player = (EntityPlayerMP)entityplayer;
+	    	if (pu != null && pu instanceof PacketOpenGui)
+	    	{
+		    	//ModLoader.getMinecraftServerInstance().log("Sending Packet");
+		    	player.playerNetServerHandler.netManager.addToSendQueue(pu.getPacket());
+	    	}
+		}
+    }
+	
 	public void initialize()
 	{
 		if (initialized) return;
