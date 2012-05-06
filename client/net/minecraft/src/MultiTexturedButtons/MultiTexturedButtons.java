@@ -38,6 +38,7 @@ public class MultiTexturedButtons
     
     public static void load()
     {
+	    ModLoader.registerTileEntity(TileEntityMTButton.class, "mtButton");
     	EurysCore.console(Core.getModName(), "Registering items...");
     	MTBCore.addItems();
 	    EurysCore.console(Core.getModName(), "Naming items...");

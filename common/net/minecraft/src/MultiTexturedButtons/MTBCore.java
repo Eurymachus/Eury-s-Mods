@@ -30,11 +30,10 @@ public class MTBCore
     {
 		BlockMTButtonID =  configurationProperties();
 		BlockMTButton = new BlockMTButton(BlockMTButtonID, TileEntityMTButton.class, 0.5F, Block.soundStoneFootstep, true, true).setBlockName("mtButton");
+	    ModLoader.registerBlock(BlockMTButton, ItemMTButtons.class);
 		ironButton = new ItemStack(BlockMTButton, 1, 0);
 		goldButton = new ItemStack(BlockMTButton, 1, 1);
 		diamondButton = new ItemStack(BlockMTButton, 1, 2);
-	    ModLoader.registerBlock(BlockMTButton, ItemMTButtons.class);
-	    ModLoader.registerTileEntity(TileEntityMTButton.class, "mtButton");
     }
     
     public static void addNames()

@@ -31,11 +31,11 @@ public class MTLCore
     {
     	mtLeverBlockID = configurationProperties();
         mtLever = (new BlockMTLever(mtLeverBlockID, TileEntityMTLever.class, 0.5F, Block.soundStoneFootstep, true, true)).setBlockName("mtLever");
+	    ModLoader.registerBlock(mtLever);
         mtLeverItem = (new ItemMTLever(mtLeverItemID - 256)).setItemName("mtItemLever");
         ironLever = new ItemStack(mtLeverItem, 1, 0);
         goldLever = new ItemStack(mtLeverItem, 1, 1);
         diamondLever = new ItemStack(mtLeverItem, 1, 2);
-	    ModLoader.registerBlock(mtLever);
     }
     
     public static void addNames()

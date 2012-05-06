@@ -33,6 +33,8 @@ public class MTSCore
 		mtSignPostBlockID = configurationProperties();
 	    mtSignPost = (new BlockMTSign(mtSignPostBlockID, TileEntityMTSign.class, true, 1F, 2F, true, true)).setBlockName("mtSignPost");
 	    mtSignWall = (new BlockMTSign(mtSignWallBlockID, TileEntityMTSign.class, false, 1F, 2F, true, true)).setBlockName("mtSignWall");
+	    ModLoader.registerBlock(mtSignPost);
+	    ModLoader.registerBlock(mtSignWall);
 	    mtsItemSignParts = (new ItemMTSignParts(mtSignPartsItemID - 256)).setItemName("mtsItemSignParts");
 	    mtsItemSigns = (new ItemMTSigns(mtSignItemID - 256)).setItemName("mtsItemSigns");
 	    mtsItemSignTool = (new ItemMTSignTool(mtSignToolItemID - 256)).setItemName("mtsItemSignTool");
@@ -45,8 +47,6 @@ public class MTSCore
         ironCladSign = new ItemStack(mtsItemSigns, 1, 0);
         goldPlatedSign = new ItemStack(mtsItemSigns, 1, 1);
         diamondLatheredSign = new ItemStack(mtsItemSigns, 1, 2);
-	    ModLoader.registerBlock(mtSignPost);
-	    ModLoader.registerBlock(mtSignWall);
 	}
 
 	public static void addNames()

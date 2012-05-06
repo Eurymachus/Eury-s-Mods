@@ -31,11 +31,11 @@ public class MTDCore
     {
     	mtDoorBlockID = configurationProperties();
     	mtDoor = (new BlockMTDoor(mtDoorBlockID, TileEntityMTDoor.class, 0.5F, Block.soundStoneFootstep, true, true)).setBlockName("mtDoor");
+        ModLoader.registerBlock(mtDoor);
         mtDoorItem = (new ItemMTDoor(mtDoorItemID - 256)).setItemName("mtItemDoor");
         stoneDoor = new ItemStack(mtDoorItem, 1, 0);
         goldDoor = new ItemStack(mtDoorItem, 1, 1);
         diamondDoor = new ItemStack(mtDoorItem, 1, 2);
-        ModLoader.registerBlock(mtDoor);
     }
     
     public static void addNames()
