@@ -30,12 +30,9 @@ public class MultiTexturedSigns
 
 	public static void displaymtsGuiEditSign(EntityPlayer entityplayer, TileEntityMTSign tileentitymtsign)
     {
-		if (entityplayer instanceof EntityPlayerMP)
-		{
-			EntityPlayerMP entityplayermp = (EntityPlayerMP)entityplayer;
-        	PacketOpenGui gui = new PacketOpenGui(tileentitymtsign.xCoord, tileentitymtsign.yCoord, tileentitymtsign.zCoord);
-			entityplayermp.playerNetServerHandler.netManager.addToSendQueue(gui.getPacket());
-		}
+		EntityPlayerMP entityplayermp = (EntityPlayerMP)entityplayer;
+    	PacketOpenGui gui = new PacketOpenGui(tileentitymtsign.xCoord, tileentitymtsign.yCoord, tileentitymtsign.zCoord);
+		entityplayermp.playerNetServerHandler.netManager.addToSendQueue(gui.getPacket());
     }
 	
 	public static void initialize()
@@ -51,8 +48,8 @@ public class MultiTexturedSigns
     public static void load()
     {
     	EurysCore.console(MTS.getModName(), "Registering items...");
-    	MTSCore.addItems();
 		ModLoader.registerTileEntity(TileEntityMTSign.class, "mtSign");
+    	MTSCore.addItems();
 		EurysCore.console(MTS.getModName(), "Naming items...");
     	MTSCore.addNames();
     	EurysCore.console(MTS.getModName(), "Registering recipes...");

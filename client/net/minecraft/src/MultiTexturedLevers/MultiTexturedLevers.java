@@ -46,8 +46,8 @@ public class MultiTexturedLevers
     {
     	MinecraftForgeClient.preloadTexture(Core.getItemSheet());
     	mtLeverBlockRenderID = ModLoader.getUniqueBlockModelID(mod_MultiTexturedLevers.instance, true);
-	    ModLoader.registerTileEntity(TileEntityMTLever.class, "mtLever");
     	EurysCore.console(Core.getModName(), "Registering items...");
+	    ModLoader.registerTileEntity(TileEntityMTLever.class, "mtLever");
     	MTLCore.addItems();
 	    EurysCore.console(Core.getModName(), "Naming items...");
 	    MTLCore.addNames();

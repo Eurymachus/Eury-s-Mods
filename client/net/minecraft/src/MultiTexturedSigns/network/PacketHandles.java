@@ -8,6 +8,7 @@ import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.EurysMods.network.IPacketHandling;
 import net.minecraft.src.EurysMods.network.PacketUpdate;
+import net.minecraft.src.MultiTexturedSigns.GuiEditMTSign;
 import net.minecraft.src.MultiTexturedSigns.MTSCore;
 import net.minecraft.src.MultiTexturedSigns.MultiTexturedSigns;
 import net.minecraft.src.MultiTexturedSigns.TileEntityMTSign;
@@ -38,8 +39,10 @@ public class PacketHandles implements IPacketHandling
 		int y = packet.yPosition;
 		int z = packet.zPosition;
 		TileEntity tileentity = ModLoader.getMinecraftInstance().theWorld.getBlockTileEntity(x, y, z);
-		entityplayer.addChatMessage("X: " + tileentity.xCoord);
-		entityplayer.addChatMessage("Y: " + tileentity.yCoord);
-		entityplayer.addChatMessage("Z: " + tileentity.zCoord);
+		if (tileentity != null && tileentity instanceof TileEntityMTSign)
+		{
+			TileEntityMTSign tileentitymtsign = (TileEntityMTSign)tileentity;
+			ModLoader.openGUI(entityplayer, new GuiEditMTSign(tileentitymtsign));
+		}
 	}
 }

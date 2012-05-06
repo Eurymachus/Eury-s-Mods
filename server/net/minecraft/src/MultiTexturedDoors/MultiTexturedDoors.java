@@ -36,8 +36,8 @@ public class MultiTexturedDoors
     
     public static void load()
     {
-        ModLoader.registerTileEntity(TileEntityMTDoor.class, "mtDoor");
     	EurysCore.console(Core.getModName(), "Registering Items...");
+        ModLoader.registerTileEntity(TileEntityMTDoor.class, "mtDoor");
     	MTDCore.addItems();
     	EurysCore.console(Core.getModName(), "Naming Items...");
     	MTDCore.addNames();

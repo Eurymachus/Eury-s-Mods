@@ -28,7 +28,6 @@ public class NetworkConnection implements INetworkConnections
 			NetClientHandler net = (NetClientHandler)network.getNetHandler();
 			EntityPlayer player = ModLoader.getMinecraftInstance().thePlayer;
 			int packetID = data.read();
-			//mc.thePlayer.addChatMessage("Client Packet ID: " + packetID);
 			switch (packetID) {
 			case PacketIds.MTSIGN_UPDATE:
 				PacketUpdateMTSign packetSign = new PacketUpdateMTSign();
@@ -38,9 +37,6 @@ public class NetworkConnection implements INetworkConnections
 			case PacketIds.MTSIGN_GUI:
 				PacketOpenGui packetGui = new PacketOpenGui();
 				packetGui.readData(data);
-				player.addChatMessage("PacketX: " + packetGui.xPosition);
-				player.addChatMessage("PacketY: " + packetGui.yPosition);
-				player.addChatMessage("PacketZ: " + packetGui.zPosition);
 				MultiTexturedSigns.MTS.getPacketHandler().handleGuiPacket(packetGui, player);
 				break;
 			}

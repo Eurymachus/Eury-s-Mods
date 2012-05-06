@@ -44,8 +44,8 @@ public class MultiTexturedDoors
     {
     	MinecraftForgeClient.preloadTexture(Core.getBlockSheet());
     	mtDoorBlockRenderID = ModLoader.getUniqueBlockModelID(mod_MultiTexturedDoors.instance, true);
-        ModLoader.registerTileEntity(TileEntityMTDoor.class, "mtDoor");
     	EurysCore.console(Core.getModName(), "Registering Items...");
+        ModLoader.registerTileEntity(TileEntityMTDoor.class, "mtDoor");
     	MTDCore.addItems();
     	EurysCore.console(Core.getModName(), "Naming Items...");
     	MTDCore.addNames();

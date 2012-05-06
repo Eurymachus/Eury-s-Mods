@@ -41,8 +41,8 @@ public class MultiTexturedPPlates
     
     public static void load()
     {
-	    ModLoader.registerTileEntity(TileEntityMTPPlate.class, "mtPPlate");
     	EurysCore.console(Core.getModName(), "Registering items...");
+	    ModLoader.registerTileEntity(TileEntityMTPPlate.class, "mtPPlate");
     	MTPCore.addItems();
 	    EurysCore.console(Core.getModName(), "Naming items...");
 	    MTPCore.addNames();

@@ -50,9 +50,8 @@ public class MultiTexturedSigns
 	}
 
 	public static void displaymtsGuiEditSign(EntityPlayer entityplayer, TileEntityMTSign tileentitymtsign)
-    {
-		ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Opening GUI");
-        ModLoader.openGUI(entityplayer, new GuiEditMTSign(tileentitymtsign));
+	{
+		if (!ModLoader.getMinecraftInstance().theWorld.isRemote) ModLoader.openGUI(entityplayer, new GuiEditMTSign(tileentitymtsign));
     }
     
 	public static void initialize()
