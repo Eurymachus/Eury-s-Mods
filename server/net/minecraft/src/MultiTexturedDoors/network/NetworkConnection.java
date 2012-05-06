@@ -15,8 +15,8 @@ import net.minecraft.src.forge.MessageManager;
 
 public class NetworkConnection implements INetworkConnections
 {
-	private static String modChannel = MultiTexturedDoors.MTDCore.getModChannel();
-	private static String modName = MultiTexturedDoors.MTDCore.getModName();
+	private static String modChannel = MultiTexturedDoors.Core.getModChannel();
+	private static String modName = MultiTexturedDoors.Core.getModName();
 	private static String modVersion = MTDCore.version;
 	
 	@Override
@@ -32,7 +32,7 @@ public class NetworkConnection implements INetworkConnections
 			case PacketIds.MTDOOR_UPDATE:
 				PacketUpdateMTDoor packetLever = new PacketUpdateMTDoor();
 				packetLever.readData(data);
-				MultiTexturedDoors.MTDCore.getPacketHandler().handleTileEntityPacket(packetLever, net.getPlayerEntity());
+				MultiTexturedDoors.Core.getPacketHandler().handleTileEntityPacket(packetLever, net.getPlayerEntity());
 				break;
 			}
 		} catch(Exception ex) {

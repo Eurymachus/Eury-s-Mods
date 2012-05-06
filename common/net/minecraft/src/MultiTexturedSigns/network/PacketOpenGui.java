@@ -1,11 +1,5 @@
 package net.minecraft.src.MultiTexturedSigns.network;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.World;
 import net.minecraft.src.EurysMods.network.PacketIds;
 
 public class PacketOpenGui extends PacketMTS

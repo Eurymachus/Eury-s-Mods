@@ -15,8 +15,8 @@ import net.minecraft.src.forge.MessageManager;
 
 public class NetworkConnection implements INetworkConnections
 {
-	private static String modName = MultiTexturedSigns.MTSCore.getModName();
-	private static String modChannel = MultiTexturedSigns.MTSCore.getModChannel();
+	private static String modName = MultiTexturedSigns.MTS.getModName();
+	private static String modChannel = MultiTexturedSigns.MTS.getModChannel();
 	private static String modVersion = MTSCore.version;
 	
 	@Override
@@ -32,7 +32,7 @@ public class NetworkConnection implements INetworkConnections
 			case PacketIds.MTSIGN_UPDATE:
 				PacketUpdateMTSign packetSign = new PacketUpdateMTSign();
 				packetSign.readData(data);
-				MultiTexturedSigns.MTSCore.getPacketHandler().handleTileEntityPacket(packetSign, net.getPlayerEntity());
+				MultiTexturedSigns.MTS.getPacketHandler().handleTileEntityPacket(packetSign, net.getPlayerEntity());
 				break;
 			}
 		} catch(Exception ex) {

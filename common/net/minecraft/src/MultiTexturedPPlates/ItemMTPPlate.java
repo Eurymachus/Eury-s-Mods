@@ -1,4 +1,4 @@
-package net.minecraft.src.MultiTexturedButtons;
+package net.minecraft.src.MultiTexturedPPlates;
 
 import net.minecraft.src.Block;
 import net.minecraft.src.EntityPlayer;
@@ -10,18 +10,16 @@ import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
-import net.minecraft.src.mod_MultiTexturedButtons;
-import net.minecraft.src.forge.ITextureProvider;
 
-public class ItemMTButtons extends ItemBlock// implements ITextureProvider
+public class ItemMTPPlate extends ItemBlock
 {
-    private String[] buttonNames = new String[]{"Iron", "Gold", "Diamond"};
+    private String[] pPlateNames = new String[]{"Iron", "Gold", "Diamond"};
     private final Block blockRef;
-    
-    public ItemMTButtons(int i)
+
+    public ItemMTPPlate(int i)
     {
         super(i);
-        this.blockRef = MultiTexturedButtons.BlockMTButton;
+        this.blockRef = MTPCore.mtPPlate;
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
         this.setNoRepair();
@@ -33,16 +31,21 @@ public class ItemMTButtons extends ItemBlock// implements ITextureProvider
     	return (new StringBuilder())
         .append(super.getItemName())
         .append(".")
-        .append(buttonNames[itemstack.getItemDamage()])
+        .append(pPlateNames[itemstack.getItemDamage()])
         .toString();
+    }
+    
+    public int filterData(int i)
+    {
+    	return i;
     }
     
     /**
      * sets the array of strings to be used for name lookups from item damage to metadata
      */
-    public ItemMTButtons setBlockNames(String[] par1ArrayOfStr)
+    public ItemMTPPlate setBlockNames(String[] par1ArrayOfStr)
     {
-        this.buttonNames = par1ArrayOfStr;
+        this.pPlateNames = par1ArrayOfStr;
         return this;
     }
     
@@ -51,13 +54,13 @@ public class ItemMTButtons extends ItemBlock// implements ITextureProvider
      */
     public int getIconFromDamage(int par1)
     {
-        return this.blockRef.getBlockTextureFromSideAndMetadata(0, par1);
+        return this.blockRef.getBlockTextureFromSideAndMetadata(1000, par1);
     }
+    
     
     public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
     {
-    	if (world.isRemote) return false;
-        Block button = MultiTexturedButtons.BlockMTButton;
+        Block mtPPlate = MTPCore.mtPPlate;
         if (l == 0)
         {
             --j;
@@ -95,27 +98,33 @@ public class ItemMTButtons extends ItemBlock// implements ITextureProvider
         {
             return false;
         }
-        else if (j == 255 && button.blockMaterial.isSolid())
+        else if (j == 255 && mtPPlate.blockMaterial.isSolid())
         {
             return false;
         }
-        else if (world.canBlockBePlacedAt(button.blockID, i, j, k, false, l))
+        else if (world.canBlockBePlacedAt(mtPPlate.blockID, i, j, k, false, l))
         {
-            if (world.setBlockAndMetadataWithNotify(i, j, k, button.blockID, this.getMetadata(itemstack.getItemDamage())))
+            if (world.setBlockAndMetadataWithNotify(i, j, k, mtPPlate.blockID, 0))
             {
-                if (world.getBlockId(i, j, k) == button.blockID)
+                if (world.getBlockId(i, j, k) == mtPPlate.blockID)
                 {
-                    button.onBlockPlaced(world, i, j, k, l);
-                    button.onBlockPlacedBy(world, i, j, k, entityplayer);
-                    TileEntity tileentity = world.getBlockTileEntity(i, j, k);
-                    if(tileentity != null && tileentity instanceof TileEntityMTButton)
+                	mtPPlate.onBlockPlaced(world, i, j, k, l);
+                	mtPPlate.onBlockPlacedBy(world, i, j, k, entityplayer);
+                	TileEntity tileentity = world.getBlockTileEntity(i, j, k);
+                    if(tileentity != null && tileentity instanceof TileEntityMTPPlate)
                     {
-                        TileEntityMTButton tileentitymtbutton = (TileEntityMTButton)tileentity;
-                    	tileentitymtbutton.setMetaValue(itemstack.getItemDamage());
-                    	tileentitymtbutton.onInventoryChanged();
+                        TileEntityMTPPlate tileentitymtpplate = (TileEntityMTPPlate)tileentity;
+                    	tileentitymtpplate.setMetaValue(itemstack.getItemDamage());
+                    	switch(itemstack.getItemDamage())
+                    	{
+	                    	case 0: tileentitymtpplate.setTriggerType(1); //mobs >
+	                    	case 1: tileentitymtpplate.setTriggerType(2); //players only
+	                    	case 2: tileentitymtpplate.setTriggerType(2); //players only
+                    	}
+                    	tileentitymtpplate.onInventoryChanged();
                     }
                 }
-                world.playSoundEffect((double)((float)i + 0.5F), (double)((float)j + 0.5F), (double)((float)k + 0.5F), button.stepSound.getStepSound(), (button.stepSound.getVolume() + 1.0F) / 2.0F, button.stepSound.getPitch() * 0.8F);
+                world.playSoundEffect((double)((float)i + 0.5F), (double)((float)j + 0.5F), (double)((float)k + 0.5F), mtPPlate.stepSound.getStepSound(), (mtPPlate.stepSound.getVolume() + 1.0F) / 2.0F, mtPPlate.stepSound.getPitch() * 0.8F);
                 --itemstack.stackSize;
                 return true;
             }

@@ -2,7 +2,6 @@ package net.minecraft.src.MultiTexturedSigns;
 
 import net.minecraft.src.Block;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.MathHelper;
@@ -10,10 +9,9 @@ import net.minecraft.src.ModLoader;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.mod_MultiTexturedSigns;
-import net.minecraft.src.MultiTexturedSigns.network.PacketOpenGui;
 import net.minecraft.src.forge.ITextureProvider;
 
-public class ItemMTSigns extends Item
+public class ItemMTSigns extends Item implements ITextureProvider
 {
     public ItemMTSigns(int i)
     {
@@ -41,10 +39,22 @@ public class ItemMTSigns extends Item
     	return i;
     }
 
+    public int getIconFromDamage(int i)
+    {
+    	int index = i;
+        switch(i)
+        {
+	        case 0: return 16;
+	        case 1: return 17;
+	        case 2: return 18;
+	        default: return 19;
+        }
+    }
+
     public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
     {
-    	Block signpost = MultiTexturedSigns.mtSignPost;
-    	Block wallsign = MultiTexturedSigns.mtSignWall;
+    	Block signpost = MTSCore.mtSignPost;
+    	Block wallsign = MTSCore.mtSignWall;
         if (l == 0)
         {
             return false;
@@ -94,11 +104,17 @@ public class ItemMTSigns extends Item
         TileEntity tileentity = world.getBlockTileEntity(i, j, k);
         if (tileentity != null && tileentity instanceof TileEntityMTSign)
         {
-        	TileEntityMTSign tileentitymtsign = (TileEntityMTSign)tileentity;
+            TileEntityMTSign tileentitymtsign = (TileEntityMTSign)tileentity;
 	        tileentitymtsign.setMetaValue(itemstack.getItemDamage());
-        	PacketOpenGui gui = new PacketOpenGui(tileentitymtsign.xCoord, tileentitymtsign.yCoord, tileentitymtsign.zCoord);
-        	MultiTexturedSigns.displaymtsGuiEditSign(entityplayer, gui);
+	        tileentitymtsign.onInventoryChanged();
+	        MultiTexturedSigns.displaymtsGuiEditSign(entityplayer, tileentitymtsign);
+	        return true;
         }
-        return true;
+        else return false;
+    }
+    
+    public String getTextureFile()
+    {
+            return MultiTexturedSigns.MTS.getItemSheet();
     }
 }

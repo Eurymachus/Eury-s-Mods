@@ -62,8 +62,8 @@ public class TileEntityMTSign extends TileEntity
         }
     }
 	
-	public PacketPayload getPacketPayload() {
-
+	public PacketPayload getPacketPayload()
+	{
 		int[] dataInt = new int[1];
 		float[] dataFloat = new float[1];
 		String[] dataString;

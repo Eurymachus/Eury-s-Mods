@@ -93,7 +93,7 @@ public class GuiEditMTSign extends GuiScreen
         GL11.glScalef(-f1, -f1, -f1);
         GL11.glRotatef(180F, 0.0F, 1.0F, 0.0F);
         Block block = mtsEntitySign.getBlockType();
-        if (block == MultiTexturedSigns.mtSignPost)
+        if (block == MTSCore.mtSignPost)
         {
             float f2 = (float)(mtsEntitySign.getBlockMetadata() * 360) / 16F;
             GL11.glRotatef(f2, 0.0F, 1.0F, 0.0F);

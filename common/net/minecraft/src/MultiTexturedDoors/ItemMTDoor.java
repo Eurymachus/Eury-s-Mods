@@ -8,6 +8,7 @@ import net.minecraft.src.ItemColored;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModLoader;
+import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.forge.ITextureProvider;
 
@@ -34,6 +35,11 @@ public class ItemMTDoor extends Item implements ITextureProvider
         .toString();
     }
     
+    public int filterData(int i)
+    {
+    	return i;
+    }
+    
     /**
      * sets the array of strings to be used for name lookups from item damage to metadata
      */
@@ -53,8 +59,7 @@ public class ItemMTDoor extends Item implements ITextureProvider
     
     public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
     {
-    	if (world.isRemote) return false;
-        Block mtDoor = MultiTexturedDoors.mtDoor;
+        Block mtDoor = MTDCore.mtDoor;
         if (l != 1)
         {
             return false;
@@ -129,18 +134,22 @@ public class ItemMTDoor extends Item implements ITextureProvider
 
         par0World.editingBlocks = true;
         par0World.setBlockAndMetadataWithNotify(par1, par2, par3, par5Block.blockID, par4);
-        TileEntityMTDoor tileentitymtdoor = (TileEntityMTDoor)par0World.getBlockTileEntity(par1, par2, par3);
-        if(tileentitymtdoor != null)
+        TileEntity tileentity = par0World.getBlockTileEntity(par1, par2, par3);
+        if (tileentity != null && tileentity instanceof TileEntityMTDoor)
         {
+        	TileEntityMTDoor tileentitymtdoor = (TileEntityMTDoor)tileentity;
         	tileentitymtdoor.setMetaValue(damage);
         	tileentitymtdoor.setDoorPiece(0);
+        	tileentitymtdoor.onInventoryChanged();
         }
-        par0World.setBlockAndMetadataWithNotify(par1, par2 + 1, par3, par5Block.blockID, 8 | (var12 ? 1 : 0));
-        TileEntityMTDoor tileentitymtdoor1 = (TileEntityMTDoor)par0World.getBlockTileEntity(par1, par2+1, par3);
-        if(tileentitymtdoor1 != null)
+	    par0World.setBlockAndMetadataWithNotify(par1, par2 + 1, par3, par5Block.blockID, 8 | (var12 ? 1 : 0));
+        TileEntity tileentity1 = par0World.getBlockTileEntity(par1, par2 + 1, par3);
+        if (tileentity1 != null && tileentity1 instanceof TileEntityMTDoor)
         {
+	        TileEntityMTDoor tileentitymtdoor1 = (TileEntityMTDoor)tileentity1;
         	tileentitymtdoor1.setMetaValue(damage);
         	tileentitymtdoor1.setDoorPiece(1);
+        	tileentitymtdoor1.onInventoryChanged();
         }
         par0World.editingBlocks = false;
         par0World.notifyBlocksOfNeighborChange(par1, par2, par3, par5Block.blockID);
@@ -150,6 +159,6 @@ public class ItemMTDoor extends Item implements ITextureProvider
 	@Override
 	public String getTextureFile()
 	{
-		return MultiTexturedDoors.MTDCore.getBlockSheet();
+		return MultiTexturedDoors.Core.getBlockSheet();
 	}
 }

@@ -21,12 +21,6 @@ public class ItemMTLever extends Item implements ITextureProvider
     }
     
     @Override
-    public int getIconFromDamage(int i)
-    {
-    	return i;
-    }
-    
-    @Override
     public String getItemNameIS(ItemStack itemstack)
     {
     	return (new StringBuilder())
@@ -36,10 +30,19 @@ public class ItemMTLever extends Item implements ITextureProvider
         .toString();
     }
     
+    public int filterData(int i)
+    {
+    	return i;
+    }
+
+    public int getIconFromDamage(int i)
+    {
+    	return i;
+    }
+    
     public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
     {
-    	if (world.isRemote) return false;
-        Block lever = MultiTexturedLevers.mtLever;
+        Block lever = MTLCore.mtLever;
         if (l == 0)
         {
             --j;
@@ -69,6 +72,7 @@ public class ItemMTLever extends Item implements ITextureProvider
         {
             ++i;
         }
+
         if (itemstack.stackSize == 0)
         {
             return false;
@@ -76,6 +80,10 @@ public class ItemMTLever extends Item implements ITextureProvider
         else if (!entityplayer.canPlayerEdit(i, j, k))
         {
             return false;
+        }
+        else if (!lever.canPlaceBlockAt(world, i, j, k))
+        {
+        	return false;
         }
         else if (j == 255 && lever.blockMaterial.isSolid())
         {
@@ -92,7 +100,7 @@ public class ItemMTLever extends Item implements ITextureProvider
                     TileEntity tileentity = world.getBlockTileEntity(i, j, k);
                     if(tileentity != null && tileentity instanceof TileEntityMTLever)
                     {
-                        TileEntityMTLever tileentitymtbutton = (TileEntityMTLever)tileentity;
+                    	TileEntityMTLever tileentitymtbutton = (TileEntityMTLever)tileentity;
                     	tileentitymtbutton.setMetaValue(itemstack.getItemDamage());
                     	tileentitymtbutton.onInventoryChanged();
                     }
@@ -115,6 +123,6 @@ public class ItemMTLever extends Item implements ITextureProvider
 	@Override
 	public String getTextureFile()
 	{
-		return MultiTexturedLevers.MTLCore.getItemSheet();
+		return MultiTexturedLevers.Core.getItemSheet();
 	}
 }

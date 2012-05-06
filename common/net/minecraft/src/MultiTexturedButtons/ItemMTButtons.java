@@ -21,7 +21,7 @@ public class ItemMTButtons extends ItemBlock// implements ITextureProvider
     public ItemMTButtons(int i)
     {
         super(i);
-        this.blockRef = MultiTexturedButtons.BlockMTButton;
+        this.blockRef = MTBCore.BlockMTButton;
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
         this.setNoRepair();
@@ -61,7 +61,7 @@ public class ItemMTButtons extends ItemBlock// implements ITextureProvider
     
     public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
     {
-        Block button = MultiTexturedButtons.BlockMTButton;
+        Block button = MTBCore.BlockMTButton;
         if (l == 0)
         {
             --j;

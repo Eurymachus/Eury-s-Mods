@@ -24,7 +24,7 @@ public class TileEntityMTSignRenderer extends TileEntitySpecialRenderer
         Block block = mtstileentitysign.getBlockType();
         GL11.glPushMatrix();
         float f1 = 0.6666667F;
-        if (block == MultiTexturedSigns.mtSignPost)
+        if (block == MTSCore.mtSignPost)
         {
             GL11.glTranslatef((float)d + 0.5F, (float)d1 + 0.75F * f1, (float)d2 + 0.5F);
             float f2 = (float)(mtstileentitysign.getBlockMetadata() * 360) / 16F;

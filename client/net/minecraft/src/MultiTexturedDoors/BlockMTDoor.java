@@ -3,6 +3,7 @@ package net.minecraft.src.MultiTexturedDoors;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockContainer;
@@ -24,6 +25,7 @@ import net.minecraft.src.forge.ITextureProvider;
 
 public class BlockMTDoor extends BlockContainer implements ITextureProvider
 {
+	private static Minecraft mc = ModLoader.getMinecraftInstance();
 	Class mtDoorEntityClass;
 	
     public BlockMTDoor(int par1, Class doorClass, float hardness, StepSound sound, boolean disableStats, boolean requiresSelfNotify)
@@ -38,6 +40,45 @@ public class BlockMTDoor extends BlockContainer implements ITextureProvider
         float var4 = 1.0F;
         this.setBlockBounds(0.5F - var3, 0.0F, 0.5F - var3, 0.5F + var3, var4, 0.5F + var3);
     }
+    
+    public static int getDamageValue(IBlockAccess blockaccess, int x, int y, int z)
+    {
+    	TileEntity tileentity = blockaccess.getBlockTileEntity(x, y, z);
+    	if (tileentity != null && tileentity instanceof TileEntityMTDoor)
+    	{
+    		TileEntityMTDoor tileentitymtdoor = (TileEntityMTDoor)tileentity;
+    		return tileentitymtdoor.getMetaValue();
+		}
+		return 0;
+	}
+    
+    public static int getMouseOver()
+    {
+    	if (mc.objectMouseOver != null)
+    	{
+        	int xPosition = mc.objectMouseOver.blockX;
+        	int yPosition = mc.objectMouseOver.blockY;
+        	int zPosition = mc.objectMouseOver.blockZ;
+        	return getDamageValue(mc.theWorld, xPosition, yPosition, zPosition);
+    	}
+    	return 0;
+    }
+    
+    public static int getBelowPlayer(EntityPlayer player)
+    {
+		int playerX = (int)player.posX;
+		int playerY = (int)player.posY;
+		int playerZ = (int)player.posZ;
+    	return getDamageValue(mc.theWorld, playerX, playerY - 1, playerZ);
+    }
+    
+    public static int getAtPlayer(EntityPlayer player)
+    {
+		int playerX = (int)player.posX;
+		int playerY = (int)player.posY;
+		int playerZ = (int)player.posZ;
+    	return getDamageValue(mc.theWorld, playerX, playerY, playerZ);
+    }
 
     /**
      * Retrieves the block texture to use based on the display side. Args: iBlockAccess, x, y, z, side
@@ -46,21 +87,17 @@ public class BlockMTDoor extends BlockContainer implements ITextureProvider
     {
         int var6 = this.getFullMetadata(par1IBlockAccess, par2, par3, par4);
         int var7 = 0;
-        TileEntityMTDoor tileentitymtdoor = (TileEntityMTDoor)par1IBlockAccess.getBlockTileEntity(par2, par3, par4);
-    	if (tileentitymtdoor != null)
-    	{
-    		switch(tileentitymtdoor.getMetaValue())
-    		{
-    		case 0:
-    			var7 = 16;
-    			break;
-    		case 1:
-    			var7 = 17;
-    			break;
-    		case 2:
-    			var7 = 18;
-    			break;
-    		}
+		switch(getDamageValue(par1IBlockAccess, par2, par3, par4))
+		{
+		case 0:
+			var7 = 16;
+			break;
+		case 1:
+			var7 = 17;
+			break;
+		case 2:
+			var7 = 18;
+			break;
     	}
         if ((var6 & 8) != 0)
         {
@@ -68,70 +105,19 @@ public class BlockMTDoor extends BlockContainer implements ITextureProvider
         }
     	return var7;
     }
-	
-	public int getMouseOver(EntityPlayer player)
-    {
-    	int mouseOver = -1;
-    	if (ModLoader.getMinecraftInstance().objectMouseOver != null)
-    	{
-        	int xPosition = ModLoader.getMinecraftInstance().objectMouseOver.blockX;
-        	int yPosition = ModLoader.getMinecraftInstance().objectMouseOver.blockY;
-        	int zPosition = ModLoader.getMinecraftInstance().objectMouseOver.blockZ;	
-        	TileEntity tileentity = ModLoader.getMinecraftInstance().theWorld.getBlockTileEntity(xPosition, yPosition, zPosition);
-        	if (tileentity != null && tileentity instanceof TileEntityMTDoor)
-        	{
-        		TileEntityMTDoor tileentitymtdoor = (TileEntityMTDoor)tileentity;
-        		mouseOver = tileentitymtdoor.getMetaValue();
-        	}
-    	}
-    	return mouseOver;
-    }
-    
-    public int getBelowPlayer(EntityPlayer player)
-    {
-    	int belowPlayer = -1;
-		int playerX = (int)player.posX;
-		int playerY = (int)player.posY;
-		int playerZ = (int)player.posZ;
-		//player.addChatMessage("Y: " + playerY);
-    	TileEntity tileentity = ModLoader.getMinecraftInstance().theWorld.getBlockTileEntity(playerX, playerY - 1, playerZ);
-    	if (tileentity != null && tileentity instanceof TileEntityMTDoor)
-    	{
-    		TileEntityMTDoor tileentitymtdoor = (TileEntityMTDoor)tileentity;
-    		belowPlayer = tileentitymtdoor.getMetaValue();
-    	}
-    	return belowPlayer;
-    }
-    
-    public int getAtPlayer(EntityPlayer player)
-    {
-    	int belowPlayer = -1;
-		int playerX = (int)player.posX;
-		int playerY = (int)player.posY;
-		int playerZ = (int)player.posZ;
-		//player.addChatMessage("Y: " + playerY);
-    	TileEntity tileentity = ModLoader.getMinecraftInstance().theWorld.getBlockTileEntity(playerX, playerY, playerZ);
-    	if (tileentity != null && tileentity instanceof TileEntityMTDoor)
-    	{
-    		TileEntityMTDoor tileentitymtdoor = (TileEntityMTDoor)tileentity;
-    		belowPlayer = tileentitymtdoor.getMetaValue();
-    	}
-    	return belowPlayer;
-    }
     
 	@Override
     public int getBlockTextureFromSideAndMetadata(int par1, int par2)
     {
-		int itemDamage = -1;
 		int texture = -1;
     	EntityPlayer player = ModLoader.getMinecraftInstance().thePlayer;
     	if (player.onGround)
     	{
-    		texture = getMouseOver(player);
+    		texture = getMouseOver();
     	}
     	if (texture == -1 && player.isAirBorne)
     	{
-    		texture = getMouseOver(player);
+    		texture = getMouseOver();
     	}
     	if (texture == -1 && player.isAirBorne)
     	{
@@ -144,17 +130,13 @@ public class BlockMTDoor extends BlockContainer implements ITextureProvider
     	switch(texture)
     	{
 		case 0:
-			itemDamage = 0;
-			break;
+			return 0;
 		case 1:
-			itemDamage = 1;
-			break;
+			return 1;
 		case 2:
-			itemDamage = 2;
-			break;
+			return 2;
     	}
-		if (itemDamage == -1) itemDamage = 22;
-		return itemDamage;
+		return 0;
     }
 
     /**
@@ -436,33 +418,10 @@ public class BlockMTDoor extends BlockContainer implements ITextureProvider
 
     public void onBlockRemoval(World world, int i, int j, int k)
     {
-        TileEntityMTDoor tileentitymtdoor = (TileEntityMTDoor)world.getBlockTileEntity(i, j, k);
-    	if (tileentitymtdoor != null)
-    	{
-    		int itemDamage = -1;
-    		switch(tileentitymtdoor.getMetaValue())
-    		{
-    		case 0:
-    			itemDamage = 0;
-    			break;
-    		case 1:
-    			itemDamage = 1;
-    			break;
-    		case 2:
-    			itemDamage = 2;
-    			break;
-    		}
-    		if (itemDamage > -1)
-    		{
-    			if (tileentitymtdoor.getDoorPiece() == 0)
-    			{
-		    		ItemStack itemstack = new ItemStack(MultiTexturedDoors.mtDoorItem, 1, itemDamage);
-		    		EntityItem entityitem = new EntityItem(world, (float)i, (float)j, (float)k, new ItemStack(itemstack.itemID, 1, itemstack.getItemDamage()));
-		            world.spawnEntityInWorld(entityitem);
-    			}
-    		}
-    	}
-        //super.onBlockRemoval(world, i, j, k);
+		ItemStack itemstack = new ItemStack(MTDCore.mtDoorItem, 1, getDamageValue(world, i, j, j));
+		EntityItem entityitem = new EntityItem(world, (float)i, (float)j, (float)k, new ItemStack(itemstack.itemID, 1, itemstack.getItemDamage()));
+        world.spawnEntityInWorld(entityitem);
+        super.onBlockRemoval(world, i, j, k);
     }
     
     /**
@@ -537,6 +496,6 @@ public class BlockMTDoor extends BlockContainer implements ITextureProvider
 	@Override
 	public String getTextureFile()
 	{
-		return MultiTexturedDoors.MTDCore.getBlockSheet();
+		return MultiTexturedDoors.Core.getBlockSheet();
 	}
 }

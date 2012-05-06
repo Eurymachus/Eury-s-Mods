@@ -357,7 +357,7 @@ public class BlockMTLever extends BlockContainer
     		}
     		if (itemDamage > -1)
     		{
-	    		ItemStack itemstack = new ItemStack(MultiTexturedLevers.mtLeverItem, 1, itemDamage);
+	    		ItemStack itemstack = new ItemStack(MTLCore.mtLeverItem, 1, itemDamage);
 	    		EntityItem entityitem = new EntityItem(par1World, (float)par2, (float)par3, (float)par4, new ItemStack(itemstack.itemID, 1, itemstack.getItemDamage()));
 	            par1World.spawnEntityInWorld(entityitem);
     		}

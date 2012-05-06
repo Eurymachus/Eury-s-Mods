@@ -8,6 +8,6 @@ public class PacketMTD extends PacketUpdate
     public PacketMTD(int packetId)
     {
     	super(packetId);
-        this.channel = MultiTexturedDoors.MTDCore.getModChannel();
+        this.channel = MultiTexturedDoors.Core.getModChannel();
     }
 }

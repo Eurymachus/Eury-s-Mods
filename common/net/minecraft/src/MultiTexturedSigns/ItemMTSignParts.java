@@ -26,7 +26,11 @@ public class ItemMTSignParts extends Item implements ITextureProvider
         .toString();
     }
     
-    @Override
+    public int filterData(int i)
+    {
+    	return i;
+    }
+    
     public int getIconFromDamage(int i)
     {
         if(i==0 || i==2 || i==4)
@@ -42,6 +46,6 @@ public class ItemMTSignParts extends Item implements ITextureProvider
     
     public String getTextureFile()
     {
-            return MultiTexturedSigns.MTSCore.getItemSheet();
+            return MultiTexturedSigns.MTS.getItemSheet();
     }
 }

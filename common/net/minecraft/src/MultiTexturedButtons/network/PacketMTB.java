@@ -22,6 +22,6 @@ public abstract class PacketMTB extends PacketUpdate
     public PacketMTB(int packetId)
     {
     	super(packetId);
-        this.channel = MultiTexturedButtons.MTBCore.getModChannel();
+        this.channel = MultiTexturedButtons.Core.getModChannel();
     }
 }

@@ -34,18 +34,12 @@ public class PacketHandles implements IPacketHandling
 	@Override
 	public void handleGuiPacket(PacketUpdate packet, EntityPlayer entityplayer)
 	{
-		if (packet != null && packet instanceof PacketOpenGui)
-		{
-			PacketOpenGui openGui = (PacketOpenGui)packet;
-			World world = ModLoader.getMinecraftInstance().theWorld;
-			if(!openGui.targetExists(world)) return;
-			TileEntity tileentity = openGui.getTarget(world);
-			//player.addChatMessage("Packet Received");
-	        if ((tileentity != null) && (tileentity instanceof TileEntityMTSign))
-	        {
-	            TileEntityMTSign tileentitymtsign = (TileEntityMTSign)tileentity;
-	            MultiTexturedSigns.displaymtsGuiEditSign(entityplayer, tileentitymtsign);
-	        }
-		}
+		int x = packet.xPosition;
+		int y = packet.yPosition;
+		int z = packet.zPosition;
+		TileEntity tileentity = ModLoader.getMinecraftInstance().theWorld.getBlockTileEntity(x, y, z);
+		entityplayer.addChatMessage("X: " + tileentity.xCoord);
+		entityplayer.addChatMessage("Y: " + tileentity.yCoord);
+		entityplayer.addChatMessage("Z: " + tileentity.zCoord);
 	}
 }

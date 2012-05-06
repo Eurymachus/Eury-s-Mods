@@ -15,9 +15,9 @@ import net.minecraft.src.forge.MessageManager;
 
 public class NetworkConnection implements INetworkConnections
 {
-	private static String modName = MultiTexturedPPlates.MTPCore.getModName();
+	private static String modName = MultiTexturedPPlates.Core.getModName();
 	private static String modVersion = MTPCore.version;
-	private static String modChannel = MultiTexturedPPlates.MTPCore.getModChannel();
+	private static String modChannel = MultiTexturedPPlates.Core.getModChannel();
 	
 	@Override
 	public void onPacketData(NetworkManager network, String channel, byte[] bytes) 
@@ -33,7 +33,7 @@ public class NetworkConnection implements INetworkConnections
 			case PacketIds.MTPPLATE_UPDATE:
 				PacketUpdateMTPPlate packetPPlate = new PacketUpdateMTPPlate();
 				packetPPlate.readData(data);
-				MultiTexturedPPlates.MTPCore.getPacketHandler().handleTileEntityPacket(packetPPlate, net.getPlayerEntity());
+				MultiTexturedPPlates.Core.getPacketHandler().handleTileEntityPacket(packetPPlate, net.getPlayerEntity());
 				break;
 			}
 		} catch(Exception ex) {

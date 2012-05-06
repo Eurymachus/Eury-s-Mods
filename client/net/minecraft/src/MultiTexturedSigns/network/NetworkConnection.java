@@ -16,7 +16,7 @@ import net.minecraft.src.forge.MessageManager;
 
 public class NetworkConnection implements INetworkConnections
 {
-	private static String modChannel = MultiTexturedSigns.MTSCore.getModChannel();
+	private static String modChannel = MultiTexturedSigns.MTS.getModChannel();
 	
 	@Override
 	public void onPacketData(NetworkManager network, String channel, byte[] bytes) 
@@ -33,13 +33,15 @@ public class NetworkConnection implements INetworkConnections
 			case PacketIds.MTSIGN_UPDATE:
 				PacketUpdateMTSign packetSign = new PacketUpdateMTSign();
 				packetSign.readData(data);
-				MultiTexturedSigns.MTSCore.getPacketHandler().handleTileEntityPacket(packetSign, null);
+				MultiTexturedSigns.MTS.getPacketHandler().handleTileEntityPacket(packetSign, player);
 				break;
 			case PacketIds.MTSIGN_GUI:
 				PacketOpenGui packetGui = new PacketOpenGui();
 				packetGui.readData(data);
-				//mc.thePlayer.addChatMessage("PacketX: " + packetGui.xPosition);
-				MultiTexturedSigns.MTSCore.getPacketHandler().handleGuiPacket(packetGui, player);
+				player.addChatMessage("PacketX: " + packetGui.xPosition);
+				player.addChatMessage("PacketY: " + packetGui.yPosition);
+				player.addChatMessage("PacketZ: " + packetGui.zPosition);
+				MultiTexturedSigns.MTS.getPacketHandler().handleGuiPacket(packetGui, player);
 				break;
 			}
 		} catch(Exception ex) {

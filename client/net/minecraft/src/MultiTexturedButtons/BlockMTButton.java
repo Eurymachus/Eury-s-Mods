@@ -32,7 +32,7 @@ public class BlockMTButton extends BlockContainer
         this.setTickRandomly(true);
     }
     
-    public static int getButtonMeta(IBlockAccess blockaccess, int x, int y, int z)
+    public static int getDamageValue(IBlockAccess blockaccess, int x, int y, int z)
     {
     	TileEntity tileentity = blockaccess.getBlockTileEntity(x, y, z);
     	if (tileentity != null && tileentity instanceof TileEntityMTButton)
@@ -43,14 +43,14 @@ public class BlockMTButton extends BlockContainer
     	return 0;
     }
     
-    public static int getMouseOver(EntityPlayer player)
+    public static int getMouseOver()
     {
     	if (mc.objectMouseOver != null)
     	{
         	int xPosition = mc.objectMouseOver.blockX;
         	int yPosition = mc.objectMouseOver.blockY;
         	int zPosition = mc.objectMouseOver.blockZ;
-        	return getButtonMeta(mc.theWorld, xPosition, yPosition, zPosition);
+        	return getDamageValue(mc.theWorld, xPosition, yPosition, zPosition);
     	}
     	return 0;
     }
@@ -60,7 +60,7 @@ public class BlockMTButton extends BlockContainer
 		int playerX = (int)player.posX;
 		int playerY = (int)player.posY;
 		int playerZ = (int)player.posZ;
-    	return getButtonMeta(mc.theWorld, playerX, playerY - 1, playerZ);
+    	return getDamageValue(mc.theWorld, playerX, playerY - 1, playerZ);
     }
     
     public static int getAtPlayer(EntityPlayer player)
@@ -68,7 +68,7 @@ public class BlockMTButton extends BlockContainer
 		int playerX = (int)player.posX;
 		int playerY = (int)player.posY;
 		int playerZ = (int)player.posZ;
-    	return getButtonMeta(mc.theWorld, playerX, playerY, playerZ);
+    	return getDamageValue(mc.theWorld, playerX, playerY, playerZ);
     }
     
     public static int getTextureFromMetaData(int i)
@@ -92,11 +92,11 @@ public class BlockMTButton extends BlockContainer
 	    	EntityPlayer player = ModLoader.getMinecraftInstance().thePlayer;
 	    	if (player.onGround)
 	    	{
-	    		texture = getMouseOver(player);
+	    		texture = getMouseOver();
 	    	}
 	    	if (texture == -1 && player.isAirBorne)
 	    	{
-	    		texture = getMouseOver(player);
+	    		texture = getMouseOver();
 	    	}
 	    	if (texture == -1 && player.isAirBorne)
 	    	{
@@ -126,7 +126,7 @@ public class BlockMTButton extends BlockContainer
 	@Override
     public int getBlockTexture(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
     {
-		switch(getButtonMeta(par1IBlockAccess, par2, par3, par4))
+		switch(getDamageValue(par1IBlockAccess, par2, par3, par4))
 		{
 		case 0:
 			return 22;
@@ -419,30 +419,10 @@ public class BlockMTButton extends BlockContainer
                 par1World.notifyBlocksOfNeighborChange(par2, par3 - 1, par4, this.blockID);
             }
         }
-        TileEntityMTButton tileentitymtbutton = (TileEntityMTButton)par1World.getBlockTileEntity(par2, par3, par4);
-    	if (tileentitymtbutton != null)
-    	{
-    		int itemDamage = -1;
-    		switch(tileentitymtbutton.getMetaValue())
-    		{
-    		case 0:
-    			itemDamage = 0;
-    			break;
-    		case 1:
-    			itemDamage = 1;
-    			break;
-    		case 2:
-    			itemDamage = 2;
-    			break;
-    		}
-    		if (itemDamage > -1)
-    		{
-	    		ItemStack itemstack = new ItemStack(MultiTexturedButtons.BlockMTButton, 1, itemDamage);
-	    		EntityItem entityitem = new EntityItem(par1World, (float)par2, (float)par3, (float)par4, new ItemStack(itemstack.itemID, 1, itemstack.getItemDamage()));
-	            par1World.spawnEntityInWorld(entityitem);
-    		}
-    	}
-        //super.onBlockRemoval(par1World, par2, par3, par4);
+		ItemStack itemstack = new ItemStack(MTBCore.BlockMTButton, 1, getDamageValue(par1World, par2, par3, par4));
+		EntityItem entityitem = new EntityItem(par1World, (float)par2, (float)par3, (float)par4, new ItemStack(itemstack.itemID, 1, itemstack.getItemDamage()));
+        par1World.spawnEntityInWorld(entityitem);
+        super.onBlockRemoval(par1World, par2, par3, par4);
     }
     
     @Override

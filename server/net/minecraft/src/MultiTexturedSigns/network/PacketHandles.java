@@ -21,7 +21,7 @@ public class PacketHandles implements IPacketHandling
     	if (packet != null && packet instanceof PacketUpdateMTSign)
     	{
     		PacketUpdateMTSign signPacket = (PacketUpdateMTSign)packet;
-	    	//mcServer.log("Handling Server Packet");
+	    	ModLoader.getMinecraftServerInstance().log("Handling Server Packet");
 	        EntityPlayerMP entityplayermp = null;
 	        World worldserver = var2.worldObj;
 	        if (signPacket.targetExists(worldserver))

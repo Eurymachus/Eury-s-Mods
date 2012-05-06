@@ -13,7 +13,7 @@ import net.minecraft.src.forge.MessageManager;
 
 public class NetworkConnection implements INetworkConnections
 {
-	private static String modChannel = MultiTexturedButtons.MTBCore.getModChannel();
+	private static String modChannel = MultiTexturedButtons.Core.getModChannel();
 	
 	@Override
 	public void onPacketData(NetworkManager network, String channel, byte[] bytes) 
@@ -30,7 +30,7 @@ public class NetworkConnection implements INetworkConnections
 				PacketUpdateMTButton packetButton = new PacketUpdateMTButton();
 				packetButton.readData(data);
 				//mc.thePlayer.addChatMessage("Meta: " + packetButton.getItemDamage());
-				MultiTexturedButtons.MTBCore.getPacketHandler().handleTileEntityPacket(packetButton, null);
+				MultiTexturedButtons.Core.getPacketHandler().handleTileEntityPacket(packetButton, null);
 				break;
 			}
 		} catch(Exception ex) {

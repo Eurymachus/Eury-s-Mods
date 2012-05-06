@@ -2,6 +2,7 @@ package net.minecraft.src.MultiTexturedLevers;
 
 import java.util.Random;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockContainer;
@@ -19,6 +20,7 @@ import net.minecraft.src.forge.MinecraftForge;
 
 public class BlockMTLever extends BlockContainer
 {
+	private static Minecraft mc = ModLoader.getMinecraftInstance();
 	Class mtLeverEntityClass;
 	
     public BlockMTLever(int par1, Class leverClass, float hardness, StepSound sound, boolean disableStats, boolean requiresSelfNotify)
@@ -32,61 +34,94 @@ public class BlockMTLever extends BlockContainer
         if (requiresSelfNotify) { setRequiresSelfNotify(); }
         this.setTickRandomly(true);
     }
+    
+    public static int getDamageValue(IBlockAccess blockaccess, int x, int y, int z)
+    {
+    	TileEntity tileentity = blockaccess.getBlockTileEntity(x, y, z);
+    	if (tileentity != null && tileentity instanceof TileEntityMTLever)
+    	{
+    		TileEntityMTLever tileentitymtlever = (TileEntityMTLever)tileentity;
+    		return tileentitymtlever.getMetaValue();
+    	}
+    	return 0;
+    }
+    
+    public static int getMouseOver()
+    {
+    	if (mc.objectMouseOver != null)
+    	{
+        	int xPosition = mc.objectMouseOver.blockX;
+        	int yPosition = mc.objectMouseOver.blockY;
+        	int zPosition = mc.objectMouseOver.blockZ;
+        	return getDamageValue(mc.theWorld, xPosition, yPosition, zPosition);
+    	}
+    	return 0;
+    }
+    
+    public static int getBelowPlayer(EntityPlayer player)
+    {
+		int playerX = (int)player.posX;
+		int playerY = (int)player.posY;
+		int playerZ = (int)player.posZ;
+    	return getDamageValue(mc.theWorld, playerX, playerY - 1, playerZ);
+    }
+    
+    public static int getAtPlayer(EntityPlayer player)
+    {
+		int playerX = (int)player.posX;
+		int playerY = (int)player.posY;
+		int playerZ = (int)player.posZ;
+    	return getDamageValue(mc.theWorld, playerX, playerY, playerZ);
+    }
 	
 	@Override
     public int getBlockTexture(IBlockAccess par1IBlockAccess, int par2, int par3, int par4, int par5)
     {
-		int itemDamage = -1;
-        TileEntityMTLever tileentitymtlever = (TileEntityMTLever)par1IBlockAccess.getBlockTileEntity(par2, par3, par4);
-    	if (tileentitymtlever != null)
-    	{
-    		switch(tileentitymtlever.getMetaValue())
-    		{
-    		case 0:
-    			itemDamage = 22;
-    			break;
-    		case 1:
-    			itemDamage = 23;
-    			break;
-    		case 2:
-    			itemDamage = 24;
-    			break;
+		switch(getDamageValue(par1IBlockAccess, par2, par3, par4))
+		{
+		case 0:
+			return 22;
+		case 1:
+			return 23;
+		case 2:
+			return 24;
 //    		case 3:
-//    			itemDamage = 1;
-//    			break;
-    		}
-    	}
-    	if (itemDamage != -1)
-    	{
-    		return itemDamage;
-    	}
-    	else return 1;
+//    			return 1;
+		}
+    	return 22;
     }
 	
 	@Override
     public int getBlockTextureFromSideAndMetadata(int par1, int par2)
     {
-		int itemDamage = -1;
-		switch(par2)
-		{
+		int texture = -1;
+    	EntityPlayer player = ModLoader.getMinecraftInstance().thePlayer;
+    	if (player.onGround)
+    	{
+    		texture = getMouseOver();
+    	}
+    	if (texture == -1 && player.isAirBorne)
+    	{
+    		texture = getMouseOver();
+    	}
+    	if (texture == -1 && player.isAirBorne)
+    	{
+    		texture = getBelowPlayer(player);
+    	}
+    	if (texture == -1 && player.isAirBorne)
+    	{
+    		texture = getAtPlayer(player);
+    	}
+    	switch(texture)
+    	{
 		case 0:
-			itemDamage = 22;
-			break;
+			return 22;
 		case 1:
-			itemDamage = 23;
-			break;
+			return 23;
 		case 2:
-			itemDamage = 24;
-			break;
-//		case 3:
-//			itemDamage = 1;
-//			break;
-		}
-		if (itemDamage == -1)
-		{
-			itemDamage = 1;
-		}
-		return itemDamage;
+			return 24;
+    	}
+		return 22;
     }
 	
 	 /**
@@ -378,31 +413,10 @@ public class BlockMTLever extends BlockContainer
                 par1World.notifyBlocksOfNeighborChange(par2, par3 - 1, par4, this.blockID);
             }
         }
-        TileEntityMTLever tileentitymtlever = (TileEntityMTLever)par1World.getBlockTileEntity(par2, par3, par4);
-    	if (tileentitymtlever != null)
-    	{
-    		int itemDamage = -1;
-    		switch(tileentitymtlever.getMetaValue())
-    		{
-    		case 0:
-    			itemDamage = 0;
-    			break;
-    		case 1:
-    			itemDamage = 1;
-    			break;
-    		case 2:
-    			itemDamage = 2;
-    			break;
-    		}
-    		if (itemDamage > -1)
-    		{
-	    		ItemStack itemstack = new ItemStack(MultiTexturedLevers.mtLeverItem, 1, itemDamage);
-	    		EntityItem entityitem = new EntityItem(par1World, (float)par2, (float)par3, (float)par4, new ItemStack(itemstack.itemID, 1, itemstack.getItemDamage()));
-	            par1World.spawnEntityInWorld(entityitem);
-    		}
-    	}
-        
-        //super.onBlockRemoval(par1World, par2, par3, par4);
+		ItemStack itemstack = new ItemStack(MTLCore.mtLeverItem, 1, getDamageValue(par1World, par2, par3, par4));
+		EntityItem entityitem = new EntityItem(par1World, (float)par2, (float)par3, (float)par4, new ItemStack(itemstack.itemID, 1, itemstack.getItemDamage()));
+        par1World.spawnEntityInWorld(entityitem);
+        super.onBlockRemoval(par1World, par2, par3, par4);
     }
     
     @Override

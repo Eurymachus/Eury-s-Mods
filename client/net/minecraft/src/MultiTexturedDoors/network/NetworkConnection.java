@@ -13,7 +13,7 @@ import net.minecraft.src.forge.MessageManager;
 
 public class NetworkConnection implements INetworkConnections
 {
-	private static String modChannel = MultiTexturedDoors.MTDCore.getModChannel();
+	private static String modChannel = MultiTexturedDoors.Core.getModChannel();
 	
 	@Override
 	public void onPacketData(NetworkManager network, String channel, byte[] bytes) 
@@ -30,7 +30,7 @@ public class NetworkConnection implements INetworkConnections
 				//mc.thePlayer.addChatMessage("PacketID is Door");
 				PacketUpdateMTDoor packetDoor = new PacketUpdateMTDoor();
 				packetDoor.readData(data);
-				MultiTexturedDoors.MTDCore.getPacketHandler().handleTileEntityPacket(packetDoor, null);
+				MultiTexturedDoors.Core.getPacketHandler().handleTileEntityPacket(packetDoor, null);
 				break;
 			}
 		} catch(Exception ex) {

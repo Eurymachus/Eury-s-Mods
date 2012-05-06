@@ -15,9 +15,9 @@ import net.minecraft.src.forge.MessageManager;
 
 public class NetworkConnection implements INetworkConnections
 {
-	private static String modName = MultiTexturedButtons.MTBCore.getModName();
+	private static String modName = MultiTexturedButtons.Core.getModName();
 	private static String modVersion = MTBCore.version;
-	private static String modChannel = MultiTexturedButtons.MTBCore.getModChannel();
+	private static String modChannel = MultiTexturedButtons.Core.getModChannel();
 	
 	@Override
 	public void onPacketData(NetworkManager network, String channel, byte[] bytes) 
@@ -33,7 +33,7 @@ public class NetworkConnection implements INetworkConnections
 			case PacketIds.MTBUTTON_UPDATE:
 				PacketUpdateMTButton packetButton = new PacketUpdateMTButton();
 				packetButton.readData(data);
-				MultiTexturedButtons.MTBCore.getPacketHandler().handleTileEntityPacket(packetButton, net.getPlayerEntity());
+				MultiTexturedButtons.Core.getPacketHandler().handleTileEntityPacket(packetButton, net.getPlayerEntity());
 				break;
 			}
 		} catch(Exception ex) {

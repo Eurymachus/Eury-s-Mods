@@ -28,21 +28,19 @@ public class ItemMTSignTool extends Item implements ITextureProvider
         else
         {
         	TileEntity tileentity = world.getBlockTileEntity(i, j, k);
-        	if ((tileentity != null) && (tileentity instanceof TileEntityMTSign))
+        	if (tileentity != null && tileentity instanceof TileEntityMTSign)
         	{
-		        TileEntityMTSign mtstileentitysign = (TileEntityMTSign)tileentity;
-		        if (mtstileentitysign != null)
-		        {
-		        	MultiTexturedSigns.displaymtsGuiEditSign(entityplayer, mtstileentitysign);
-		        	itemstack.damageItem(5, entityplayer);
-		        }
+		        TileEntityMTSign tileentitymtsign = (TileEntityMTSign)tileentity;
+	        	MultiTexturedSigns.displaymtsGuiEditSign(entityplayer, tileentitymtsign);
+	        	itemstack.damageItem(5, entityplayer);
+		        return true;
         	}
-	        return true;
+        	else return false;
         }
     }
 
 	public String getTextureFile()
 	{
-    	return MultiTexturedSigns.MTSCore.getItemSheet();
+    	return MultiTexturedSigns.MTS.getItemSheet();
 	}
 }

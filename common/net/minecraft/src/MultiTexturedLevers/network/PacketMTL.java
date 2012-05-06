@@ -14,6 +14,6 @@ public class PacketMTL extends PacketUpdate
     public PacketMTL(int packetId)
     {
     	super(packetId);
-        this.channel = MultiTexturedLevers.MTLCore.getModChannel();
+        this.channel = MultiTexturedLevers.Core.getModChannel();
     }
 }

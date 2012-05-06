@@ -15,9 +15,9 @@ import net.minecraft.src.forge.MessageManager;
 
 public class NetworkConnection implements INetworkConnections
 {
-	private static String modName = MultiTexturedLevers.MTLCore.getModName();
+	private static String modName = MultiTexturedLevers.Core.getModName();
 	private static String modVersion = MTLCore.version;
-	private static String modChannel = MultiTexturedLevers.MTLCore.getModChannel();
+	private static String modChannel = MultiTexturedLevers.Core.getModChannel();
 	
 	@Override
 	public void onPacketData(NetworkManager network, String channel, byte[] bytes) 
@@ -32,7 +32,7 @@ public class NetworkConnection implements INetworkConnections
 			case PacketIds.MTLEVER_UPDATE:
 				PacketUpdateMTLever packetLever = new PacketUpdateMTLever();
 				packetLever.readData(data);
-				MultiTexturedLevers.MTLCore.getPacketHandler().handleTileEntityPacket(packetLever, net.getPlayerEntity());
+				MultiTexturedLevers.Core.getPacketHandler().handleTileEntityPacket(packetLever, net.getPlayerEntity());
 				break;
 			}
 		} catch(Exception ex) {

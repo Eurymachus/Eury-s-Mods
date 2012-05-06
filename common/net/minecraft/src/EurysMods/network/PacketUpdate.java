@@ -39,27 +39,27 @@ public class PacketUpdate extends EurysPacket
 	@Override
 	public void writeData(DataOutputStream data) throws IOException {
 
-        data.writeInt(xPosition);
-        data.writeInt(yPosition);
-        data.writeInt(zPosition);
+        data.writeInt(this.xPosition);
+        data.writeInt(this.yPosition);
+        data.writeInt(this.zPosition);
 
         // No payload means no data
-        if(payload == null) {
+        if(this.payload == null) {
         	data.writeInt(0);
         	data.writeInt(0);
         	data.writeInt(0);
         	return;
         }
 
-        data.writeInt(payload.intPayload.length);
-        data.writeInt(payload.floatPayload.length);
-        data.writeInt(payload.stringPayload.length);
+        data.writeInt(this.payload.intPayload.length);
+        data.writeInt(this.payload.floatPayload.length);
+        data.writeInt(this.payload.stringPayload.length);
 
-        for(int intData : payload.intPayload)
+        for(int intData : this.payload.intPayload)
         	data.writeInt(intData);
-        for(float floatData : payload.floatPayload)
+        for(float floatData : this.payload.floatPayload)
         	data.writeFloat(floatData);
-        for(String stringData : payload.stringPayload)
+        for(String stringData : this.payload.stringPayload)
         	data.writeUTF(stringData);
 
 	}
@@ -67,36 +67,38 @@ public class PacketUpdate extends EurysPacket
 	@Override
 	public void readData(DataInputStream data) throws IOException {
 
-		xPosition = data.readInt();
-		yPosition = data.readInt();
-		zPosition = data.readInt();
+		this.xPosition = data.readInt();
+		this.yPosition = data.readInt();
+		this.zPosition = data.readInt();
 
-        payload = new PacketPayload();
+		this.payload = new PacketPayload();
 
-        payload.intPayload = new int[data.readInt()];
-        payload.floatPayload = new float[data.readInt()];
-        payload.stringPayload = new String[data.readInt()];
+		this.payload.intPayload = new int[data.readInt()];
+		this.payload.floatPayload = new float[data.readInt()];
+		this.payload.stringPayload = new String[data.readInt()];
 
-        for(int i = 0; i < payload.intPayload.length; i++)
-        	payload.intPayload[i] = data.readInt();
-        for(int i = 0; i < payload.floatPayload.length; i++)
-        	payload.floatPayload[i] = data.readFloat();
-        for(int i = 0; i < payload.stringPayload.length; i++)
-        	payload.stringPayload[i] = data.readUTF();
+        for(int i = 0; i < this.payload.intPayload.length; i++)
+        	this.payload.intPayload[i] = data.readInt();
+        for(int i = 0; i < this.payload.floatPayload.length; i++)
+        	this.payload.floatPayload[i] = data.readFloat();
+        for(int i = 0; i < this.payload.stringPayload.length; i++)
+        	this.payload.stringPayload[i] = data.readUTF();
 
 	}
 	
-	public boolean targetExists(World world) {
-		return world.blockExists(xPosition, yPosition, zPosition);
+	public boolean targetExists(World world)
+	{
+		return world.blockExists(this.xPosition, this.yPosition, this.zPosition);
 	}
 	
-	public TileEntity getTarget(World world) {
-		return world.getBlockTileEntity(xPosition, yPosition, zPosition);
+	public TileEntity getTarget(World world)
+	{
+		return world.getBlockTileEntity(this.xPosition, this.yPosition, this.zPosition);
 	}
 	
 	@Override
 	public int getID() 
 	{
-		return packetId;
+		return this.packetId;
 	}
 }

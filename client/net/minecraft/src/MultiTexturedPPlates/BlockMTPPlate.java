@@ -3,6 +3,7 @@ package net.minecraft.src.MultiTexturedPPlates;
 import java.util.List;
 import java.util.Random;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockContainer;
@@ -21,6 +22,7 @@ import net.minecraft.src.mod_MultiTexturedPPlates;
 
 public class BlockMTPPlate extends BlockContainer
 {
+	private static Minecraft mc = ModLoader.getMinecraftInstance();
 	Class mtPPlateEntityClass;
 	
     public BlockMTPPlate(int par1, Class pPlateClass, float hardness, StepSound sound, boolean disableStats, boolean requiresSelfNotify)
@@ -34,6 +36,45 @@ public class BlockMTPPlate extends BlockContainer
         this.setTickRandomly(true);
         float f = 0.0625F;
         setBlockBounds(f, 0.0F, f, 1.0F - f, 0.03125F, 1.0F - f);
+    }
+    
+    public static int getDamageValue(IBlockAccess blockaccess, int x, int y, int z)
+    {
+    	TileEntity tileentity = blockaccess.getBlockTileEntity(x, y, z);
+    	if (tileentity != null && tileentity instanceof TileEntityMTPPlate)
+    	{
+    		TileEntityMTPPlate tileentitymtpplate = (TileEntityMTPPlate)tileentity;
+    		return tileentitymtpplate.getMetaValue();
+    	}
+    	return 0;
+    }
+    
+    public static int getMouseOver()
+    {
+    	if (mc.objectMouseOver != null)
+    	{
+        	int xPosition = mc.objectMouseOver.blockX;
+        	int yPosition = mc.objectMouseOver.blockY;
+        	int zPosition = mc.objectMouseOver.blockZ;
+        	return getDamageValue(mc.theWorld, xPosition, yPosition, zPosition);
+    	}
+    	return 0;
+    }
+    
+    public static int getBelowPlayer(EntityPlayer player)
+    {
+		int playerX = (int)player.posX;
+		int playerY = (int)player.posY;
+		int playerZ = (int)player.posZ;
+    	return getDamageValue(mc.theWorld, playerX, playerY - 1, playerZ);
+    }
+    
+    public static int getAtPlayer(EntityPlayer player)
+    {
+		int playerX = (int)player.posX;
+		int playerY = (int)player.posY;
+		int playerZ = (int)player.posZ;
+    	return getDamageValue(mc.theWorld, playerX, playerY, playerZ);
     }
 	
 	@Override
@@ -62,56 +103,6 @@ public class BlockMTPPlate extends BlockContainer
     	}
     	else return 1;
     }
-	
-	public int getMouseOver(EntityPlayer player)
-    {
-    	int mouseOver = -1;
-    	if (ModLoader.getMinecraftInstance().objectMouseOver != null)
-    	{
-        	int xPosition = ModLoader.getMinecraftInstance().objectMouseOver.blockX;
-        	int yPosition = ModLoader.getMinecraftInstance().objectMouseOver.blockY;
-        	int zPosition = ModLoader.getMinecraftInstance().objectMouseOver.blockZ;	
-        	TileEntity tileentity = ModLoader.getMinecraftInstance().theWorld.getBlockTileEntity(xPosition, yPosition, zPosition);
-        	if (tileentity != null && tileentity instanceof TileEntityMTPPlate)
-        	{
-        		TileEntityMTPPlate tileentitymtpplate = (TileEntityMTPPlate)tileentity;
-        		mouseOver = tileentitymtpplate.getMetaValue();
-        	}
-    	}
-    	return mouseOver;
-    }
-    
-    public int getBelowPlayer(EntityPlayer player)
-    {
-    	int belowPlayer = -1;
-		int playerX = (int)player.posX;
-		int playerY = (int)player.posY;
-		int playerZ = (int)player.posZ;
-		//player.addChatMessage("Y: " + playerY);
-    	TileEntity tileentity = ModLoader.getMinecraftInstance().theWorld.getBlockTileEntity(playerX, playerY - 1, playerZ);
-    	if (tileentity != null && tileentity instanceof TileEntityMTPPlate)
-    	{
-    		TileEntityMTPPlate tileentitymtpplate = (TileEntityMTPPlate)tileentity;
-    		belowPlayer = tileentitymtpplate.getMetaValue();
-    	}
-    	return belowPlayer;
-    }
-    
-    public int getAtPlayer(EntityPlayer player)
-    {
-    	int belowPlayer = -1;
-		int playerX = (int)player.posX;
-		int playerY = (int)player.posY;
-		int playerZ = (int)player.posZ;
-		//player.addChatMessage("Y: " + playerY);
-    	TileEntity tileentity = ModLoader.getMinecraftInstance().theWorld.getBlockTileEntity(playerX, playerY, playerZ);
-    	if (tileentity != null && tileentity instanceof TileEntityMTPPlate)
-    	{
-    		TileEntityMTPPlate tileentitymtpplate = (TileEntityMTPPlate)tileentity;
-    		belowPlayer = tileentitymtpplate.getMetaValue();
-    	}
-    	return belowPlayer;
-    }
     
 	@Override
     public int getBlockTextureFromSideAndMetadata(int par1, int par2)
@@ -138,11 +129,11 @@ public class BlockMTPPlate extends BlockContainer
 	    	EntityPlayer player = ModLoader.getMinecraftInstance().thePlayer;
 	    	if (player.onGround)
 	    	{
-	    		texture = getMouseOver(player);
+	    		texture = getMouseOver();
 	    	}
 	    	if (texture == -1 && player.isAirBorne)
 	    	{
-	    		texture = getMouseOver(player);
+	    		texture = getMouseOver();
 	    	}
 	    	if (texture == -1 && player.isAirBorne)
 	    	{
@@ -303,30 +294,10 @@ public class BlockMTPPlate extends BlockContainer
             world.notifyBlocksOfNeighborChange(i, j, k, blockID);
             world.notifyBlocksOfNeighborChange(i, j - 1, k, blockID);
         }
-        TileEntityMTPPlate tileentitymtpplate = (TileEntityMTPPlate)world.getBlockTileEntity(i, j, k);
-    	if (tileentitymtpplate != null)
-    	{
-    		int itemDamage = -1;
-    		switch(tileentitymtpplate.getMetaValue())
-    		{
-    		case 0:
-    			itemDamage = 0;
-    			break;
-    		case 1:
-    			itemDamage = 1;
-    			break;
-    		case 2:
-    			itemDamage = 2;
-    			break;
-    		}
-    		if (itemDamage > -1)
-    		{
-	    		ItemStack itemstack = new ItemStack(MultiTexturedPPlates.mtPPlate, 1, itemDamage);
-	    		EntityItem entityitem = new EntityItem(world, (float)i, (float)j, (float)k, new ItemStack(itemstack.itemID, 1, itemstack.getItemDamage()));
-	            world.spawnEntityInWorld(entityitem);
-    		}
-    	}
-        //super.onBlockRemoval(world, i, j, k);
+		ItemStack itemstack = new ItemStack(MTPCore.mtPPlate, 1, getDamageValue(world, i, j, k));
+		EntityItem entityitem = new EntityItem(world, (float)i, (float)j, (float)k, new ItemStack(itemstack.itemID, 1, itemstack.getItemDamage()));
+        world.spawnEntityInWorld(entityitem);
+        super.onBlockRemoval(world, i, j, k);
     }
 
     public void setBlockBoundsBasedOnState(IBlockAccess iblockaccess, int i, int j, int k)
