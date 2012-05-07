@@ -61,7 +61,7 @@ public class MTLCore
     public static int configurationProperties()
     {
         configuration.load();
-        mtLeverBlockID = Integer.parseInt(configuration.getOrCreateBlockIdProperty("mtLeverID", 215).value);
+        mtLeverBlockID = Integer.parseInt(configuration.getOrCreateBlockIdProperty("mtLeverID", 195).value);
         mtLeverItemID = Integer.parseInt(configuration.getOrCreateIntProperty("mtLeverItemID", "item", 7003).value);
         configuration.save();
         return mtLeverBlockID;
