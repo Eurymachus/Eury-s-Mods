@@ -62,56 +62,46 @@ public class ItemMTButtons extends ItemBlock// implements ITextureProvider
     public boolean onItemUse(ItemStack itemstack, EntityPlayer entityplayer, World world, int i, int j, int k, int l)
     {
         Block button = MTBCore.BlockMTButton;
-        if (l == 0)
-        {
-            --j;
+        
+        switch(l) {
+            case 0:
+                j--;
+                break;
+            case 1:
+                j++;
+            	break;
+            case 2:
+                k--;
+            	break;
+            case 3:
+                k++;
+                break;
+            case 4:
+                i--;
+                break;
+            case 5:
+                i++;
+                break;
         }
 
-        if (l == 1)
+        if (
+            itemstack.stackSize == 0 ||
+            !entityplayer.canPlayerEdit(i, j, k) ||
+            (j == 255 && button.blockMaterial.isSolid())
+        ) return false;
+            
+            
+        if (
+               world.canBlockBePlacedAt(button.blockID, i, j, k, false, l) &&
+               world.setBlockAndMetadataWithNotify(i, j, k, button.blockID, this.getMetadata(itemstack.getItemDamage()))
+           )
         {
-            ++j;
-        }
-
-        if (l == 2)
-        {
-            --k;
-        }
-
-        if (l == 3)
-        {
-            ++k;
-        }
-
-        if (l == 4)
-        {
-            --i;
-        }
-
-        if (l == 5)
-        {
-            ++i;
-        }
-        if (itemstack.stackSize == 0)
-        {
-            return false;
-        }
-        else if (!entityplayer.canPlayerEdit(i, j, k))
-        {
-            return false;
-        }
-        else if (j == 255 && button.blockMaterial.isSolid())
-        {
-            return false;
-        }
-        else if (world.canBlockBePlacedAt(button.blockID, i, j, k, false, l))
-        {
-            if (world.setBlockAndMetadataWithNotify(i, j, k, button.blockID, this.getMetadata(itemstack.getItemDamage())))
-            {
                 if (world.getBlockId(i, j, k) == button.blockID)
                 {
                     button.onBlockPlaced(world, i, j, k, l);
                     button.onBlockPlacedBy(world, i, j, k, entityplayer);
                     TileEntity tileentity = world.getBlockTileEntity(i, j, k);
+                    
                     if(tileentity != null && tileentity instanceof TileEntityMTButton)
                     {
                         TileEntityMTButton tileentitymtbutton = (TileEntityMTButton)tileentity;
@@ -119,18 +109,20 @@ public class ItemMTButtons extends ItemBlock// implements ITextureProvider
                     	tileentitymtbutton.onInventoryChanged();
                     }
                 }
-                world.playSoundEffect((double)((float)i + 0.5F), (double)((float)j + 0.5F), (double)((float)k + 0.5F), button.stepSound.getStepSound(), (button.stepSound.getVolume() + 1.0F) / 2.0F, button.stepSound.getPitch() * 0.8F);
+                
+                world.playSoundEffect(
+                    (double)((float)i + 0.5F), 
+                    (double)((float)j + 0.5F), 
+                    (double)((float)k + 0.5F), 
+                    button.stepSound.getStepSound(), 
+                    (button.stepSound.getVolume() + 1.0F) / 2.0F, 
+                    button.stepSound.getPitch() * 0.8F
+                );
                 --itemstack.stackSize;
+                
                 return true;
-            }
-            else
-            {
-            	return false;
-            }
         }
-        else
-        {
-            return false;
-        }
+        
+        return false;
     }
 }
