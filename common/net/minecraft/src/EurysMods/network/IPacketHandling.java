@@ -5,8 +5,6 @@ import net.minecraft.src.ModLoader;
 
 public interface IPacketHandling
 {
-	//MinecraftServer mcServer = ModLoader.getMinecraftServerInstance();
-	
     public void handleTileEntityPacket(PacketUpdate packet, EntityPlayer var2);
     
 	public void handleGuiPacket(PacketUpdate packet, EntityPlayer var2);

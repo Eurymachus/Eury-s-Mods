@@ -9,12 +9,9 @@ import net.minecraft.src.Packet1Login;
 import net.minecraft.src.forge.IConnectionHandler;
 import net.minecraft.src.forge.IPacketHandler;
 import net.minecraft.src.forge.MessageManager;
-import net.minecraft.src.EurysMods.network.*;
 
 public interface INetworkConnections extends IConnectionHandler, IPacketHandler
 {
-	//MinecraftServer mc = ModLoader.getMinecraftServerInstance();
-	
 	@Override
 	public void onPacketData(NetworkManager network, String channel, byte[] bytes);
 

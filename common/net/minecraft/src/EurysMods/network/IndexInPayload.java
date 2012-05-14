@@ -5,15 +5,17 @@ package net.minecraft.src.EurysMods.network;
  * Internal use only.
  */
 public class IndexInPayload
-{
-	public IndexInPayload (int intIndex, int floatIndex, int stringIndex)
+{	
+	public IndexInPayload (int intIndex, int floatIndex, int stringIndex, int boolIndex)
 	{
 		this.intIndex = intIndex;
 		this.floatIndex = floatIndex;
 		this.stringIndex = stringIndex;
+		this.boolIndex = boolIndex;
 	}
 
 	public int intIndex = 0;
 	public int floatIndex = 0;
 	public int stringIndex = 0;
+	public int boolIndex = 0;
 }

@@ -18,35 +18,43 @@ public class PacketUpdateMTDoor extends PacketMTD
     
     public PacketUpdateMTDoor(TileEntityMTDoor tileentitymtdoor)
     {
-		super(PacketIds.MTDOOR_UPDATE);
-	
-		this.payload = tileentitymtdoor.getPacketPayload();
+		this();
 		this.xPosition = tileentitymtdoor.xCoord;
 		this.yPosition = tileentitymtdoor.yCoord;
 		this.zPosition = tileentitymtdoor.zCoord;
+		this.payload = tileentitymtdoor.getPacketPayload();
 		this.isChunkDataPacket = true;
 	}
     
     public PacketUpdateMTDoor(int x, int y, int z, int metaValue, int doorPiece)
     {
-       	super(PacketIds.MTDOOR_UPDATE);
-
-       	this.payload = new PacketPayload(2,0,0);
+       	this();
+       	this.payload = new PacketPayload(2,0,0,0);
 		this.xPosition = x;
 		this.yPosition = y;
 		this.zPosition = z;
-		this.payload.intPayload[0] = metaValue;
-		this.payload.intPayload[1] = doorPiece;
+		this.setItemDamage(metaValue);
+		this.setDoorPiece(doorPiece);
 		this.isChunkDataPacket = true;
     }
     
+	public void setItemDamage(int itemDamage)
+	{
+		this.payload.setIntPayload(0, itemDamage);
+	}
+    
+	public void setDoorPiece(int doorPiece)
+	{
+		this.payload.setIntPayload(1, doorPiece);
+	}
+    
 	public int getItemDamage()
 	{
-		return this.payload.intPayload[0];
+		return this.payload.getIntPayload(0);
 	}
     
 	public int getDoorPiece()
 	{
-		return this.payload.intPayload[1];
+		return this.payload.getIntPayload(1);
 	}
 }

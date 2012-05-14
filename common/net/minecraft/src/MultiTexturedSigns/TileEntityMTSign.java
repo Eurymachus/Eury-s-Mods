@@ -62,18 +62,13 @@ public class TileEntityMTSign extends TileEntity
         }
     }
 	
-	public PacketPayload getPacketPayload()
-	{
-		int[] dataInt = new int[1];
-		float[] dataFloat = new float[1];
-		String[] dataString;
-		dataInt[0] = this.metaValue;
-		dataFloat[0] = 0;
-		dataString = this.mtSignText;
-		PacketPayload p = new PacketPayload();
-		p.intPayload = dataInt;
-		p.floatPayload = dataFloat;
-		p.stringPayload = dataString;
+	public PacketPayload getPacketPayload() {
+		PacketPayload p = new PacketPayload(1,0,4,0);
+		p.setIntPayload(0, this.metaValue);
+		for (int i = 0; i < this.mtSignText.length; i++)
+		{
+			p.setStringPayload(i, this.mtSignText[i]);
+		}
 		return p;
 	}
 	

@@ -18,8 +18,7 @@ public class PacketUpdateMTPPlate extends PacketMTP
     
     public PacketUpdateMTPPlate(TileEntityMTPPlate tileentitymtpplate)
     {
-		super(PacketIds.MTPPLATE_UPDATE);
-	
+		this();
 		this.payload = tileentitymtpplate.getPacketPayload();
 		TileEntity entity = (TileEntity)tileentitymtpplate;
 		this.xPosition = entity.xCoord;
@@ -30,24 +29,33 @@ public class PacketUpdateMTPPlate extends PacketMTP
     
     public PacketUpdateMTPPlate(int x, int y, int z, int metaValue, int triggerType)
     {
-       	super(PacketIds.MTPPLATE_UPDATE);
-
-       	this.payload = new PacketPayload(2,0,0);
+       	this();
 		this.xPosition = x;
 		this.yPosition = y;
 		this.zPosition = z;
-		this.payload.intPayload[0] = metaValue;
-		this.payload.intPayload[1] = triggerType;
+       	this.payload = new PacketPayload(2,0,0,0);
+       	this.setItemDamage(metaValue);
+       	this.setTriggerType(triggerType);
 		this.isChunkDataPacket = true;
     }
     
+	public void setItemDamage(int itemDamage)
+	{
+		this.payload.setIntPayload(0, itemDamage);
+	}
+
+	public void setTriggerType(int triggerType)
+	{
+		this.payload.setIntPayload(1, triggerType);
+	}
+    
 	public int getItemDamage()
 	{
-		return this.payload.intPayload[0];
+		return this.payload.getIntPayload(0);
 	}
 
 	public int getTriggerType()
 	{
-		return this.payload.intPayload[1];
+		return this.payload.getIntPayload(1);
 	}
 }

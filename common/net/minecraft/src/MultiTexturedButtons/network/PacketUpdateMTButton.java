@@ -18,8 +18,7 @@ public class PacketUpdateMTButton extends PacketMTB
     
     public PacketUpdateMTButton(TileEntityMTButton tileentitymtbutton)
     {
-		super(PacketIds.MTBUTTON_UPDATE);
-	
+		this();
 		this.payload = tileentitymtbutton.getPacketPayload();
 		TileEntity entity = (TileEntity)tileentitymtbutton;
 		this.xPosition = entity.xCoord;
@@ -30,18 +29,22 @@ public class PacketUpdateMTButton extends PacketMTB
     
     public PacketUpdateMTButton(int x, int y, int z, int metaValue)
     {
-       	super(PacketIds.MTBUTTON_UPDATE);
-
-       	this.payload = new PacketPayload(1,0,0);
+       	this();
+       	this.payload = new PacketPayload(1,0,0,0);
 		this.xPosition = x;
 		this.yPosition = y;
 		this.zPosition = z;
-		this.payload.intPayload[0] = metaValue;
+		setItemDamage(metaValue);
 		this.isChunkDataPacket = true;
+    }
+    
+    public void setItemDamage(int itemdamage)
+    {
+		this.payload.setIntPayload(0, itemdamage);
     }
     
 	public int getItemDamage()
 	{
-		return this.payload.intPayload[0];
+		return this.payload.getIntPayload(0);
 	}
 }

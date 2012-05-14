@@ -1,5 +1,11 @@
 package net.minecraft.src.EurysMods.network;
 
+/**
+ * Packet ID list
+ * 
+ * @author Eurymachus
+ *
+ */
 public class PacketIds
 {
 	public static final int MTSIGN_UPDATE = 0;

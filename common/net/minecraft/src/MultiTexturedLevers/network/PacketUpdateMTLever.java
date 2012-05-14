@@ -18,8 +18,7 @@ public class PacketUpdateMTLever extends PacketMTL
     
     public PacketUpdateMTLever(TileEntityMTLever tileentitymtlever)
     {
-		super(PacketIds.MTLEVER_UPDATE);
-	
+		this();
 		this.payload = tileentitymtlever.getPacketPayload();
 		TileEntity entity = (TileEntity)tileentitymtlever;
 		this.xPosition = entity.xCoord;
@@ -30,18 +29,21 @@ public class PacketUpdateMTLever extends PacketMTL
     
     public PacketUpdateMTLever(int x, int y, int z, int metaValue)
     {
-       	super(PacketIds.MTLEVER_UPDATE);
-
-       	this.payload = new PacketPayload(1,0,0);
+       	this();
+       	this.payload = new PacketPayload(1,0,0,0);
 		this.xPosition = x;
 		this.yPosition = y;
 		this.zPosition = z;
-		this.payload.intPayload[0] = metaValue;
 		this.isChunkDataPacket = true;
     }
     
+	public void setItemDamage(int itemDamage)
+	{
+		this.payload.setIntPayload(0, itemDamage);
+	}
+	
 	public int getItemDamage()
 	{
-		return this.payload.intPayload[0];
+		return this.payload.getIntPayload(0);
 	}
 }

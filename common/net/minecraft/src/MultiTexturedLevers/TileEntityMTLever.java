@@ -27,17 +27,8 @@ public class TileEntityMTLever extends TileEntity
     }
     
 	public PacketPayload getPacketPayload() {
-
-		int[] dataInt = new int[1];
-		float[] dataFloat = new float[1];
-		String[] dataString = new String[1];
-		dataInt[0] = this.metaValue;
-		dataFloat[0] = 0;
-		dataString[0] = "";
-		PacketPayload p = new PacketPayload();
-		p.intPayload = dataInt;
-		p.floatPayload = dataFloat;
-		p.stringPayload = dataString;
+		PacketPayload p = new PacketPayload(1,0,0,0);
+		p.setIntPayload(0, this.metaValue);
 		return p;
 	}
 	

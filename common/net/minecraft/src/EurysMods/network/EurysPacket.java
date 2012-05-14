@@ -1,6 +1,5 @@
 package net.minecraft.src.EurysMods.network;
 
-
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -9,6 +8,12 @@ import net.minecraft.src.Packet;
 import net.minecraft.src.Packet250CustomPayload;
 import net.minecraft.src.forge.packets.ForgePacket;
 
+/**
+ * Packet Information Base
+ * 
+ * @author Eurymachus
+ *
+ */
 public abstract class EurysPacket extends ForgePacket
 {
     /**
@@ -21,7 +26,14 @@ public abstract class EurysPacket extends ForgePacket
     public int yPosition;
     public int zPosition;
     public String channel;
-    
+
+	public void setPosition(int x, int y, int z)
+	{
+		this.xPosition = x;
+		this.yPosition = y;
+		this.zPosition = z;
+	}
+	
 	@Override
     public Packet getPacket()
 	{
@@ -34,7 +46,7 @@ public abstract class EurysPacket extends ForgePacket
             e.printStackTrace();
         }
         Packet250CustomPayload packet = new Packet250CustomPayload();
-        packet.channel = this.channel;
+        packet.channel = channel;
         packet.data = bytes.toByteArray();
         packet.length = packet.data.length;
         packet.isChunkDataPacket = this.isChunkDataPacket;

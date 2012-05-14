@@ -16,20 +16,6 @@ import net.minecraft.src.forge.NetworkMod;
 public class ServerProxy implements IProxy
 {
 	@Override
-	public PacketPayload getPayload(int[] dataInt, float[] dataFloat, String[] dataString)
-	{
-		int dILength, dFLength, dSLength;
-		if (dataInt != null) dILength = dataInt.length; else dILength = 0;
-		if (dataFloat != null) dFLength = dataFloat.length; else dFLength = 0;
-		if (dataString != null) dSLength = dataString.length; else dSLength = 0;
-        PacketPayload payload = new PacketPayload(dILength, dFLength, dSLength);
-        payload.intPayload = dataInt;
-        payload.floatPayload = dataFloat;
-        payload.stringPayload = dataString;
-        return payload;
-	}
-
-	@Override
 	public void sendPacket(EntityPlayer entityplayer, Packet packet)
 	{
 		EntityPlayerMP playermp = (EntityPlayerMP)entityplayer;

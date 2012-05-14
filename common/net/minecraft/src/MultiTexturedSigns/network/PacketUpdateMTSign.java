@@ -30,37 +30,38 @@ public class PacketUpdateMTSign extends PacketMTS
     {
        	super(PacketIds.MTSIGN_UPDATE);
 
-       	this.payload = new PacketPayload(1,0,4);
+       	this.payload = new PacketPayload(1,0,4,0);
 		this.xPosition = x;
 		this.yPosition = y;
 		this.zPosition = z;
-		this.payload.intPayload[0] = metaValue;
-		this.payload.stringPayload = signText;
 		this.isChunkDataPacket = true;
     }
     
+	public void setItemDamage(int itemDamage)
+	{
+		this.payload.setIntPayload(0, itemDamage);
+	}
+	
+	public void setMtSignText(String[] signText)
+	{
+		for (int i = 0; i < signText.length; i++)
+		{
+			this.payload.setStringPayload(i, signText[i]);;
+		}
+	}
+    
 	public int getItemDamage()
 	{
-		return this.payload.intPayload[0];
+		return this.payload.getIntPayload(0);
 	}
 	
 	public String[] getMtSignText()
 	{
-		return this.payload.stringPayload;
+		String[] signText = new String[4];
+		for (int i = 0; i < 4; i++)
+		{
+			signText[i] = this.payload.getStringPayload(i);
+		}
+		return signText;
 	}
-    
-    /**
-     * Abstract. Return the size of the packet (not counting the header).
-     */
-    public int getPacketSize()
-    {
-        int var1 = 0;
-
-        for (int var2 = 0; var2 < 4; ++var2)
-        {
-            var1 += this.signLines[var2].length();
-        }
-
-        return var1;
-    }
 }
