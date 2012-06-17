@@ -6,7 +6,6 @@ import java.io.IOException;
 
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
-import net.minecraft.src.EurysMods.network.EurysPacket;
 
 /**
  * Packet Information for Reading/Writing packet data

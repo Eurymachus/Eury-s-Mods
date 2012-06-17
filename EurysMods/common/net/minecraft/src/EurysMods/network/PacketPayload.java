@@ -2,9 +2,6 @@ package net.minecraft.src.EurysMods.network;
 
 import java.util.Arrays;
 
-import net.minecraft.src.ModLoader;
-import net.minecraft.src.EurysMods.network.IndexInPayload;
-
 /**
  * Payload for data transfer in packets
  * 

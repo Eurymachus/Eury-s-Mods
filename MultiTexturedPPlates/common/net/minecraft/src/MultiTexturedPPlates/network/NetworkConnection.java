@@ -14,48 +14,51 @@ import net.minecraft.src.MultiTexturedPPlates.MTPCore;
 import net.minecraft.src.MultiTexturedPPlates.MultiTexturedPPlates;
 import net.minecraft.src.forge.MessageManager;
 
-public class NetworkConnection implements INetworkConnections
-{
+public class NetworkConnection implements INetworkConnections {
 	private static String modName = MultiTexturedPPlates.Core.getModName();
 	private static String modVersion = MTPCore.version;
-	private static String modChannel = MultiTexturedPPlates.Core.getModChannel();
-	
+	private static String modChannel = MultiTexturedPPlates.Core
+			.getModChannel();
+
 	@Override
-	public void onPacketData(NetworkManager network, String channel, byte[] bytes) 
-	{
-		DataInputStream data = new DataInputStream(new ByteArrayInputStream(bytes));
-		try
-		{
-			World world = MultiTexturedPPlates.Core.getProxy().getWorld(network);
-			EntityPlayer entityplayer = MultiTexturedPPlates.Core.getProxy().getPlayer(network);
+	public void onPacketData(NetworkManager network, String channel,
+			byte[] bytes) {
+		DataInputStream data = new DataInputStream(new ByteArrayInputStream(
+				bytes));
+		try {
+			World world = MultiTexturedPPlates.Core.getProxy()
+					.getWorld(network);
+			EntityPlayer entityplayer = MultiTexturedPPlates.Core.getProxy()
+					.getPlayer(network);
 			int packetID = data.read();
 			switch (packetID) {
 			case PacketIds.MTPPLATE_UPDATE:
 				PacketUpdateMTPPlate packetPPlate = new PacketUpdateMTPPlate();
 				packetPPlate.readData(data);
-				MultiTexturedPPlates.Core.getPacketHandler().handleTileEntityPacket(packetPPlate, entityplayer);
+				MultiTexturedPPlates.Core.getPacketHandler()
+						.handleTileEntityPacket(packetPPlate, entityplayer);
 				break;
 			}
-		} catch(Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
 	}
 
 	@Override
-	public void onConnect(NetworkManager network)
-	{
+	public void onConnect(NetworkManager network) {
 	}
 
 	@Override
-	public void onLogin(NetworkManager network, Packet1Login login)
-	{
+	public void onLogin(NetworkManager network, Packet1Login login) {
 		MessageManager.getInstance().registerChannel(network, this, modChannel);
-		ModLoader.getLogger().fine("Channel["+modChannel+"] Registered: " + modName + " " + modVersion);
+		ModLoader.getLogger().fine(
+				"Channel[" + modChannel + "] Registered: " + modName + " "
+						+ modVersion);
 	}
 
 	@Override
-	public void onDisconnect(NetworkManager network, String message, Object[] args)
-	{
-		
+	public void onDisconnect(NetworkManager network, String message,
+			Object[] args) {
+
 	}
 }

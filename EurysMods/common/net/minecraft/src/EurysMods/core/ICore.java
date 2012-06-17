@@ -2,8 +2,7 @@ package net.minecraft.src.EurysMods.core;
 
 import net.minecraft.src.EurysMods.network.IPacketHandling;
 
-public interface ICore
-{
+public interface ICore {
 	String getBlockSheet();
 
 	String getItemSheet();
@@ -21,10 +20,10 @@ public interface ICore
 	String getModName();
 
 	String getModDir();
-	
+
 	String getModChannel();
 
 	IPacketHandling getPacketHandler();
-	
+
 	IProxy getProxy();
 }
