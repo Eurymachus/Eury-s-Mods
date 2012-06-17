@@ -31,13 +31,6 @@ public class TileEntityMTPPlate extends TileEntity
         this.setMetaValue(nbttagcompound.getInteger("metaValue"));
         this.setTriggerType(nbttagcompound.getInteger("triggerType"));
     }
-    
-	public PacketPayload getPacketPayload() {
-		PacketPayload p = new PacketPayload(2,0,0,0);
-		p.setIntPayload(0, this.metaValue);
-		p.setIntPayload(1, this.triggerType);
-		return p;
-	}
 	
 	public Packet getDescriptionPacket()
 	{

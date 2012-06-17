@@ -35,29 +35,6 @@ public class BlockMTPPlate extends BlockContainer
         float f = 0.0625F;
         setBlockBounds(f, 0.0F, f, 1.0F - f, 0.03125F, 1.0F - f);
     }
-	
-	@Override
-    public int getBlockTextureFromSideAndMetadata(int par1, int par2)
-    {
-		int itemDamage = -1;
-		switch(par2)
-		{
-		case 0:
-			itemDamage = 22;
-			break;
-		case 1:
-			itemDamage = 23;
-			break;
-		case 2:
-			itemDamage = 24;
-			break;
-		}
-		if (itemDamage == -1)
-		{
-			itemDamage = 1;
-		}
-		return itemDamage;
-    }
 
     public int tickRate()
     {

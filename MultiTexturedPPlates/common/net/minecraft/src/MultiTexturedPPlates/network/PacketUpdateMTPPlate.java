@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
+import net.minecraft.src.ModLoader;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.EurysMods.network.PacketIds;
 import net.minecraft.src.EurysMods.network.PacketPayload;
@@ -19,25 +20,15 @@ public class PacketUpdateMTPPlate extends PacketMTP
     public PacketUpdateMTPPlate(TileEntityMTPPlate tileentitymtpplate)
     {
 		this();
-		this.payload = tileentitymtpplate.getPacketPayload();
+		this.payload = new PacketPayload(2,0,0,0);
 		TileEntity entity = (TileEntity)tileentitymtpplate;
 		this.xPosition = entity.xCoord;
 		this.yPosition = entity.yCoord;
 		this.zPosition = entity.zCoord;
+       	this.setItemDamage(tileentitymtpplate.getMetaValue());
+       	this.setTriggerType(tileentitymtpplate.getTriggerType());
 		this.isChunkDataPacket = true;
 	}
-    
-    public PacketUpdateMTPPlate(int x, int y, int z, int metaValue, int triggerType)
-    {
-       	this();
-		this.xPosition = x;
-		this.yPosition = y;
-		this.zPosition = z;
-       	this.payload = new PacketPayload(2,0,0,0);
-       	this.setItemDamage(metaValue);
-       	this.setTriggerType(triggerType);
-		this.isChunkDataPacket = true;
-    }
     
 	public void setItemDamage(int itemDamage)
 	{

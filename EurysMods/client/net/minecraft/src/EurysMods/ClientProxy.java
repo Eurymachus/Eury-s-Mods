@@ -2,6 +2,7 @@ package net.minecraft.src.EurysMods;
 
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModLoader;
+import net.minecraft.src.NetworkManager;
 import net.minecraft.src.Packet;
 import net.minecraft.src.Packet250CustomPayload;
 import net.minecraft.src.TileEntity;
@@ -24,5 +25,15 @@ public class ClientProxy implements IProxy
 	@Override
 	public void sendPacketToAll(Packet packet, int x, int y, int z,	int maxDistance, NetworkMod mod)
 	{
+	}
+
+	@Override
+	public World getWorld(NetworkManager network) {
+		return ModLoader.getMinecraftInstance().theWorld;
+	}
+
+	@Override
+	public EntityPlayer getPlayer(NetworkManager network) {
+		return ModLoader.getMinecraftInstance().thePlayer;
 	}
 }

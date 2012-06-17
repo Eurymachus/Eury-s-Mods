@@ -159,6 +159,6 @@ public class ItemMTDoor extends Item implements ITextureProvider
 	@Override
 	public String getTextureFile()
 	{
-		return MultiTexturedDoors.Core.getBlockSheet();
+		return MultiTexturedDoors.Core.getItemSheet();
 	}
 }

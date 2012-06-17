@@ -105,12 +105,12 @@ public class BlockMTPPlate extends BlockContainer
     }
     
 	@Override
-    public int getBlockTextureFromSideAndMetadata(int par1, int par2)
+    public int getBlockTextureFromSideAndMetadata(int par0, int par1)
     {
 		int itemDamage = -1;
-		if (par1 != 0)
+		if (par0 != 0)
 		{
-			switch(par2)
+			switch(par1)
 			{
 			case 0:
 				itemDamage = 22;

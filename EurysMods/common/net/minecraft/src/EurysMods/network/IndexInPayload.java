@@ -4,10 +4,9 @@ package net.minecraft.src.EurysMods.network;
  * Keeps track of the indices to use when writing data to payload arrays.
  * Internal use only.
  */
-public class IndexInPayload
-{	
-	public IndexInPayload (int intIndex, int floatIndex, int stringIndex, int boolIndex)
-	{
+public class IndexInPayload {
+	public IndexInPayload(int intIndex, int floatIndex, int stringIndex,
+			int boolIndex) {
 		this.intIndex = intIndex;
 		this.floatIndex = floatIndex;
 		this.stringIndex = stringIndex;

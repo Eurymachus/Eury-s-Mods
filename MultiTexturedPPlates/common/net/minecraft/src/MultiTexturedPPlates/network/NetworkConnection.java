@@ -3,10 +3,11 @@ package net.minecraft.src.MultiTexturedPPlates.network;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.NetServerHandler;
 import net.minecraft.src.NetworkManager;
 import net.minecraft.src.Packet1Login;
+import net.minecraft.src.World;
 import net.minecraft.src.EurysMods.network.INetworkConnections;
 import net.minecraft.src.EurysMods.network.PacketIds;
 import net.minecraft.src.MultiTexturedPPlates.MTPCore;
@@ -22,18 +23,17 @@ public class NetworkConnection implements INetworkConnections
 	@Override
 	public void onPacketData(NetworkManager network, String channel, byte[] bytes) 
 	{
-		if (channel != modName) return;
 		DataInputStream data = new DataInputStream(new ByteArrayInputStream(bytes));
 		try
 		{
-			NetServerHandler net = (NetServerHandler)network.getNetHandler();
-
+			World world = MultiTexturedPPlates.Core.getProxy().getWorld(network);
+			EntityPlayer entityplayer = MultiTexturedPPlates.Core.getProxy().getPlayer(network);
 			int packetID = data.read();
 			switch (packetID) {
 			case PacketIds.MTPPLATE_UPDATE:
 				PacketUpdateMTPPlate packetPPlate = new PacketUpdateMTPPlate();
 				packetPPlate.readData(data);
-				MultiTexturedPPlates.Core.getPacketHandler().handleTileEntityPacket(packetPPlate, net.getPlayerEntity());
+				MultiTexturedPPlates.Core.getPacketHandler().handleTileEntityPacket(packetPPlate, entityplayer);
 				break;
 			}
 		} catch(Exception ex) {
@@ -50,7 +50,7 @@ public class NetworkConnection implements INetworkConnections
 	public void onLogin(NetworkManager network, Packet1Login login)
 	{
 		MessageManager.getInstance().registerChannel(network, this, modChannel);
-		ModLoader.getMinecraftServerInstance().log("Channel Registered: " + modName + " " + modVersion);
+		ModLoader.getLogger().fine("Channel["+modChannel+"] Registered: " + modName + " " + modVersion);
 	}
 
 	@Override
