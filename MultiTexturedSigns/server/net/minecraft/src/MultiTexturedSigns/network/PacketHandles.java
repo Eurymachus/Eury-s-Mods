@@ -11,12 +11,9 @@ import net.minecraft.src.MultiTexturedSigns.TileEntityMTSign;
 public class PacketHandles implements IPacketHandling {
 	@Override
 	public void handleTileEntityPacket(PacketUpdate packet, EntityPlayer var2)
-	// public void handlePacket(NetworkManager network, String channel, byte[]
-	// data)
 	{
 		if (packet != null && packet instanceof PacketUpdateMTSign) {
 			PacketUpdateMTSign signPacket = (PacketUpdateMTSign) packet;
-			// ModLoader.getMinecraftServerInstance().log("Handling Server Packet");
 			EntityPlayerMP entityplayermp = (EntityPlayerMP) var2;
 			World worldserver = entityplayermp.worldObj;
 			if (signPacket.targetExists(worldserver)) {

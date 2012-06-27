@@ -39,10 +39,7 @@ public class GuiEditMTSign extends GuiScreen {
 		Keyboard.enableRepeatEvents(false);
 		if (mc.theWorld.isRemote) {
 			mc.getSendQueue().addToSendQueue(
-					new PacketUpdateMTSign(mtsEntitySign.xCoord,
-							mtsEntitySign.yCoord, mtsEntitySign.zCoord,
-							mtsEntitySign.getMetaValue(),
-							mtsEntitySign.mtSignText).getPacket());
+					new PacketUpdateMTSign(mtsEntitySign).getPacket());
 		}
 	}
 

@@ -23,17 +23,6 @@ public class PacketUpdateMTSign extends PacketMTS {
 		this.isChunkDataPacket = true;
 	}
 
-	public PacketUpdateMTSign(int x, int y, int z, int metaValue,
-			String[] signText) {
-		super(PacketIds.MTSIGN_UPDATE);
-
-		this.payload = new PacketPayload(1, 0, 4, 0);
-		this.xPosition = x;
-		this.yPosition = y;
-		this.zPosition = z;
-		this.isChunkDataPacket = true;
-	}
-
 	public void setItemDamage(int itemDamage) {
 		this.payload.setIntPayload(0, itemDamage);
 	}
