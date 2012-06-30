@@ -1,12 +1,14 @@
 package net.minecraft.src.EurysMods;
 
 import java.net.URISyntaxException;
-import java.util.Arrays;
-
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.EurysMods.core.ICore;
 
 public class EurysCore {
+	public static String version = "v1.1";
+	public static ICore EurysCore;
+	private static boolean initialized = false;
+
 	public static String getMinecraftDir() {
 		try {
 			String s = (net.minecraft.src.ModLoader.class)
@@ -38,10 +40,6 @@ public class EurysCore {
 	public static void console(String modName, String s) {
 		console(modName, s, 0);
 	}
-
-	public static String version = "v1.0";
-	public static ICore EurysCore;
-	private static boolean initialized = false;
 
 	public static void load() {
 	}

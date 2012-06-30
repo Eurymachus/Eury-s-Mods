@@ -17,7 +17,7 @@ public class MultiTexturedPPlates {
 			return;
 		initialized = true;
 		Core = new ServerCore(new ServerProxy(), new PacketHandles());
-		Core.setModName("MultiTexturedPlates");
+		Core.setModName("MultiTexturedPPlates");
 		Core.setModChannel("MTP");
 		load();
 	}

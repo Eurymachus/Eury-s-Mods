@@ -341,9 +341,8 @@ public class BlockMTLever extends BlockContainer {
 			int var8 = 8 - (var6 & 8);
 			par1World.setBlockMetadataWithNotify(par2, par3, par4, var7 + var8);
 			par1World.markBlocksDirty(par2, par3, par4, par2, par3, par4);
-			par1World.playSoundEffect(par2 + 0.5D,
-					par3 + 0.5D, par4 + 0.5D, "random.click",
-					0.3F, var8 > 0 ? 0.6F : 0.5F);
+			par1World.playSoundEffect(par2 + 0.5D, par3 + 0.5D, par4 + 0.5D,
+					"random.click", 0.3F, var8 > 0 ? 0.6F : 0.5F);
 			par1World.notifyBlocksOfNeighborChange(par2, par3, par4,
 					this.blockID);
 
@@ -399,9 +398,8 @@ public class BlockMTLever extends BlockContainer {
 		}
 		ItemStack itemstack = new ItemStack(MTLCore.mtLeverItem, 1,
 				getDamageValue(par1World, par2, par3, par4));
-		EntityItem entityitem = new EntityItem(par1World, par2,
-				par3, par4, new ItemStack(itemstack.itemID, 1,
-						itemstack.getItemDamage()));
+		EntityItem entityitem = new EntityItem(par1World, par2, par3, par4,
+				new ItemStack(itemstack.itemID, 1, itemstack.getItemDamage()));
 		par1World.spawnEntityInWorld(entityitem);
 		super.onBlockRemoval(par1World, par2, par3, par4);
 	}

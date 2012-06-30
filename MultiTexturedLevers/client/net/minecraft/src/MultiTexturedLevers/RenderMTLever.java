@@ -83,19 +83,14 @@ public class RenderMTLever {
 		float var22 = 0.0625F;
 		float var23 = 0.0625F;
 		float var24 = 0.625F;
-		var21[0] = Vec3D.createVector((-var22), 0.0D,
-				(-var23));
+		var21[0] = Vec3D.createVector((-var22), 0.0D, (-var23));
 		var21[1] = Vec3D.createVector(var22, 0.0D, (-var23));
 		var21[2] = Vec3D.createVector(var22, 0.0D, var23);
 		var21[3] = Vec3D.createVector((-var22), 0.0D, var23);
-		var21[4] = Vec3D.createVector((-var22), var24,
-				(-var23));
-		var21[5] = Vec3D.createVector(var22, var24,
-				(-var23));
-		var21[6] = Vec3D.createVector(var22, var24,
-				var23);
-		var21[7] = Vec3D.createVector((-var22), var24,
-				var23);
+		var21[4] = Vec3D.createVector((-var22), var24, (-var23));
+		var21[5] = Vec3D.createVector(var22, var24, (-var23));
+		var21[6] = Vec3D.createVector(var22, var24, var23);
+		var21[7] = Vec3D.createVector((-var22), var24, var23);
 
 		for (int var25 = 0; var25 < 8; ++var25) {
 			if (var7) {

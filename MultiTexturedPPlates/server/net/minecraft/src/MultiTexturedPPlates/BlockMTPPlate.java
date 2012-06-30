@@ -117,23 +117,20 @@ public class BlockMTPPlate extends BlockContainer {
 			List list = null;
 			if (tileentitymtpplate.getTriggerType() == 0) {
 				list = world.getEntitiesWithinAABBExcludingEntity(null,
-						AxisAlignedBB.getBoundingBoxFromPool(i + f, j,
-								k + f, (i + 1) - f,
-								j + 0.25D, (k + 1) - f));
+						AxisAlignedBB.getBoundingBoxFromPool(i + f, j, k + f,
+								(i + 1) - f, j + 0.25D, (k + 1) - f));
 			}
 			if (tileentitymtpplate.getTriggerType() == 1) {
 				list = world.getEntitiesWithinAABB(
-						net.minecraft.src.EntityLiving.class,
-						AxisAlignedBB.getBoundingBoxFromPool(i + f, j,
-								k + f, (i + 1) - f,
-								j + 0.25D, (k + 1) - f));
+						net.minecraft.src.EntityLiving.class, AxisAlignedBB
+								.getBoundingBoxFromPool(i + f, j, k + f,
+										(i + 1) - f, j + 0.25D, (k + 1) - f));
 			}
 			if (tileentitymtpplate.getTriggerType() == 2) {
 				list = world.getEntitiesWithinAABB(
-						net.minecraft.src.EntityPlayer.class,
-						AxisAlignedBB.getBoundingBoxFromPool(i + f, j,
-								k + f, (i + 1) - f,
-								j + 0.25D, (k + 1) - f));
+						net.minecraft.src.EntityPlayer.class, AxisAlignedBB
+								.getBoundingBoxFromPool(i + f, j, k + f,
+										(i + 1) - f, j + 0.25D, (k + 1) - f));
 			}
 			if (list.size() > 0) {
 				flag1 = true;
@@ -143,18 +140,16 @@ public class BlockMTPPlate extends BlockContainer {
 				world.notifyBlocksOfNeighborChange(i, j, k, blockID);
 				world.notifyBlocksOfNeighborChange(i, j - 1, k, blockID);
 				world.markBlocksDirty(i, j, k, i, j, k);
-				world.playSoundEffect(i + 0.5D,
-						j + 0.10000000000000001D, k + 0.5D,
-						"random.click", 0.3F, 0.6F);
+				world.playSoundEffect(i + 0.5D, j + 0.10000000000000001D,
+						k + 0.5D, "random.click", 0.3F, 0.6F);
 			}
 			if (!flag1 && flag) {
 				world.setBlockMetadataWithNotify(i, j, k, 0);
 				world.notifyBlocksOfNeighborChange(i, j, k, blockID);
 				world.notifyBlocksOfNeighborChange(i, j - 1, k, blockID);
 				world.markBlocksDirty(i, j, k, i, j, k);
-				world.playSoundEffect(i + 0.5D,
-						j + 0.10000000000000001D, k + 0.5D,
-						"random.click", 0.3F, 0.5F);
+				world.playSoundEffect(i + 0.5D, j + 0.10000000000000001D,
+						k + 0.5D, "random.click", 0.3F, 0.5F);
 			}
 			if (flag1) {
 				world.scheduleBlockUpdate(i, j, k, blockID, tickRate());
@@ -187,9 +182,9 @@ public class BlockMTPPlate extends BlockContainer {
 			if (itemDamage > -1) {
 				ItemStack itemstack = new ItemStack(MTPCore.mtPPlate, 1,
 						itemDamage);
-				EntityItem entityitem = new EntityItem(world, i,
-						j, k, new ItemStack(itemstack.itemID,
-								1, itemstack.getItemDamage()));
+				EntityItem entityitem = new EntityItem(world, i, j, k,
+						new ItemStack(itemstack.itemID, 1,
+								itemstack.getItemDamage()));
 				world.spawnEntityInWorld(entityitem);
 			}
 		}

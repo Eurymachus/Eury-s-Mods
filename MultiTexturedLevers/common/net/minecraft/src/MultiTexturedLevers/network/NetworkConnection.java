@@ -1,22 +1,23 @@
-package net.minecraft.src.MultiTexturedDoors.network;
+package net.minecraft.src.MultiTexturedLevers.network;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.NetServerHandler;
 import net.minecraft.src.NetworkManager;
 import net.minecraft.src.Packet1Login;
+import net.minecraft.src.World;
 import net.minecraft.src.EurysMods.network.INetworkConnections;
 import net.minecraft.src.EurysMods.network.PacketIds;
-import net.minecraft.src.MultiTexturedDoors.MTDCore;
-import net.minecraft.src.MultiTexturedDoors.MultiTexturedDoors;
+import net.minecraft.src.MultiTexturedLevers.MTLCore;
+import net.minecraft.src.MultiTexturedLevers.MultiTexturedLevers;
 import net.minecraft.src.forge.MessageManager;
 
 public class NetworkConnection implements INetworkConnections {
-	private static String modChannel = MultiTexturedDoors.Core.getModChannel();
-	private static String modName = MultiTexturedDoors.Core.getModName();
-	private static String modVersion = MTDCore.version;
+	private static String modName = MultiTexturedLevers.Core.getModName();
+	private static String modVersion = MTLCore.version;
+	private static String modChannel = MultiTexturedLevers.Core.getModChannel();
 
 	@Override
 	public void onPacketData(NetworkManager network, String channel,
@@ -24,16 +25,17 @@ public class NetworkConnection implements INetworkConnections {
 		DataInputStream data = new DataInputStream(new ByteArrayInputStream(
 				bytes));
 		try {
-			NetServerHandler net = (NetServerHandler) network.getNetHandler();
+			World world = MultiTexturedLevers.Core.getProxy().getWorld(network);
+			EntityPlayer entityplayer = MultiTexturedLevers.Core.getProxy()
+					.getPlayer(network);
 
 			int packetID = data.read();
 			switch (packetID) {
-			case PacketIds.MTDOOR_UPDATE:
-				PacketUpdateMTDoor packetLever = new PacketUpdateMTDoor();
+			case PacketIds.MTLEVER_UPDATE:
+				PacketUpdateMTLever packetLever = new PacketUpdateMTLever();
 				packetLever.readData(data);
-				MultiTexturedDoors.Core.getPacketHandler()
-						.handleTileEntityPacket(packetLever,
-								net.getPlayerEntity());
+				MultiTexturedLevers.Core.getPacketHandler()
+						.handleTileEntityPacket(packetLever, entityplayer);
 				break;
 			}
 		} catch (Exception ex) {
@@ -48,8 +50,9 @@ public class NetworkConnection implements INetworkConnections {
 	@Override
 	public void onLogin(NetworkManager network, Packet1Login login) {
 		MessageManager.getInstance().registerChannel(network, this, modChannel);
-		ModLoader.getMinecraftServerInstance().log(
-				"Channel Registered: " + modName + " " + modVersion);
+		ModLoader.getLogger().fine(
+				"Channel[" + modChannel + "] Registered: " + modName + " "
+						+ modVersion);
 	}
 
 	@Override

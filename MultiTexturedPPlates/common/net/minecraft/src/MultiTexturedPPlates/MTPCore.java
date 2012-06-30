@@ -12,7 +12,7 @@ import net.minecraft.src.forge.Configuration;
 import net.minecraft.src.forge.MinecraftForge;
 
 public class MTPCore {
-	public static String version = "v1.3";
+	public static String version = "v1.4";
 	public static File configFile = new File(MultiTexturedPPlates.minecraftDir,
 			"config/MultiTexturedPPlates.cfg");
 	public static Configuration configuration = new Configuration(configFile);

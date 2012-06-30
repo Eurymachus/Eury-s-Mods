@@ -2,7 +2,6 @@ package net.minecraft.src.MultiTexturedSigns.network;
 
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.EurysMods.network.PacketIds;
-import net.minecraft.src.EurysMods.network.PacketPayload;
 import net.minecraft.src.MultiTexturedSigns.TileEntityMTSign;
 
 public class PacketUpdateMTSign extends PacketMTS {

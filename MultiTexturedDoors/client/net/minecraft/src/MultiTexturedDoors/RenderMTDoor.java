@@ -29,17 +29,19 @@ public class RenderMTDoor {
 				.getMixedBrightnessForBlock(renderblocks.blockAccess, par2,
 						par3 - 1, par4));
 		var5.setColorOpaque_F(var8, var8, var8);
-		renderblocks.renderBottomFace(par1Block, par2, par3,
-				par4, par1Block.getBlockTexture(
-						renderblocks.blockAccess, par2, par3, par4, 0));
+		renderblocks
+				.renderBottomFace(par1Block, par2, par3, par4, par1Block
+						.getBlockTexture(renderblocks.blockAccess, par2, par3,
+								par4, 0));
 		var7 = true;
 		var5.setBrightness(par1Block.maxY < 1.0D ? var12 : par1Block
 				.getMixedBrightnessForBlock(renderblocks.blockAccess, par2,
 						par3 + 1, par4));
 		var5.setColorOpaque_F(var9, var9, var9);
-		renderblocks.renderTopFace(par1Block, par2, par3,
-				par4, par1Block.getBlockTexture(
-						renderblocks.blockAccess, par2, par3, par4, 1));
+		renderblocks
+				.renderTopFace(par1Block, par2, par3, par4, par1Block
+						.getBlockTexture(renderblocks.blockAccess, par2, par3,
+								par4, 1));
 		var7 = true;
 		var5.setBrightness(par1Block.minZ > 0.0D ? var12 : par1Block
 				.getMixedBrightnessForBlock(renderblocks.blockAccess, par2,
@@ -53,8 +55,7 @@ public class RenderMTDoor {
 			var13 = -var13;
 		}
 
-		renderblocks.renderEastFace(par1Block, par2, par3,
-				par4, var13);
+		renderblocks.renderEastFace(par1Block, par2, par3, par4, var13);
 		var7 = true;
 		renderblocks.flipTexture = false;
 		var5.setBrightness(par1Block.maxZ < 1.0D ? var12 : par1Block
@@ -69,8 +70,7 @@ public class RenderMTDoor {
 			var13 = -var13;
 		}
 
-		renderblocks.renderWestFace(par1Block, par2, par3,
-				par4, var13);
+		renderblocks.renderWestFace(par1Block, par2, par3, par4, var13);
 		var7 = true;
 		renderblocks.flipTexture = false;
 		var5.setBrightness(par1Block.minX > 0.0D ? var12 : par1Block
@@ -85,8 +85,7 @@ public class RenderMTDoor {
 			var13 = -var13;
 		}
 
-		renderblocks.renderNorthFace(par1Block, par2, par3,
-				par4, var13);
+		renderblocks.renderNorthFace(par1Block, par2, par3, par4, var13);
 		var7 = true;
 		renderblocks.flipTexture = false;
 		var5.setBrightness(par1Block.maxX < 1.0D ? var12 : par1Block
@@ -101,8 +100,7 @@ public class RenderMTDoor {
 			var13 = -var13;
 		}
 
-		renderblocks.renderSouthFace(par1Block, par2, par3,
-				par4, var13);
+		renderblocks.renderSouthFace(par1Block, par2, par3, par4, var13);
 		var7 = true;
 		renderblocks.flipTexture = false;
 		return var7;

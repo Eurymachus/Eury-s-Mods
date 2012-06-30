@@ -360,9 +360,8 @@ public class BlockMTDoor extends BlockContainer {
 				if (tileentitymtdoor.getDoorPiece() == 0) {
 					ItemStack itemstack = new ItemStack(MTDCore.mtDoorItem, 1,
 							itemDamage);
-					EntityItem entityitem = new EntityItem(world, i,
-							j, k, new ItemStack(
-									itemstack.itemID, 1,
+					EntityItem entityitem = new EntityItem(world, i, j, k,
+							new ItemStack(itemstack.itemID, 1,
 									itemstack.getItemDamage()));
 					world.spawnEntityInWorld(entityitem);
 				}

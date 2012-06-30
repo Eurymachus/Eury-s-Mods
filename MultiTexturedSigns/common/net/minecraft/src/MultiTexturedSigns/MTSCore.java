@@ -12,7 +12,7 @@ import net.minecraft.src.forge.Configuration;
 import net.minecraft.src.forge.MinecraftForge;
 
 public class MTSCore {
-	public static String version = "v3.0";
+	public static String version = "v3.1";
 	public static File configFile = new File(MultiTexturedSigns.minecraftDir,
 			"config/MultiTexturedSigns.cfg");
 	public static Configuration configuration = new Configuration(configFile);

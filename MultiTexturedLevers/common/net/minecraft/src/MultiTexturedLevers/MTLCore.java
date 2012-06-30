@@ -12,7 +12,7 @@ import net.minecraft.src.forge.Configuration;
 import net.minecraft.src.forge.MinecraftForge;
 
 public class MTLCore {
-	public static String version = "v1.3";
+	public static String version = "v1.4";
 	static File configFile = new File(MultiTexturedLevers.minecraftDir,
 			"config/MultiTexturedLevers.cfg");
 	public static Configuration configuration = new Configuration(configFile);

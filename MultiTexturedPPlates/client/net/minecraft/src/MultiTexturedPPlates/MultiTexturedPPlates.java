@@ -9,7 +9,7 @@ import net.minecraft.src.EurysMods.core.ICore;
 import net.minecraft.src.MultiTexturedPPlates.network.PacketHandles;
 
 public class MultiTexturedPPlates {
-	public static String minecraftDir = Minecraft.getMinecraftDir().toString();
+	public static String minecraftDir = EurysCore.getMinecraftDir();
 	public static ICore Core;
 	private static boolean initialized = false;
 
@@ -18,7 +18,7 @@ public class MultiTexturedPPlates {
 			return;
 		initialized = true;
 		Core = new ClientCore(new ClientProxy(), new PacketHandles());
-		Core.setModName("MultiTexturedPlates");
+		Core.setModName("MultiTexturedPPlates");
 		Core.setModChannel("MTP");
 		load();
 	}

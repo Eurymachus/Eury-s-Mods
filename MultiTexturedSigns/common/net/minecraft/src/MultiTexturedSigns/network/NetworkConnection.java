@@ -16,8 +16,8 @@ import net.minecraft.src.forge.MessageManager;
 
 public class NetworkConnection implements INetworkConnections {
 	private static String modName = MultiTexturedSigns.MTS.getModName();
-	private static String modChannel = MultiTexturedSigns.MTS.getModChannel();
 	private static String modVersion = MTSCore.version;
+	private static String modChannel = MultiTexturedSigns.MTS.getModChannel();
 
 	@Override
 	public void onPacketData(NetworkManager network, String channel,
@@ -26,15 +26,15 @@ public class NetworkConnection implements INetworkConnections {
 				bytes));
 		try {
 			World world = MultiTexturedSigns.MTS.getProxy().getWorld(network);
-			EntityPlayer entityplayer = MultiTexturedSigns.MTS.getProxy().getPlayer(network);
+			EntityPlayer entityplayer = MultiTexturedSigns.MTS.getProxy()
+					.getPlayer(network);
 			int packetID = data.read();
 			switch (packetID) {
 			case PacketIds.MTSIGN_UPDATE:
 				PacketUpdateMTSign packetSign = new PacketUpdateMTSign();
 				packetSign.readData(data);
 				MultiTexturedSigns.MTS.getPacketHandler()
-						.handleTileEntityPacket(packetSign,
-								entityplayer);
+						.handleTileEntityPacket(packetSign, entityplayer);
 				break;
 			case PacketIds.MTSIGN_GUI:
 				PacketOpenGui packetGui = new PacketOpenGui();
@@ -56,7 +56,8 @@ public class NetworkConnection implements INetworkConnections {
 	public void onLogin(NetworkManager network, Packet1Login login) {
 		MessageManager.getInstance().registerChannel(network, this, modChannel);
 		ModLoader.getLogger().fine(
-				"Channel Registered: " + modName + " " + modVersion);
+				"Channel[" + modChannel + "] Registered: " + modName + " "
+						+ modVersion);
 	}
 
 	@Override

@@ -1,0 +1,22 @@
+[
+{
+  "modid": "mod_EurysMods",
+  "name": "Eury's Mod Core",
+  "description": "This is the Core required for all Eury's mods",
+  "version": "1.1",
+  "mcversion": "1.2.5",
+  "url": "http://www.minecraftforum.net/topic/1123291-125123forgeml-eurys-multi-textured-mods-sspsmpbukkit/",
+  "updateUrl": "",
+  "authors": [
+    "Eurymachus"
+  ],
+  "credits": "Created By Eurymachus",
+  "logoFile": "/EurysMods.png",
+  "screenshots": [
+  ],
+
+  "dependencies": [
+     "mod_MinecraftForge"
+  ]
+}
+]

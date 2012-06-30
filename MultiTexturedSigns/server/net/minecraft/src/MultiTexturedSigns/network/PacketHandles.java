@@ -10,8 +10,7 @@ import net.minecraft.src.MultiTexturedSigns.TileEntityMTSign;
 
 public class PacketHandles implements IPacketHandling {
 	@Override
-	public void handleTileEntityPacket(PacketUpdate packet, EntityPlayer var2)
-	{
+	public void handleTileEntityPacket(PacketUpdate packet, EntityPlayer var2) {
 		if (packet != null && packet instanceof PacketUpdateMTSign) {
 			PacketUpdateMTSign signPacket = (PacketUpdateMTSign) packet;
 			EntityPlayerMP entityplayermp = (EntityPlayerMP) var2;

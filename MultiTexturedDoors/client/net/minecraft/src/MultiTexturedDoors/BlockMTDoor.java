@@ -385,9 +385,8 @@ public class BlockMTDoor extends BlockContainer implements ITextureProvider {
 	public void onBlockRemoval(World world, int i, int j, int k) {
 		ItemStack itemstack = new ItemStack(MTDCore.mtDoorItem, 1,
 				getDamageValue(world, i, j, j));
-		EntityItem entityitem = new EntityItem(world, i, j,
-				k, new ItemStack(itemstack.itemID, 1,
-						itemstack.getItemDamage()));
+		EntityItem entityitem = new EntityItem(world, i, j, k, new ItemStack(
+				itemstack.itemID, 1, itemstack.getItemDamage()));
 		world.spawnEntityInWorld(entityitem);
 		super.onBlockRemoval(world, i, j, k);
 	}

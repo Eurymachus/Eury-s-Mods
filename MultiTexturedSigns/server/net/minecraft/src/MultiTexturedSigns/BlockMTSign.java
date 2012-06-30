@@ -115,9 +115,9 @@ public class BlockMTSign extends BlockContainer {
 			if (itemDamage > -1) {
 				ItemStack itemstack = new ItemStack(MTSCore.mtsItemSignParts,
 						1, itemDamage);
-				EntityItem entityitem = new EntityItem(world, i,
-						j, k, new ItemStack(itemstack.itemID,
-								1, itemstack.getItemDamage()));
+				EntityItem entityitem = new EntityItem(world, i, j, k,
+						new ItemStack(itemstack.itemID, 1,
+								itemstack.getItemDamage()));
 				world.spawnEntityInWorld(entityitem);
 			}
 		}
