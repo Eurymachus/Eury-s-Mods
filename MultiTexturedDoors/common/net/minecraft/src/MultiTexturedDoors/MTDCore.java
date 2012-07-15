@@ -12,7 +12,7 @@ import net.minecraft.src.forge.Configuration;
 import net.minecraft.src.forge.MinecraftForge;
 
 public class MTDCore {
-	public static String version = "v1.0";
+	public static String version = "v1.1";
 	public static File configFile = new File(MultiTexturedDoors.minecraftDir,
 			"config/MultiTexturedDoors.cfg");
 	public static Configuration configuration = new Configuration(configFile);
@@ -42,7 +42,7 @@ public class MTDCore {
 		ModLoader.addName(mtDoor, "MultiTextured Door");
 		ModLoader.addName(stoneDoor, "Stone Door");
 		ModLoader.addName(goldDoor, "Gold Door");
-		ModLoader.addName(diamondDoor, "Secret Bookcase Door");
+		ModLoader.addName(diamondDoor, "Diamond Door");
 	}
 
 	public static void addRecipes() {

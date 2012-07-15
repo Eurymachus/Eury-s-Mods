@@ -2,7 +2,6 @@ package net.minecraft.src.MultiTexturedDoors;
 
 import java.util.Random;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.Block;
 import net.minecraft.src.BlockContainer;
@@ -20,7 +19,6 @@ import net.minecraft.src.World;
 import net.minecraft.src.forge.ITextureProvider;
 
 public class BlockMTDoor extends BlockContainer implements ITextureProvider {
-	private static Minecraft mc = ModLoader.getMinecraftInstance();
 	Class mtDoorEntityClass;
 
 	public BlockMTDoor(int par1, Class doorClass, float hardness,
@@ -41,91 +39,114 @@ public class BlockMTDoor extends BlockContainer implements ITextureProvider {
 				0.5F + var3);
 	}
 
-	public static int getDamageValue(IBlockAccess blockaccess, int x, int y,
-			int z) {
-		TileEntity tileentity = blockaccess.getBlockTileEntity(x, y, z);
-		if (tileentity != null && tileentity instanceof TileEntityMTDoor) {
-			TileEntityMTDoor tileentitymtdoor = (TileEntityMTDoor) tileentity;
-			return tileentitymtdoor.getMetaValue();
-		}
-		return 0;
-	}
-
-	public static int getMouseOver() {
-		if (mc.objectMouseOver != null) {
-			int xPosition = mc.objectMouseOver.blockX;
-			int yPosition = mc.objectMouseOver.blockY;
-			int zPosition = mc.objectMouseOver.blockZ;
-			return getDamageValue(mc.theWorld, xPosition, yPosition, zPosition);
-		}
-		return 0;
-	}
-
-	public static int getBelowPlayer(EntityPlayer player) {
-		int playerX = (int) player.posX;
-		int playerY = (int) player.posY;
-		int playerZ = (int) player.posZ;
-		return getDamageValue(mc.theWorld, playerX, playerY - 1, playerZ);
-	}
-
-	public static int getAtPlayer(EntityPlayer player) {
-		int playerX = (int) player.posX;
-		int playerY = (int) player.posY;
-		int playerZ = (int) player.posZ;
-		return getDamageValue(mc.theWorld, playerX, playerY, playerZ);
-	}
-
 	/**
 	 * Retrieves the block texture to use based on the display side. Args:
 	 * iBlockAccess, x, y, z, side
 	 */
-	@Override
-	public int getBlockTexture(IBlockAccess par1IBlockAccess, int par2,
-			int par3, int par4, int par5) {
-		int var6 = this.getFullMetadata(par1IBlockAccess, par2, par3, par4);
-		int var7 = 0;
-		switch (getDamageValue(par1IBlockAccess, par2, par3, par4)) {
+	
+    public int getBlockTexture(IBlockAccess par1IBlockAccess, int x, int y, int z, int side)
+    {
+        int staticIndex = 1;
+        int index = 1;
+		switch (MultiTexturedDoors.getDamageValue(par1IBlockAccess, x, y, z)) {
 		case 0:
-			var7 = 16;
+			index = 17;
+			staticIndex = index;
 			break;
 		case 1:
-			var7 = 17;
+			index = 18;
+			staticIndex = index;
 			break;
 		case 2:
-			var7 = 18;
+			index = 19;
+			staticIndex = index;
 			break;
 		}
-		if ((var6 & 8) != 0) {
-			var7 -= 16;
-		}
-		return var7;
-	}
+        if (side != 0 && side != 1)
+        {
+            int fullMeta = this.getFullMetadata(par1IBlockAccess, x, y, z);
+            if ((fullMeta & 8) != 0)
+            {
+                index -= 16;
+            }
+
+            int var8 = fullMeta & 3;
+            boolean var9 = (fullMeta & 4) != 0;
+
+            if (!var9)
+            {
+                if (var8 == 0 && side == 5)
+                {
+                    index = -index;
+                }
+                else if (var8 == 1 && side == 3)
+                {
+                    index = -index;
+                }
+                else if (var8 == 2 && side == 4)
+                {
+                    index = -index;
+                }
+                else if (var8 == 3 && side == 2)
+                {
+                    index = -index;
+                }
+
+                if ((fullMeta & 16) != 0)
+                {
+                    index = -index;
+                }
+            }
+            else if (var8 == 0 && side == 2)
+            {
+                index = -index;
+            }
+            else if (var8 == 1 && side == 5)
+            {
+                index = -index;
+            }
+            else if (var8 == 2 && side == 3)
+            {
+                index = -index;
+            }
+            else if (var8 == 3 && side == 4)
+            {
+                index = -index;
+            }
+
+            return index;
+        }
+        else
+        {
+            return staticIndex;
+        }
+    }
 
 	@Override
 	public int getBlockTextureFromSideAndMetadata(int par1, int par2) {
 		int texture = -1;
-		EntityPlayer player = ModLoader.getMinecraftInstance().thePlayer;
-		if (player.onGround) {
-			texture = getMouseOver();
+		EntityPlayer entityplayer = MultiTexturedDoors.getPlayer();
+		if (entityplayer.onGround) {
+			texture = MultiTexturedDoors.getMouseOver();
 		}
-		if (texture == -1 && player.isAirBorne) {
-			texture = getMouseOver();
+		if (texture == -1 && entityplayer.isAirBorne) {
+			texture = MultiTexturedDoors.getMouseOver();
 		}
-		if (texture == -1 && player.isAirBorne) {
-			texture = getBelowPlayer(player);
+		if (texture == -1 && entityplayer.isAirBorne) {
+			texture = MultiTexturedDoors.getBelowPlayer(entityplayer);
 		}
-		if (texture == -1 && player.isAirBorne) {
-			texture = getAtPlayer(player);
+		if (texture == -1 && entityplayer.isAirBorne) {
+			texture = MultiTexturedDoors.getAtPlayer(entityplayer);
 		}
 		switch (texture) {
 		case 0:
-			return 0;
-		case 1:
 			return 1;
-		case 2:
+		case 1:
 			return 2;
+		case 2:
+			return 3;
 		}
-		return 0;
+		return 1;
 	}
 
 	/**
@@ -165,12 +186,10 @@ public class BlockMTDoor extends BlockContainer implements ITextureProvider {
 	/**
 	 * Returns the bounding box of the wired rectangular prism to render.
 	 */
-	@Override
 	public AxisAlignedBB getSelectedBoundingBoxFromPool(World par1World,
 			int par2, int par3, int par4) {
 		this.setBlockBoundsBasedOnState(par1World, par2, par3, par4);
-		return super
-				.getSelectedBoundingBoxFromPool(par1World, par2, par3, par4);
+		return AxisAlignedBB.getBoundingBoxFromPool((double)par2 + this.minX, (double)par3 + this.minY, (double)par4 + this.minZ, (double)par2 + this.maxX, (double)par3 + this.maxY, (double)par4 + this.maxZ);
 	}
 
 	/**
@@ -267,27 +286,23 @@ public class BlockMTDoor extends BlockContainer implements ITextureProvider {
 	@Override
 	public boolean blockActivated(World par1World, int par2, int par3,
 			int par4, EntityPlayer par5EntityPlayer) {
-		if (this.blockMaterial == Material.iron) {
-			return false;
+		int var6 = this.getFullMetadata(par1World, par2, par3, par4);
+		int var7 = var6 & 7;
+		var7 ^= 4;
+
+		if ((var6 & 8) != 0) {
+			par1World
+					.setBlockMetadataWithNotify(par2, par3 - 1, par4, var7);
+			par1World.markBlocksDirty(par2, par3 - 1, par4, par2, par3,
+					par4);
 		} else {
-			int var6 = this.getFullMetadata(par1World, par2, par3, par4);
-			int var7 = var6 & 7;
-			var7 ^= 4;
-
-			if ((var6 & 8) != 0) {
-				par1World
-						.setBlockMetadataWithNotify(par2, par3 - 1, par4, var7);
-				par1World.markBlocksDirty(par2, par3 - 1, par4, par2, par3,
-						par4);
-			} else {
-				par1World.setBlockMetadataWithNotify(par2, par3, par4, var7);
-				par1World.markBlocksDirty(par2, par3, par4, par2, par3, par4);
-			}
-
-			par1World.playAuxSFXAtEntity(par5EntityPlayer, 1003, par2, par3,
-					par4, 0);
-			return true;
+			par1World.setBlockMetadataWithNotify(par2, par3, par4, var7);
+			par1World.markBlocksDirty(par2, par3, par4, par2, par3, par4);
 		}
+
+		par1World.playAuxSFXAtEntity(par5EntityPlayer, 1003, par2, par3,
+				par4, 0);
+		return true;
 	}
 
 	/**
@@ -384,7 +399,7 @@ public class BlockMTDoor extends BlockContainer implements ITextureProvider {
 	@Override
 	public void onBlockRemoval(World world, int i, int j, int k) {
 		ItemStack itemstack = new ItemStack(MTDCore.mtDoorItem, 1,
-				getDamageValue(world, i, j, j));
+				MultiTexturedDoors.getDamageValue(world, i, j, j));
 		EntityItem entityitem = new EntityItem(world, i, j, k, new ItemStack(
 				itemstack.itemID, 1, itemstack.getItemDamage()));
 		world.spawnEntityInWorld(entityitem);
