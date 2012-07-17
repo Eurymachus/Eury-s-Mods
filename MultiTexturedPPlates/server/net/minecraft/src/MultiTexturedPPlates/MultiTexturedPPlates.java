@@ -1,6 +1,9 @@
 package net.minecraft.src.MultiTexturedPPlates;
 
+import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.ModLoader;
+import net.minecraft.src.TileEntity;
 import net.minecraft.src.EurysMods.EurysCore;
 import net.minecraft.src.EurysMods.ServerCore;
 import net.minecraft.src.EurysMods.ServerProxy;
@@ -30,5 +33,19 @@ public class MultiTexturedPPlates {
 		MTPCore.addNames();
 		EurysCore.console(Core.getModName(), "Registering recipes...");
 		MTPCore.addRecipes();
+	}
+
+	public static int getDamageValue(IBlockAccess blockaccess, int x, int y,
+			int z) {
+		TileEntity tileentity = blockaccess.getBlockTileEntity(x, y, z);
+		if (tileentity != null && tileentity instanceof TileEntityMTPPlate) {
+			TileEntityMTPPlate tileentitymtpplate = (TileEntityMTPPlate) tileentity;
+			return tileentitymtpplate.getMetaValue();
+		}
+		return 0;
+	}
+	
+	public static int getTextureFromMetaData(int i) {
+		return 0;
 	}
 }

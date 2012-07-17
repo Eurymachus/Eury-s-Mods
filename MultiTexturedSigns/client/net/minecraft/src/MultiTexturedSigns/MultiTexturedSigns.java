@@ -2,7 +2,9 @@ package net.minecraft.src.MultiTexturedSigns;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.EntityPlayer;
+import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.ModLoader;
+import net.minecraft.src.TileEntity;
 import net.minecraft.src.TileEntitySpecialRenderer;
 import net.minecraft.src.EurysMods.ClientCore;
 import net.minecraft.src.EurysMods.ClientProxy;
@@ -13,6 +15,7 @@ import net.minecraft.src.forge.MinecraftForgeClient;
 
 public class MultiTexturedSigns {
 	public static String minecraftDir = Minecraft.getMinecraftDir().toString();
+	private static Minecraft mc = ModLoader.getMinecraftInstance();
 	public static TileEntitySpecialRenderer mtsTileEntitySignRenderer = new TileEntityMTSignRenderer();
 	public static ICore MTS;
 	private static boolean initialized = false;
@@ -65,5 +68,60 @@ public class MultiTexturedSigns {
 		MTSCore.addNames();
 		EurysCore.console(MTS.getModName(), "Registering recipes...");
 		MTSCore.addRecipes();
+	}
+	
+	public static int getDamageValue(IBlockAccess blockAccess, int x, int y,
+			int z) {
+		TileEntity tileentity = blockAccess.getBlockTileEntity(x, y, z);
+		if (tileentity != null && tileentity instanceof TileEntityMTSign) {
+			TileEntityMTSign tileentitymtsign = (TileEntityMTSign) tileentity;
+			return tileentitymtsign.getMetaValue();
+		}
+		return 0;
+	}
+
+	public static int getMouseOver() {
+		if (mc.objectMouseOver != null) {
+			int xPosition = mc.objectMouseOver.blockX;
+			int yPosition = mc.objectMouseOver.blockY;
+			int zPosition = mc.objectMouseOver.blockZ;
+			return getDamageValue(mc.theWorld, xPosition, yPosition, zPosition);
+		}
+		return 0;
+	}
+
+	public static int getBelowPlayer(EntityPlayer player) {
+		int playerX = (int) player.posX;
+		int playerY = (int) player.posY;
+		int playerZ = (int) player.posZ;
+		return getDamageValue(mc.theWorld, playerX, playerY - 1, playerZ);
+	}
+
+	public static int getAtPlayer(EntityPlayer player) {
+		int playerX = (int) player.posX;
+		int playerY = (int) player.posY;
+		int playerZ = (int) player.posZ;
+		return getDamageValue(mc.theWorld, playerX, playerY, playerZ);
+	}
+	
+	public static int getBlockTextureFromMetadata(int i) {
+		int texture = -1;
+		EntityPlayer player = mc.thePlayer;
+		if (player.onGround) {
+			texture = getMouseOver();
+		}
+		if (texture == -1 && player.isAirBorne) {
+			texture = getMouseOver();
+		}
+		if (texture == -1 && player.isAirBorne) {
+			texture = getBelowPlayer(player);
+		}
+		if (texture == -1 && player.isAirBorne) {
+			texture = getAtPlayer(player);
+		}
+		if (texture == -1) {
+			texture = 0;
+		}
+		return texture;
 	}
 }

@@ -46,11 +46,13 @@ public class MultiTexturedDoors {
 	public static int getDamageValue(IBlockAccess world, int x, int y,
 			int z) {
 		TileEntity tileentity = world.getBlockTileEntity(x, y, z);
-		if (tileentity != null && tileentity instanceof TileEntityMTDoor) {
-			TileEntityMTDoor tileentitymtdoor = (TileEntityMTDoor) tileentity;
-			return tileentitymtdoor.getMetaValue();
+		if (tileentity != null) {
+			if (tileentity instanceof TileEntityMTDoor) {
+				TileEntityMTDoor tileentitymtdoor = (TileEntityMTDoor) tileentity;
+				return tileentitymtdoor.getMetaValue();
+			}
 		}
-		return 0;
+		return 1000;
 	}
 
 	public static int getMouseOver() {
@@ -79,5 +81,9 @@ public class MultiTexturedDoors {
 
 	public static EntityPlayer getPlayer() {
 		return mc.thePlayer;
+	}
+
+	public static void addMessage(String message) {
+		mc.thePlayer.addChatMessage(message);
 	}
 }

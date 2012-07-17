@@ -5,6 +5,7 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.MathHelper;
+import net.minecraft.src.ModLoader;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.forge.ITextureProvider;
@@ -59,15 +60,15 @@ public class ItemMTDoor extends Item implements ITextureProvider {
 			++j;
 			if (entityplayer.canPlayerEdit(i, j, k)
 					&& entityplayer.canPlayerEdit(i, j + 1, k)) {
-				if (!mtDoor.canPlaceBlockAt(world, i, j, k)) {
-					return false;
-				} else {
+				if (mtDoor.canPlaceBlockAt(world, i, j, k)) {
 					int var10 = MathHelper
 							.floor_double(((entityplayer.rotationYaw + 180.0F) * 4.0F / 360.0F) - 0.5D) & 3;
 					placeDoorBlock(world, i, j, k, var10, mtDoor,
 							itemstack.getItemDamage());
 					--itemstack.stackSize;
 					return true;
+				} else {
+					return false;
 				}
 			} else {
 				return false;

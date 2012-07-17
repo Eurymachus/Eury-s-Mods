@@ -2,7 +2,9 @@ package net.minecraft.src.MultiTexturedSigns;
 
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EntityPlayerMP;
+import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.ModLoader;
+import net.minecraft.src.TileEntity;
 import net.minecraft.src.EurysMods.EurysCore;
 import net.minecraft.src.EurysMods.ServerCore;
 import net.minecraft.src.EurysMods.ServerProxy;
@@ -42,5 +44,19 @@ public class MultiTexturedSigns {
 		MTSCore.addNames();
 		EurysCore.console(MTS.getModName(), "Registering recipes...");
 		MTSCore.addRecipes();
+	}
+
+	public static int getDamageValue(IBlockAccess blockAccess, int x,
+			int y, int z) {
+		TileEntity tileentity = blockAccess.getBlockTileEntity(x, y, z);
+		if (tileentity != null && tileentity instanceof TileEntityMTSign) {
+			TileEntityMTSign tileentitymtsign = (TileEntityMTSign) tileentity;
+			return tileentitymtsign.getMetaValue();
+		}
+		return 0;
+	}
+
+	public static int getBlockTextureFromMetadata(int par2) {
+		return 0;
 	}
 }

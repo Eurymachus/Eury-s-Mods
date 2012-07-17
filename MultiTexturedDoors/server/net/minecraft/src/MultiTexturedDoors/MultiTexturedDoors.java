@@ -58,4 +58,8 @@ public class MultiTexturedDoors {
 	public static int getAtPlayer(EntityPlayer entityplayer) {
 		return 0;
 	}
+
+	public static void addMessage(String message) {
+		ModLoader.getLogger().warning(message);
+	}
 }

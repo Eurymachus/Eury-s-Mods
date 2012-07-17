@@ -12,7 +12,7 @@ import net.minecraft.src.forge.Configuration;
 import net.minecraft.src.forge.MinecraftForge;
 
 public class MTDCore {
-	public static String version = "v1.1";
+	public static String version = "v1.2";
 	public static File configFile = new File(MultiTexturedDoors.minecraftDir,
 			"config/MultiTexturedDoors.cfg");
 	public static Configuration configuration = new Configuration(configFile);
@@ -29,7 +29,7 @@ public class MTDCore {
 	public static void addItems() {
 		mtDoorBlockID = configurationProperties();
 		mtDoor = (new BlockMTDoor(mtDoorBlockID, TileEntityMTDoor.class, 0.5F,
-				Block.soundStoneFootstep, true, true)).setBlockName("mtDoor");
+				Block.soundStoneFootstep, true, true, "mtDoor"));
 		ModLoader.registerBlock(mtDoor);
 		mtDoorItem = (new ItemMTDoor(mtDoorItemID - 256))
 				.setItemName("mtItemDoor");
@@ -54,11 +54,11 @@ public class MTDCore {
 		ModLoader.addRecipe(diamondDoor, new Object[] { "X", "Y", "X",
 				Character.valueOf('X'), Item.diamond, Character.valueOf('Y'),
 				goldDoor });
-		FurnaceRecipes.smelting().addSmelting(mtDoorBlockID, 0,
+		FurnaceRecipes.smelting().addSmelting(mtDoorItemID, 0,
 				new ItemStack(Item.ingotIron, 1));
-		FurnaceRecipes.smelting().addSmelting(mtDoorBlockID, 1,
+		FurnaceRecipes.smelting().addSmelting(mtDoorItemID, 1,
 				new ItemStack(Item.ingotGold, 1));
-		FurnaceRecipes.smelting().addSmelting(mtDoorBlockID, 2,
+		FurnaceRecipes.smelting().addSmelting(mtDoorItemID, 2,
 				new ItemStack(Item.diamond, 1));
 	}
 
