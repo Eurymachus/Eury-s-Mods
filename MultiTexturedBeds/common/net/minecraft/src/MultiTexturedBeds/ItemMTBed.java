@@ -12,7 +12,7 @@ import net.minecraft.src.forge.ITextureProvider;
 
 public class ItemMTBed extends ItemBed implements ITextureProvider
 {
-	private String[] leverNames = new String[] { "Blue", "Black", "Pink", "Green", "Yellow", "Purple", "Orange", "Grey" };
+	private static final String[] bedNames = new String[] {"black", "red", "green", "brown", "blue", "purple", "cyan", "silver", "gray", "pink", "lime", "yellow", "lightBlue", "magenta", "orange", "white"};
 	
     public ItemMTBed(int par1)
     {
@@ -25,7 +25,7 @@ public class ItemMTBed extends ItemBed implements ITextureProvider
 	@Override
 	public String getItemNameIS(ItemStack itemstack) {
 		return (new StringBuilder()).append(super.getItemName()).append(".")
-				.append(leverNames[itemstack.getItemDamage()]).toString();
+				.append(bedNames[itemstack.getItemDamage()]).toString();
 	}
 
 	public int filterData(int i) {
