@@ -2,15 +2,10 @@ package net.minecraft.src.MultiTexturedButtons;
 
 import java.util.Random;
 
-import net.minecraft.src.AxisAlignedBB;
 import net.minecraft.src.BlockButton;
-import net.minecraft.src.BlockContainer;
 import net.minecraft.src.EntityItem;
-import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.ItemStack;
-import net.minecraft.src.Material;
-import net.minecraft.src.ModLoader;
 import net.minecraft.src.StepSound;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
@@ -36,7 +31,8 @@ public class BlockMTButton extends BlockButton implements IContainer {
 
 	public int getBlockTexture(IBlockAccess par1IBlockAccess, int par2,
 			int par3, int par4, int par5) {
-		switch (MultiTexturedButtons.getDamageValue(par1IBlockAccess, par2, par3, par4)) {
+		switch (MultiTexturedButtons.getDamageValue(par1IBlockAccess, par2,
+				par3, par4)) {
 		case 0:
 			return 22;
 		case 1:
@@ -59,7 +55,8 @@ public class BlockMTButton extends BlockButton implements IContainer {
 	@Override
 	public void onBlockRemoval(World par1World, int par2, int par3, int par4) {
 		ItemStack itemstack = new ItemStack(MTBCore.BlockMTButton, 1,
-				MultiTexturedButtons.getDamageValue(par1World, par2, par3, par4));
+				MultiTexturedButtons
+						.getDamageValue(par1World, par2, par3, par4));
 		EntityItem entityitem = new EntityItem(par1World, par2, par3, par4,
 				new ItemStack(itemstack.itemID, 1, itemstack.getItemDamage()));
 		par1World.spawnEntityInWorld(entityitem);

@@ -2,7 +2,6 @@ package net.minecraft.src.MultiTexturedDoors.network;
 
 import net.minecraft.src.EurysMods.network.PacketIds;
 import net.minecraft.src.EurysMods.network.PacketPayload;
-import net.minecraft.src.MultiTexturedDoors.MultiTexturedDoors;
 import net.minecraft.src.MultiTexturedDoors.TileEntityMTDoor;
 
 public class PacketUpdateMTDoor extends PacketMTD {

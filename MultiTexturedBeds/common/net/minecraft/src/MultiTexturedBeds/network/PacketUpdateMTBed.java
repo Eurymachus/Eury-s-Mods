@@ -3,10 +3,9 @@ package net.minecraft.src.MultiTexturedBeds.network;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.EurysMods.network.PacketIds;
 import net.minecraft.src.MultiTexturedBeds.TileEntityMTBed;
-import net.minecraft.src.MultiTexturedSigns.TileEntityMTSign;
 
 public class PacketUpdateMTBed extends PacketMTBed {
-	
+
 	public PacketUpdateMTBed() {
 		super(PacketIds.MTBED_UPDATE);
 	}

@@ -69,7 +69,7 @@ public class MultiTexturedSigns {
 		EurysCore.console(MTS.getModName(), "Registering recipes...");
 		MTSCore.addRecipes();
 	}
-	
+
 	public static int getDamageValue(IBlockAccess blockAccess, int x, int y,
 			int z) {
 		TileEntity tileentity = blockAccess.getBlockTileEntity(x, y, z);
@@ -103,7 +103,7 @@ public class MultiTexturedSigns {
 		int playerZ = (int) player.posZ;
 		return getDamageValue(mc.theWorld, playerX, playerY, playerZ);
 	}
-	
+
 	public static int getBlockTextureFromMetadata(int i) {
 		int texture = -1;
 		EntityPlayer player = mc.thePlayer;

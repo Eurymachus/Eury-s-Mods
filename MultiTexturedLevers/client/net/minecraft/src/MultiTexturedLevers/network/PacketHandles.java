@@ -1,7 +1,6 @@
 package net.minecraft.src.MultiTexturedLevers.network;
 
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ModLoader;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.EurysMods.network.IPacketHandling;
@@ -11,10 +10,9 @@ import net.minecraft.src.MultiTexturedLevers.TileEntityMTLever;
 public class PacketHandles implements IPacketHandling {
 	@Override
 	public void handleTileEntityPacket(PacketUpdate packet,
-			EntityPlayer entityplayer) {
+			EntityPlayer entityplayer, World world) {
 		if (packet != null && packet instanceof PacketUpdateMTLever) {
 			PacketUpdateMTLever leverPacket = (PacketUpdateMTLever) packet;
-			World world = ModLoader.getMinecraftInstance().theWorld;
 			if (!leverPacket.targetExists(world))
 				return;
 			TileEntity tileentity = leverPacket.getTarget(world);
@@ -27,6 +25,7 @@ public class PacketHandles implements IPacketHandling {
 	}
 
 	@Override
-	public void handleGuiPacket(PacketUpdate packet, EntityPlayer entityplayer) {
+	public void handleGuiPacket(PacketUpdate packet, EntityPlayer entityplayer,
+			World world) {
 	}
 }

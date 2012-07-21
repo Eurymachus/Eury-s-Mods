@@ -1,6 +1,5 @@
 package net.minecraft.src.MultiTexturedPPlates;
 
-import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.TileEntity;
@@ -44,7 +43,7 @@ public class MultiTexturedPPlates {
 		}
 		return 0;
 	}
-	
+
 	public static int getTextureFromMetaData(int i) {
 		return 0;
 	}

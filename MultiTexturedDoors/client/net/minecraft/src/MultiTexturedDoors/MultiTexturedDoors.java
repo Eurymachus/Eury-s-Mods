@@ -43,8 +43,7 @@ public class MultiTexturedDoors {
 		MTDCore.addRecipes();
 	}
 
-	public static int getDamageValue(IBlockAccess world, int x, int y,
-			int z) {
+	public static int getDamageValue(IBlockAccess world, int x, int y, int z) {
 		TileEntity tileentity = world.getBlockTileEntity(x, y, z);
 		if (tileentity != null) {
 			if (tileentity instanceof TileEntityMTDoor) {

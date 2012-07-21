@@ -2,19 +2,14 @@ package net.minecraft.src.MultiTexturedLevers;
 
 import java.util.Random;
 
-import net.minecraft.src.AxisAlignedBB;
-import net.minecraft.src.BlockContainer;
 import net.minecraft.src.BlockLever;
 import net.minecraft.src.EntityItem;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.ItemStack;
-import net.minecraft.src.Material;
-import net.minecraft.src.ModLoader;
 import net.minecraft.src.StepSound;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
-import net.minecraft.src.EurysMods.EurysCore;
 import net.minecraft.src.EurysMods.core.IContainer;
 
 public class BlockMTLever extends BlockLever implements IContainer {
@@ -37,7 +32,8 @@ public class BlockMTLever extends BlockLever implements IContainer {
 
 	public int getBlockTexture(IBlockAccess par1IBlockAccess, int par2,
 			int par3, int par4, int par5) {
-		switch (MultiTexturedLevers.getDamageValue(par1IBlockAccess, par2, par3, par4)) {
+		switch (MultiTexturedLevers.getDamageValue(par1IBlockAccess, par2,
+				par3, par4)) {
 		case 0:
 			return 22;
 		case 1:
@@ -103,7 +99,7 @@ public class BlockMTLever extends BlockLever implements IContainer {
 	public int quantityDropped(Random par1Random) {
 		return 0;
 	}
-	
+
 	@Override
 	public TileEntity getTileEntity(int meta) {
 		return getBlockEntity(meta);

@@ -10,24 +10,24 @@ import net.minecraft.src.MultiTexturedSigns.TileEntityMTSign;
 
 public class PacketHandles implements IPacketHandling {
 	@Override
-	public void handleTileEntityPacket(PacketUpdate packet, EntityPlayer var2) {
+	public void handleTileEntityPacket(PacketUpdate packet,
+			EntityPlayer entityplayer, World world) {
 		if (packet != null && packet instanceof PacketUpdateMTSign) {
 			PacketUpdateMTSign signPacket = (PacketUpdateMTSign) packet;
-			EntityPlayerMP entityplayermp = (EntityPlayerMP) var2;
-			World worldserver = entityplayermp.worldObj;
-			if (signPacket.targetExists(worldserver)) {
-				TileEntity tileentity = signPacket.getTarget(worldserver);
+			EntityPlayerMP entityplayermp = (EntityPlayerMP) entityplayer;
+			if (signPacket.targetExists(world)) {
+				TileEntity tileentity = signPacket.getTarget(world);
 				if ((tileentity != null)
 						&& (tileentity instanceof TileEntityMTSign)) {
 					TileEntityMTSign tileentitymtsign = (TileEntityMTSign) tileentity;
-					tileentitymtsign
-							.handleUpdatePacket(signPacket, worldserver);
+					tileentitymtsign.handleUpdatePacket(signPacket, world);
 				}
 			}
 		}
 	}
 
 	@Override
-	public void handleGuiPacket(PacketUpdate packet, EntityPlayer player) {
+	public void handleGuiPacket(PacketUpdate packet, EntityPlayer player,
+			World world) {
 	}
 }

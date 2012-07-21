@@ -1,6 +1,7 @@
 package net.minecraft.src.EurysMods;
 
 import java.net.URISyntaxException;
+
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.EurysMods.core.ICore;
 

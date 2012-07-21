@@ -6,7 +6,6 @@ import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.EurysMods.network.PacketPayload;
 import net.minecraft.src.MultiTexturedBeds.network.PacketUpdateMTBed;
-import net.minecraft.src.MultiTexturedDoors.network.PacketUpdateMTDoor;
 
 public class TileEntityMTBed extends TileEntity {
 	public int metaValue;

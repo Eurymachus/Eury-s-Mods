@@ -1,20 +1,15 @@
 package net.minecraft.src.MultiTexturedBeds;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.src.IBlockAccess;
-import net.minecraft.src.ModLoader;
 import net.minecraft.src.TileEntity;
-import net.minecraft.src.mod_MultiTexturedBeds;
-import net.minecraft.src.EurysMods.ClientCore;
-import net.minecraft.src.EurysMods.ClientProxy;
 import net.minecraft.src.EurysMods.EurysCore;
+import net.minecraft.src.EurysMods.ServerCore;
+import net.minecraft.src.EurysMods.ServerProxy;
 import net.minecraft.src.EurysMods.core.ICore;
 import net.minecraft.src.MultiTexturedBeds.network.PacketHandles;
-import net.minecraft.src.forge.MinecraftForgeClient;
 
 public class MultiTexturedBeds {
-	public static String minecraftDir = Minecraft.getMinecraftDir().toString();
-	private static Minecraft mc = ModLoader.getMinecraftInstance();
+	public static String minecraftDir = EurysCore.getMinecraftDir();
 	public static int mtBedRenderID;
 	public static ICore MTBed;
 	private static boolean initialized = false;
@@ -22,7 +17,7 @@ public class MultiTexturedBeds {
 	public static void initialize() {
 		if (!initialized) {
 			initialized = true;
-			MTBed = new ClientCore(new ClientProxy(), new PacketHandles());
+			MTBed = new ServerCore(new ServerProxy(), new PacketHandles());
 			MTBed.setModName("MultiTexturedBeds");
 			MTBed.setModChannel("MTBed");
 			load();
@@ -30,9 +25,6 @@ public class MultiTexturedBeds {
 	}
 
 	public static void load() {
-		MinecraftForgeClient.preloadTexture(MTBed.getBlockSheet());
-		mtBedRenderID = ModLoader.getUniqueBlockModelID(
-				mod_MultiTexturedBeds.instance, true);
 		EurysCore.console(MTBed.getModName(), "Registering items...");
 		MTBedsCore.addItems();
 		EurysCore.console(MTBed.getModName(), "Naming items...");

@@ -36,7 +36,8 @@ public class NetworkConnection implements INetworkConnections {
 				PacketUpdateMTPPlate packetPPlate = new PacketUpdateMTPPlate();
 				packetPPlate.readData(data);
 				MultiTexturedPPlates.Core.getPacketHandler()
-						.handleTileEntityPacket(packetPPlate, entityplayer);
+						.handleTileEntityPacket(packetPPlate, entityplayer,
+								world);
 				break;
 			}
 		} catch (Exception ex) {

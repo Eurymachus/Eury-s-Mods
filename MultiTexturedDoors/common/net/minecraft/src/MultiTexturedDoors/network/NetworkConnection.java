@@ -28,14 +28,15 @@ public class NetworkConnection implements INetworkConnections {
 			World world = MultiTexturedDoors.Core.getProxy().getWorld(network);
 			EntityPlayer entityplayer = MultiTexturedDoors.Core.getProxy()
 					.getPlayer(network);
-			
+
 			int packetID = data.read();
 			switch (packetID) {
 			case PacketIds.MTDOOR_UPDATE:
 				PacketUpdateMTDoor packetDoor = new PacketUpdateMTDoor();
 				packetDoor.readData(data);
-				MultiTexturedDoors.Core.getPacketHandler()
-						.handleTileEntityPacket(packetDoor, entityplayer);
+				MultiTexturedDoors.Core
+						.getPacketHandler()
+						.handleTileEntityPacket(packetDoor, entityplayer, world);
 				break;
 			}
 		} catch (Exception ex) {

@@ -12,10 +12,9 @@ import net.minecraft.src.MultiTexturedSigns.TileEntityMTSign;
 public class PacketHandles implements IPacketHandling {
 	@Override
 	public void handleTileEntityPacket(PacketUpdate packet,
-			EntityPlayer entityplayer) {
+			EntityPlayer entityplayer, World world) {
 		if (packet != null && packet instanceof PacketUpdateMTSign) {
 			PacketUpdateMTSign signPacket = (PacketUpdateMTSign) packet;
-			World world = ModLoader.getMinecraftInstance().theWorld;
 			if (!signPacket.targetExists(world))
 				return;
 			TileEntity tileentity = signPacket.getTarget(world);
@@ -28,12 +27,12 @@ public class PacketHandles implements IPacketHandling {
 	}
 
 	@Override
-	public void handleGuiPacket(PacketUpdate packet, EntityPlayer entityplayer) {
+	public void handleGuiPacket(PacketUpdate packet, EntityPlayer entityplayer,
+			World world) {
 		int x = packet.xPosition;
 		int y = packet.yPosition;
 		int z = packet.zPosition;
-		TileEntity tileentity = ModLoader.getMinecraftInstance().theWorld
-				.getBlockTileEntity(x, y, z);
+		TileEntity tileentity = world.getBlockTileEntity(x, y, z);
 		if (tileentity != null && tileentity instanceof TileEntityMTSign) {
 			TileEntityMTSign tileentitymtsign = (TileEntityMTSign) tileentity;
 			ModLoader

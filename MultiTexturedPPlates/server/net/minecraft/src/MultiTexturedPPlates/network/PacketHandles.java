@@ -9,10 +9,10 @@ import net.minecraft.src.MultiTexturedPPlates.TileEntityMTPPlate;
 
 public class PacketHandles implements IPacketHandling {
 	@Override
-	public void handleTileEntityPacket(PacketUpdate packet, EntityPlayer player) {
+	public void handleTileEntityPacket(PacketUpdate packet,
+			EntityPlayer player, World world) {
 		if (packet != null && packet instanceof PacketUpdateMTPPlate) {
 			PacketUpdateMTPPlate platePacket = (PacketUpdateMTPPlate) packet;
-			World world = player.worldObj;
 			if (!platePacket.targetExists(world))
 				return;
 			TileEntity tileentity = platePacket.getTarget(world);
@@ -25,6 +25,7 @@ public class PacketHandles implements IPacketHandling {
 	}
 
 	@Override
-	public void handleGuiPacket(PacketUpdate packet, EntityPlayer player) {
+	public void handleGuiPacket(PacketUpdate packet, EntityPlayer player,
+			World world) {
 	}
 }

@@ -8,7 +8,7 @@ public class EurysCore {
 	public static String version = "v1.1";
 	public static ICore EurysCore;
 	private static boolean initialized = false;
-	
+
 	public static String getMinecraftDir() {
 		return Minecraft.getMinecraftDir().toString();
 	}

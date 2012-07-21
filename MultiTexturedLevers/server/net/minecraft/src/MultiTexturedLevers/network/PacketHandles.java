@@ -10,7 +10,8 @@ import net.minecraft.src.MultiTexturedLevers.TileEntityMTLever;
 
 public class PacketHandles implements IPacketHandling {
 	@Override
-	public void handleTileEntityPacket(PacketUpdate packet, EntityPlayer player) {
+	public void handleTileEntityPacket(PacketUpdate packet,
+			EntityPlayer player, World world) {
 		if (packet != null && packet instanceof PacketUpdateMTLever) {
 			PacketUpdateMTLever leverPacket = (PacketUpdateMTLever) packet;
 			EntityPlayerMP entityplayermp = null;
@@ -27,6 +28,7 @@ public class PacketHandles implements IPacketHandling {
 	}
 
 	@Override
-	public void handleGuiPacket(PacketUpdate packet, EntityPlayer player) {
+	public void handleGuiPacket(PacketUpdate packet, EntityPlayer player,
+			World world) {
 	}
 }

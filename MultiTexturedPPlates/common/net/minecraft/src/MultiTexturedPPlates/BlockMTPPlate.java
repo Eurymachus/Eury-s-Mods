@@ -4,16 +4,12 @@ import java.util.List;
 import java.util.Random;
 
 import net.minecraft.src.AxisAlignedBB;
-import net.minecraft.src.Block;
-import net.minecraft.src.BlockContainer;
 import net.minecraft.src.BlockPressurePlate;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityItem;
-import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.Material;
-import net.minecraft.src.ModLoader;
 import net.minecraft.src.StepSound;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
@@ -39,7 +35,8 @@ public class BlockMTPPlate extends BlockPressurePlate implements IContainer {
 
 	public int getBlockTexture(IBlockAccess par1IBlockAccess, int par2,
 			int par3, int par4, int par5) {
-		switch(MultiTexturedPPlates.getDamageValue(par1IBlockAccess, par2, par3, par4)) {
+		switch (MultiTexturedPPlates.getDamageValue(par1IBlockAccess, par2,
+				par3, par4)) {
 		case 0:
 			return 22;
 		case 1:
@@ -107,35 +104,34 @@ public class BlockMTPPlate extends BlockPressurePlate implements IContainer {
 		}
 	}
 
-    /**
-     * Ticks the block if it's been scheduled
-     */
+	/**
+	 * Ticks the block if it's been scheduled
+	 */
 	@Override
-    public void updateTick(World par1World, int par2, int par3, int par4, Random par5Random)
-    {
-        if (!par1World.isRemote)
-        {
-            if (par1World.getBlockMetadata(par2, par3, par4) != 0)
-            {
-                this.setStateIfMobInteractsWithMTPlate(par1World, par2, par3, par4);
-            }
-        }
-    }
+	public void updateTick(World par1World, int par2, int par3, int par4,
+			Random par5Random) {
+		if (!par1World.isRemote) {
+			if (par1World.getBlockMetadata(par2, par3, par4) != 0) {
+				this.setStateIfMobInteractsWithMTPlate(par1World, par2, par3,
+						par4);
+			}
+		}
+	}
 
-    /**
-     * Triggered whenever an entity collides with this block (enters into the block). Args: world, x, y, z, entity
-     */
+	/**
+	 * Triggered whenever an entity collides with this block (enters into the
+	 * block). Args: world, x, y, z, entity
+	 */
 	@Override
-    public void onEntityCollidedWithBlock(World par1World, int par2, int par3, int par4, Entity par5Entity)
-    {
-        if (!par1World.isRemote)
-        {
-            if (par1World.getBlockMetadata(par2, par3, par4) != 1)
-            {
-                this.setStateIfMobInteractsWithMTPlate(par1World, par2, par3, par4);
-            }
-        }
-    }
+	public void onEntityCollidedWithBlock(World par1World, int par2, int par3,
+			int par4, Entity par5Entity) {
+		if (!par1World.isRemote) {
+			if (par1World.getBlockMetadata(par2, par3, par4) != 1) {
+				this.setStateIfMobInteractsWithMTPlate(par1World, par2, par3,
+						par4);
+			}
+		}
+	}
 
 	@Override
 	public void onBlockRemoval(World world, int i, int j, int k) {
@@ -152,7 +148,7 @@ public class BlockMTPPlate extends BlockPressurePlate implements IContainer {
 	public int quantityDropped(Random random) {
 		return 0;
 	}
-	
+
 	@Override
 	public TileEntity getTileEntity(int meta) {
 		return getBlockEntity(meta);

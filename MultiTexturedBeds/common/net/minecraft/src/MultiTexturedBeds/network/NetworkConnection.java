@@ -30,11 +30,11 @@ public class NetworkConnection implements INetworkConnections {
 					.getPlayer(network);
 			int packetID = data.read();
 			switch (packetID) {
-			case PacketIds.MTSIGN_UPDATE:
+			case PacketIds.MTBED_UPDATE:
 				PacketUpdateMTBed packetBed = new PacketUpdateMTBed();
 				packetBed.readData(data);
 				MultiTexturedBeds.MTBed.getPacketHandler()
-						.handleTileEntityPacket(packetBed, entityplayer);
+						.handleTileEntityPacket(packetBed, entityplayer, world);
 				break;
 			}
 		} catch (Exception ex) {

@@ -10,15 +10,17 @@ import net.minecraft.src.MultiTexturedBeds.network.NetworkConnection;
 import net.minecraft.src.forge.Configuration;
 import net.minecraft.src.forge.MinecraftForge;
 
-public class MTBedsCore{
+public class MTBedsCore {
 	public static String version = "v1.0";
-	public static File configFile = new File(MultiTexturedBeds.minecraftDir, "config/MultiTexturedBeds.cfg");
+	public static File configFile = new File(MultiTexturedBeds.minecraftDir,
+			"config/MultiTexturedBeds.cfg");
 	public static Configuration configuration = new Configuration(configFile);
 	public static int mtBlockBedID, mtItemBedID;
 	public static Block mtBlockBed;
 	public static Item mtItemBed;
-	public static ItemStack blueBed, blackBed, pinkBed, greenBed, yellowBed, purpleBed, orangeBed, greyBed;
-	
+	public static ItemStack blueBed, blackBed, pinkBed, greenBed, yellowBed,
+			purpleBed, orangeBed, greyBed;
+
 	public static void initialize() {
 		MultiTexturedBeds.initialize();
 		MinecraftForge.registerConnectionHandler(new NetworkConnection());
@@ -27,7 +29,8 @@ public class MTBedsCore{
 	public static void addItems() {
 		mtBlockBedID = configurationProperties();
 		ModLoader.registerTileEntity(TileEntityMTBed.class, "mtBed");
-		mtBlockBed = (new BlockMTBed(mtBlockBedID, TileEntityMTBed.class, 1.0F, true, true)).setBlockName("mtBed");
+		mtBlockBed = (new BlockMTBed(mtBlockBedID, TileEntityMTBed.class, 1.0F,
+				true, true)).setBlockName("mtBed");
 		ModLoader.registerBlock(mtBlockBed);
 		mtItemBed = (new ItemMTBed(mtItemBedID - 256)).setItemName("mtItemBed");
 		blueBed = new ItemStack(mtItemBed, 1, 0);
@@ -55,7 +58,7 @@ public class MTBedsCore{
 
 	public static void addRecipes() {
 		ModLoader.addRecipe(blackBed,
-				new Object[] { "XX", Character.valueOf('X'), Block.dirt});
+				new Object[] { "XX", Character.valueOf('X'), Block.dirt });
 	}
 
 	public static int configurationProperties() {

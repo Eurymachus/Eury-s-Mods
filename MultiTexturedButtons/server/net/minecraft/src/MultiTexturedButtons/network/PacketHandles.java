@@ -1,7 +1,6 @@
 package net.minecraft.src.MultiTexturedButtons.network;
 
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.EntityPlayerMP;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.EurysMods.network.IPacketHandling;
@@ -10,24 +9,23 @@ import net.minecraft.src.MultiTexturedButtons.TileEntityMTButton;
 
 public class PacketHandles implements IPacketHandling {
 	@Override
-	public void handleTileEntityPacket(PacketUpdate packet, EntityPlayer player) {
+	public void handleTileEntityPacket(PacketUpdate packet,
+			EntityPlayer entityplayer, World world) {
 		if (packet != null && packet instanceof PacketUpdateMTButton) {
 			PacketUpdateMTButton buttonPacket = (PacketUpdateMTButton) packet;
-			EntityPlayerMP entityplayermp = null;
-			World worldserver = player.worldObj;
-			if (!buttonPacket.targetExists(worldserver))
+			if (!buttonPacket.targetExists(world))
 				return;
-			TileEntity tileentity = buttonPacket.getTarget(worldserver);
+			TileEntity tileentity = buttonPacket.getTarget(world);
 			if ((tileentity != null)
 					&& (tileentity instanceof TileEntityMTButton)) {
 				TileEntityMTButton mtstileentitybutton = (TileEntityMTButton) tileentity;
-				mtstileentitybutton.handleUpdatePacket(buttonPacket,
-						worldserver);
+				mtstileentitybutton.handleUpdatePacket(buttonPacket, world);
 			}
 		}
 	}
 
 	@Override
-	public void handleGuiPacket(PacketUpdate packet, EntityPlayer var2) {
+	public void handleGuiPacket(PacketUpdate packet, EntityPlayer entityplayer,
+			World world) {
 	}
 }

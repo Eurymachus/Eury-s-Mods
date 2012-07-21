@@ -33,14 +33,15 @@ public class NetworkConnection implements INetworkConnections {
 			case PacketIds.MTSIGN_UPDATE:
 				PacketUpdateMTSign packetSign = new PacketUpdateMTSign();
 				packetSign.readData(data);
-				MultiTexturedSigns.MTS.getPacketHandler()
-						.handleTileEntityPacket(packetSign, entityplayer);
+				MultiTexturedSigns.MTS
+						.getPacketHandler()
+						.handleTileEntityPacket(packetSign, entityplayer, world);
 				break;
 			case PacketIds.MTSIGN_GUI:
 				PacketOpenGui packetGui = new PacketOpenGui();
 				packetGui.readData(data);
 				MultiTexturedSigns.MTS.getPacketHandler().handleGuiPacket(
-						packetGui, entityplayer);
+						packetGui, entityplayer, world);
 				break;
 			}
 		} catch (Exception ex) {

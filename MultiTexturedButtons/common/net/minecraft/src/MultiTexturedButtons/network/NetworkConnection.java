@@ -26,17 +26,19 @@ public class NetworkConnection implements INetworkConnections {
 		DataInputStream data = new DataInputStream(new ByteArrayInputStream(
 				bytes));
 		try {
-			World world = MultiTexturedButtons.Core.getProxy().getWorld(network);
+			World world = MultiTexturedButtons.Core.getProxy()
+					.getWorld(network);
 			EntityPlayer entityplayer = MultiTexturedButtons.Core.getProxy()
 					.getPlayer(network);
-			
+
 			int packetID = data.read();
 			switch (packetID) {
 			case PacketIds.MTBUTTON_UPDATE:
 				PacketUpdateMTButton packetButton = new PacketUpdateMTButton();
 				packetButton.readData(data);
 				MultiTexturedButtons.Core.getPacketHandler()
-						.handleTileEntityPacket(packetButton, entityplayer);
+						.handleTileEntityPacket(packetButton, entityplayer,
+								world);
 				break;
 			}
 		} catch (Exception ex) {

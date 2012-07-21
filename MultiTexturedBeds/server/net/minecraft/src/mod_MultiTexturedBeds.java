@@ -1,7 +1,6 @@
 package net.minecraft.src;
 
 import net.minecraft.src.MultiTexturedBeds.MTBedsCore;
-import net.minecraft.src.MultiTexturedBeds.RenderBlockMTBed;
 import net.minecraft.src.forge.NetworkMod;
 
 public class mod_MultiTexturedBeds extends NetworkMod {
@@ -28,13 +27,6 @@ public class mod_MultiTexturedBeds extends NetworkMod {
 
 	@Override
 	public void load() {
-	}
-
-	@Override
-	public boolean renderWorldBlock(RenderBlocks renderblocks,
-			IBlockAccess iblockaccess, int i, int j, int k, Block block, int l) {
-		return RenderBlockMTBed.renderWorldBlock(renderblocks, iblockaccess, i,
-				j, k, block, l);
 	}
 
 	@Override

@@ -46,8 +46,8 @@ public class MultiTexturedSigns {
 		MTSCore.addRecipes();
 	}
 
-	public static int getDamageValue(IBlockAccess blockAccess, int x,
-			int y, int z) {
+	public static int getDamageValue(IBlockAccess blockAccess, int x, int y,
+			int z) {
 		TileEntity tileentity = blockAccess.getBlockTileEntity(x, y, z);
 		if (tileentity != null && tileentity instanceof TileEntityMTSign) {
 			TileEntityMTSign tileentitymtsign = (TileEntityMTSign) tileentity;

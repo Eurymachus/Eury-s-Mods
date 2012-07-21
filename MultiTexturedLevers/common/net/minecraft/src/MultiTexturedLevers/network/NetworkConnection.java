@@ -35,7 +35,8 @@ public class NetworkConnection implements INetworkConnections {
 				PacketUpdateMTLever packetLever = new PacketUpdateMTLever();
 				packetLever.readData(data);
 				MultiTexturedLevers.Core.getPacketHandler()
-						.handleTileEntityPacket(packetLever, entityplayer);
+						.handleTileEntityPacket(packetLever, entityplayer,
+								world);
 				break;
 			}
 		} catch (Exception ex) {

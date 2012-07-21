@@ -9,10 +9,10 @@ import net.minecraft.src.MultiTexturedDoors.TileEntityMTDoor;
 
 public class PacketHandles implements IPacketHandling {
 	@Override
-	public void handleTileEntityPacket(PacketUpdate packet, EntityPlayer player) {
+	public void handleTileEntityPacket(PacketUpdate packet,
+			EntityPlayer player, World world) {
 		if (packet != null && packet instanceof PacketUpdateMTDoor) {
 			PacketUpdateMTDoor doorPacket = (PacketUpdateMTDoor) packet;
-			World world = player.worldObj;
 			if (!doorPacket.targetExists(world))
 				return;
 			TileEntity tileentity = doorPacket.getTarget(world);
@@ -25,6 +25,7 @@ public class PacketHandles implements IPacketHandling {
 	}
 
 	@Override
-	public void handleGuiPacket(PacketUpdate packet, EntityPlayer player) {
+	public void handleGuiPacket(PacketUpdate packet, EntityPlayer player,
+			World world) {
 	}
 }
