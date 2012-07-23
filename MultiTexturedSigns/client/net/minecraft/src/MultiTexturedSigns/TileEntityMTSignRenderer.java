@@ -79,8 +79,6 @@ public class TileEntityMTSignRenderer extends TileEntitySpecialRenderer {
 		if (mtstileentity instanceof TileEntityMTSign) {
 			TileEntityMTSign mtstileentitysign = (TileEntityMTSign) mtstileentity;
 			if (mtstileentitysign != null) {
-				// ModLoader.getMinecraftInstance().thePlayer.addChatMessage("Meta: "
-				// + mtstileentitysign.getMetaValue());
 				renderTileEntitySignAt(mtstileentitysign, d, d1, d2, f,
 						MultiTexturedSigns.getSignTexture(mtstileentitysign
 								.getMetaValue()));

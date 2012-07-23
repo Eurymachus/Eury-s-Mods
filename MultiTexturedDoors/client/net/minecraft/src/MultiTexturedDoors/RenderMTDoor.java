@@ -16,8 +16,8 @@ public class RenderMTDoor {
 
 	public static boolean renderDoorBlock(Block par1Block, int par2, int par3,
 			int par4, RenderBlocks renderblocks, IBlockAccess iblockaccess) {
-		Tessellator var5 = Tessellator.instance;
-		BlockMTDoor var6 = (BlockMTDoor) par1Block;
+		Tessellator tesselator = Tessellator.instance;
+		BlockMTDoor mtDoor = (BlockMTDoor) par1Block;
 		boolean var7 = false;
 		float var8 = 0.5F;
 		float var9 = 1.0F;
@@ -25,28 +25,28 @@ public class RenderMTDoor {
 		float var11 = 0.6F;
 		int var12 = par1Block.getMixedBrightnessForBlock(
 				renderblocks.blockAccess, par2, par3, par4);
-		var5.setBrightness(par1Block.minY > 0.0D ? var12 : par1Block
+		tesselator.setBrightness(par1Block.minY > 0.0D ? var12 : par1Block
 				.getMixedBrightnessForBlock(renderblocks.blockAccess, par2,
 						par3 - 1, par4));
-		var5.setColorOpaque_F(var8, var8, var8);
+		tesselator.setColorOpaque_F(var8, var8, var8);
 		renderblocks
 				.renderBottomFace(par1Block, par2, par3, par4, par1Block
 						.getBlockTexture(renderblocks.blockAccess, par2, par3,
 								par4, 0));
 		var7 = true;
-		var5.setBrightness(par1Block.maxY < 1.0D ? var12 : par1Block
+		tesselator.setBrightness(par1Block.maxY < 1.0D ? var12 : par1Block
 				.getMixedBrightnessForBlock(renderblocks.blockAccess, par2,
 						par3 + 1, par4));
-		var5.setColorOpaque_F(var9, var9, var9);
+		tesselator.setColorOpaque_F(var9, var9, var9);
 		renderblocks
 				.renderTopFace(par1Block, par2, par3, par4, par1Block
 						.getBlockTexture(renderblocks.blockAccess, par2, par3,
 								par4, 1));
 		var7 = true;
-		var5.setBrightness(par1Block.minZ > 0.0D ? var12 : par1Block
+		tesselator.setBrightness(par1Block.minZ > 0.0D ? var12 : par1Block
 				.getMixedBrightnessForBlock(renderblocks.blockAccess, par2,
 						par3, par4 - 1));
-		var5.setColorOpaque_F(var10, var10, var10);
+		tesselator.setColorOpaque_F(var10, var10, var10);
 		int var13 = par1Block.getBlockTexture(renderblocks.blockAccess, par2,
 				par3, par4, 2);
 
@@ -58,10 +58,10 @@ public class RenderMTDoor {
 		renderblocks.renderEastFace(par1Block, par2, par3, par4, var13);
 		var7 = true;
 		renderblocks.flipTexture = false;
-		var5.setBrightness(par1Block.maxZ < 1.0D ? var12 : par1Block
+		tesselator.setBrightness(par1Block.maxZ < 1.0D ? var12 : par1Block
 				.getMixedBrightnessForBlock(renderblocks.blockAccess, par2,
 						par3, par4 + 1));
-		var5.setColorOpaque_F(var10, var10, var10);
+		tesselator.setColorOpaque_F(var10, var10, var10);
 		var13 = par1Block.getBlockTexture(renderblocks.blockAccess, par2, par3,
 				par4, 3);
 
@@ -73,10 +73,10 @@ public class RenderMTDoor {
 		renderblocks.renderWestFace(par1Block, par2, par3, par4, var13);
 		var7 = true;
 		renderblocks.flipTexture = false;
-		var5.setBrightness(par1Block.minX > 0.0D ? var12 : par1Block
+		tesselator.setBrightness(par1Block.minX > 0.0D ? var12 : par1Block
 				.getMixedBrightnessForBlock(renderblocks.blockAccess, par2 - 1,
 						par3, par4));
-		var5.setColorOpaque_F(var11, var11, var11);
+		tesselator.setColorOpaque_F(var11, var11, var11);
 		var13 = par1Block.getBlockTexture(renderblocks.blockAccess, par2, par3,
 				par4, 4);
 
@@ -88,10 +88,10 @@ public class RenderMTDoor {
 		renderblocks.renderNorthFace(par1Block, par2, par3, par4, var13);
 		var7 = true;
 		renderblocks.flipTexture = false;
-		var5.setBrightness(par1Block.maxX < 1.0D ? var12 : par1Block
+		tesselator.setBrightness(par1Block.maxX < 1.0D ? var12 : par1Block
 				.getMixedBrightnessForBlock(renderblocks.blockAccess, par2 + 1,
 						par3, par4));
-		var5.setColorOpaque_F(var11, var11, var11);
+		tesselator.setColorOpaque_F(var11, var11, var11);
 		var13 = par1Block.getBlockTexture(renderblocks.blockAccess, par2, par3,
 				par4, 5);
 

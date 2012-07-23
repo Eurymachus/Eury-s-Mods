@@ -31,20 +31,20 @@ public class TileEntityMTBed extends TileEntity {
 	public void writeToNBT(NBTTagCompound nbttagcompound) {
 		super.writeToNBT(nbttagcompound);
 		nbttagcompound.setInteger("metaValue", this.getMetaValue());
-		nbttagcompound.setInteger("doorPiece", this.getBedPiece());
+		nbttagcompound.setInteger("bedPiece", this.getBedPiece());
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbttagcompound) {
 		super.readFromNBT(nbttagcompound);
 		this.setMetaValue(nbttagcompound.getInteger("metaValue"));
-		this.setBedPiece(nbttagcompound.getInteger("doorPiece"));
+		this.setBedPiece(nbttagcompound.getInteger("bedPiece"));
 	}
 
 	public PacketPayload getPacketPayload() {
 		PacketPayload p = new PacketPayload(2, 0, 0, 0);
-		p.setIntPayload(0, this.metaValue);
-		p.setIntPayload(1, this.bedPiece);
+		p.setIntPayload(0, this.getMetaValue());
+		p.setIntPayload(1, this.getBedPiece());
 		return p;
 	}
 
@@ -57,8 +57,8 @@ public class TileEntityMTBed extends TileEntity {
 	}
 
 	public void handleUpdatePacket(PacketUpdateMTBed packet, World world) {
-		this.setMetaValue(packet.getItemDamage());
 		this.setBedPiece(packet.getBedPiece());
+		this.setMetaValue(packet.getItemDamage());
 		this.onInventoryChanged();
 		world.markBlockNeedsUpdate(packet.xPosition, packet.yPosition,
 				packet.zPosition);

@@ -1,9 +1,13 @@
 package net.minecraft.src.MultiTexturedBeds;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.src.Block;
+import net.minecraft.src.Direction;
+import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.TileEntity;
+import net.minecraft.src.World;
 import net.minecraft.src.mod_MultiTexturedBeds;
 import net.minecraft.src.EurysMods.ClientCore;
 import net.minecraft.src.EurysMods.ClientProxy;
@@ -48,5 +52,58 @@ public class MultiTexturedBeds {
 			return ((TileEntityMTBed) tileentity).getMetaValue();
 		}
 		return 0;
+	}
+	public static int getMouseOver() {
+		if (mc.objectMouseOver != null) {
+			int xPosition = mc.objectMouseOver.blockX;
+			int yPosition = mc.objectMouseOver.blockY;
+			int zPosition = mc.objectMouseOver.blockZ;
+			return getDamageValue(mc.theWorld, xPosition, yPosition, zPosition);
+		}
+		return 0;
+	}
+
+	public static int getBelowPlayer(EntityPlayer player) {
+		int playerX = (int) player.posX;
+		int playerY = (int) player.posY;
+		int playerZ = (int) player.posZ;
+		return getDamageValue(mc.theWorld, playerX, playerY - 1, playerZ);
+	}
+
+	public static int getAtPlayer(EntityPlayer player) {
+		int playerX = (int) player.posX;
+		int playerY = (int) player.posY;
+		int playerZ = (int) player.posZ;
+		return getDamageValue(mc.theWorld, playerX, playerY, playerZ);
+	}
+
+	public static int getBlockTextureFromSideAndMetadata(int side, int metadata) {
+		int index = -1;
+		EntityPlayer entityplayer = mc.thePlayer;
+		if (entityplayer.onGround) {
+			index = getMouseOver();
+		}
+		if (index == -1 && entityplayer.isAirBorne) {
+			index = getMouseOver();
+		}
+		if (index == -1 && entityplayer.isAirBorne) {
+			index = getBelowPlayer(entityplayer);
+		}
+		if (index == -1 && entityplayer.isAirBorne) {
+			index = getAtPlayer(entityplayer);
+		}
+		if (index == -1) {
+			index = 0;
+		}
+		return index;
+	}
+
+	public static boolean isBlockFootOfBed(World world, int x, int y, int z) {
+		TileEntity tileentity = world.getBlockTileEntity(x, y, z);
+		if (tileentity != null && tileentity instanceof TileEntityMTBed) {
+			if (((TileEntityMTBed)tileentity).getBedPiece() == 1)
+				return true;
+		}
+		return false;
 	}
 }

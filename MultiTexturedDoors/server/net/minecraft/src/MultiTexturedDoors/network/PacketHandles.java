@@ -10,7 +10,7 @@ import net.minecraft.src.MultiTexturedDoors.TileEntityMTDoor;
 public class PacketHandles implements IPacketHandling {
 	@Override
 	public void handleTileEntityPacket(PacketUpdate packet,
-			EntityPlayer player, World world) {
+			EntityPlayer entityplayer, World world) {
 		if (packet != null && packet instanceof PacketUpdateMTDoor) {
 			PacketUpdateMTDoor doorPacket = (PacketUpdateMTDoor) packet;
 			if (!doorPacket.targetExists(world))

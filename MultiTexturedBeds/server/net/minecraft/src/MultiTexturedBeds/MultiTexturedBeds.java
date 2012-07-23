@@ -1,7 +1,9 @@
 package net.minecraft.src.MultiTexturedBeds;
 
 import net.minecraft.src.IBlockAccess;
+import net.minecraft.src.ModLoader;
 import net.minecraft.src.TileEntity;
+import net.minecraft.src.World;
 import net.minecraft.src.EurysMods.EurysCore;
 import net.minecraft.src.EurysMods.ServerCore;
 import net.minecraft.src.EurysMods.ServerProxy;
@@ -40,5 +42,18 @@ public class MultiTexturedBeds {
 			return ((TileEntityMTBed) tileentity).getMetaValue();
 		}
 		return 0;
+	}
+
+	public static int getBlockTextureFromSideAndMetadata(int side, int metadata) {
+		return 0;
+	}
+
+	public static boolean isBlockFootOfBed(World world, int x, int y, int z) {
+		TileEntity tileentity = world.getBlockTileEntity(x, y, z);
+		if (tileentity != null && tileentity instanceof TileEntityMTBed) {
+			if (((TileEntityMTBed)tileentity).getBedPiece() == 1)
+				return true;
+		}
+		return false;
 	}
 }

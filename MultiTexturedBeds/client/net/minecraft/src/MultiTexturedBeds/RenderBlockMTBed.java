@@ -9,166 +9,113 @@ import net.minecraft.src.Tessellator;
 public class RenderBlockMTBed {
 	public static boolean renderWorldBlock(RenderBlocks renderblocks,
 			IBlockAccess iblockaccess, int i, int j, int k, Block block, int l) {
-		return renderBlockMTBed(block, i, j, k, renderblocks, iblockaccess);
+		if (block.blockID == MTBedsCore.mtBlockBedID) {
+			return renderBlockMTBed(block, i, j, k, renderblocks, iblockaccess);
+		}
+		return false;
 	}
-
-	/**
-	 * render a bed at the given coordinates
-	 */
-	public static boolean renderBlockMTBed(Block par1Block, int par2, int par3,
-			int par4, RenderBlocks renderblocks, IBlockAccess iblockaccess) {
-		Tessellator var5 = Tessellator.instance;
-		int var7 = par1Block.getBedDirection(iblockaccess, par2, par3, par4);
-		boolean var8 = par1Block.isBedFoot(iblockaccess, par2, par3, par4);
+	
+	public static boolean renderBlockMTBed(Block par1Block, int x, int y,
+			int z, RenderBlocks renderblocks, IBlockAccess iblockaccess) {
+		Tessellator tessellator = Tessellator.instance;
+		BlockMTBed mtBed = (BlockMTBed)par1Block;
+		
+		int bedDirection = par1Block.getBedDirection(iblockaccess, x, y, z);
+		
+		boolean isBedFoot = par1Block.isBedFoot(iblockaccess, x, y, z);
+		
 		float var9 = 0.5F;
 		float var10 = 1.0F;
 		float var11 = 0.8F;
 		float var12 = 0.6F;
-		int var25 = par1Block.getMixedBrightnessForBlock(iblockaccess, par2,
-				par3, par4);
-		var5.setBrightness(var25);
-		var5.setColorOpaque_F(var9, var9, var9);
-		int var27 = par1Block
-				.getBlockTexture(iblockaccess, par2, par3, par4, 0);
-		int var28 = (var27 & 15) << 4;
-		int var29 = var27 & 240;
+		
+		int mixedBrightness = par1Block.getMixedBrightnessForBlock(iblockaccess, x, y, z);
+		
+		tessellator.setBrightness(mixedBrightness);
+		tessellator.setColorOpaque_F(var9, var9, var9);
+		
+		int blockTexture = par1Block.getBlockTexture(iblockaccess, x, y, z, 0);
+		
+		int var28 = (blockTexture & 15) << 4;		
+		int var29 = blockTexture & 240;
+		
 		double var30 = (var28 / 256.0F);
 		double var32 = ((var28 + 16) - 0.01D) / 256.0D;
 		double var34 = (var29 / 256.0F);
 		double var36 = ((var29 + 16) - 0.01D) / 256.0D;
-		double var38 = par2 + par1Block.minX;
-		double var40 = par2 + par1Block.maxX;
-		double var42 = par3 + par1Block.minY + 0.1875D;
-		double var44 = par4 + par1Block.minZ;
-		double var46 = par4 + par1Block.maxZ;
-		var5.addVertexWithUV(var38, var42, var46, var30, var36);
-		var5.addVertexWithUV(var38, var42, var44, var30, var34);
-		var5.addVertexWithUV(var40, var42, var44, var32, var34);
-		var5.addVertexWithUV(var40, var42, var46, var32, var36);
-		var5.setBrightness(par1Block.getMixedBrightnessForBlock(iblockaccess,
-				par2, par3 + 1, par4));
-		var5.setColorOpaque_F(var10, var10, var10);
-		var27 = par1Block.getBlockTexture(iblockaccess, par2, par3, par4, 1);
-		var28 = (var27 & 15) << 4;
-		var29 = var27 & 240;
-		var30 = (var28 / 256.0F);
-		var32 = ((var28 + 16) - 0.01D) / 256.0D;
-		var34 = (var29 / 256.0F);
-		var36 = ((var29 + 16) - 0.01D) / 256.0D;
-		var38 = var30;
-		var40 = var32;
-		var42 = var34;
-		var44 = var34;
-		var46 = var30;
-		double var48 = var32;
-		double var50 = var36;
-		double var52 = var36;
-
-		if (var7 == 0) {
-			var40 = var30;
-			var42 = var36;
-			var46 = var32;
-			var52 = var34;
-		} else if (var7 == 2) {
-			var38 = var32;
-			var44 = var36;
-			var48 = var30;
-			var50 = var34;
-		} else if (var7 == 3) {
-			var38 = var32;
-			var44 = var36;
-			var48 = var30;
-			var50 = var34;
-			var40 = var30;
-			var42 = var36;
-			var46 = var32;
-			var52 = var34;
+		double var38 = x + mtBed.minX;
+		double var40 = x + mtBed.maxX;
+		double var42 = y + mtBed.minY + 0.1875D;
+		double var44 = z + mtBed.minZ;
+		double var46 = z + mtBed.maxZ;
+		
+		tessellator.addVertexWithUV(var38, var42, var46, var30, var36);
+		tessellator.addVertexWithUV(var38, var42, var44, var30, var34);
+		tessellator.addVertexWithUV(var40, var42, var44, var32, var34);
+		tessellator.addVertexWithUV(var40, var42, var46, var32, var36);
+		tessellator.setBrightness(par1Block.getMixedBrightnessForBlock(iblockaccess, x, y + 1, z));
+		tessellator.setColorOpaque_F(var10, var10, var10);
+		int rotation = renderblocks.uvRotateTop;
+		if (bedDirection == 0) {
+			renderblocks.uvRotateTop = 1;
+		} else if (bedDirection == 1) {
+			renderblocks.uvRotateTop = 3;
+		} else if (bedDirection == 2) {
+			renderblocks.uvRotateTop = 2;
+		} else if (bedDirection == 3) {
+			renderblocks.uvRotateTop = 4;
 		}
+		renderblocks.renderTopFace(par1Block, x, y, z, par1Block
+				.getBlockTexture(renderblocks.blockAccess, x, y,
+						z, 1));
+		renderblocks.uvRotateTop = rotation;
+		blockTexture = Direction.headInvisibleFace[bedDirection];
 
-		double var54 = par2 + par1Block.minX;
-		double var56 = par2 + par1Block.maxX;
-		double var58 = par3 + par1Block.maxY;
-		double var60 = par4 + par1Block.minZ;
-		double var62 = par4 + par1Block.maxZ;
-		var5.addVertexWithUV(var56, var58, var62, var46, var50);
-		var5.addVertexWithUV(var56, var58, var60, var38, var42);
-		var5.addVertexWithUV(var54, var58, var60, var40, var44);
-		var5.addVertexWithUV(var54, var58, var62, var48, var52);
-		var27 = Direction.headInvisibleFace[var7];
-
-		if (var8) {
-			var27 = Direction.headInvisibleFace[Direction.footInvisibleFaceRemap[var7]];
+		if (isBedFoot) {
+			blockTexture = Direction.headInvisibleFace[Direction.footInvisibleFaceRemap[bedDirection]];
 		}
 
 		byte var64 = 4;
 
-		switch (var7) {
-		case 0:
-			var64 = 5;
-			break;
-		case 1:
-			var64 = 3;
-		case 2:
-		default:
-			break;
-		case 3:
-			var64 = 2;
+		switch (bedDirection) {
+			case 0:
+				var64 = 5;
+				break;
+			case 1:
+				var64 = 3;
+			case 2:
+			default:
+				break;
+			case 3:
+				var64 = 2;
 		}
 
-		if (var27 != 2
-				&& (renderblocks.renderAllFaces || par1Block
-						.shouldSideBeRendered(iblockaccess, par2, par3,
-								par4 - 1, 2))) {
-			var5.setBrightness(par1Block.minZ > 0.0D ? var25 : par1Block
-					.getMixedBrightnessForBlock(iblockaccess, par2, par3,
-							par4 - 1));
-			var5.setColorOpaque_F(var11, var11, var11);
+		if (blockTexture != 2 && (renderblocks.renderAllFaces || par1Block.shouldSideBeRendered(iblockaccess, x, y,	z - 1, 2))) {
+			tessellator.setBrightness(par1Block.minZ > 0.0D ? mixedBrightness : par1Block.getMixedBrightnessForBlock(iblockaccess, x, y, z - 1));
+			tessellator.setColorOpaque_F(var11, var11, var11);
 			renderblocks.flipTexture = var64 == 2;
-			renderblocks.renderEastFace(par1Block, par2,
-					par3, par4, par1Block.getBlockTexture(
-							iblockaccess, par2, par3, par4, 2));
+			renderblocks.renderEastFace(par1Block, x, y, z, par1Block.getBlockTexture(iblockaccess, x, y, z, 2));
 		}
 
-		if (var27 != 3
-				&& (renderblocks.renderAllFaces || par1Block
-						.shouldSideBeRendered(iblockaccess, par2, par3,
-								par4 + 1, 3))) {
-			var5.setBrightness(par1Block.maxZ < 1.0D ? var25 : par1Block
-					.getMixedBrightnessForBlock(iblockaccess, par2, par3,
-							par4 + 1));
-			var5.setColorOpaque_F(var11, var11, var11);
+		if (blockTexture != 3 && (renderblocks.renderAllFaces || par1Block.shouldSideBeRendered(iblockaccess, x, y,	z + 1, 3))) {
+			tessellator.setBrightness(par1Block.maxZ < 1.0D ? mixedBrightness : par1Block.getMixedBrightnessForBlock(iblockaccess, x, y, z + 1));
+			tessellator.setColorOpaque_F(var11, var11, var11);
 			renderblocks.flipTexture = var64 == 3;
-			renderblocks.renderWestFace(par1Block, par2,
-					par3, par4, par1Block.getBlockTexture(
-							iblockaccess, par2, par3, par4, 3));
+			renderblocks.renderWestFace(par1Block, x, y, z, par1Block.getBlockTexture(iblockaccess, x, y, z, 3));
 		}
 
-		if (var27 != 4
-				&& (renderblocks.renderAllFaces || par1Block
-						.shouldSideBeRendered(iblockaccess, par2 - 1, par3,
-								par4, 4))) {
-			var5.setBrightness(par1Block.minZ > 0.0D ? var25 : par1Block
-					.getMixedBrightnessForBlock(iblockaccess, par2 - 1, par3,
-							par4));
-			var5.setColorOpaque_F(var12, var12, var12);
+		if (blockTexture != 4 && (renderblocks.renderAllFaces || par1Block.shouldSideBeRendered(iblockaccess, x - 1, y, z, 4))) {
+			tessellator.setBrightness(par1Block.minZ > 0.0D ? mixedBrightness : par1Block.getMixedBrightnessForBlock(iblockaccess, x - 1, y, z));
+			tessellator.setColorOpaque_F(var12, var12, var12);
 			renderblocks.flipTexture = var64 == 4;
-			renderblocks.renderNorthFace(par1Block, par2,
-					par3, par4, par1Block.getBlockTexture(
-							iblockaccess, par2, par3, par4, 4));
+			renderblocks.renderNorthFace(par1Block, x, y, z, par1Block.getBlockTexture(iblockaccess, x, y, z, 4));
 		}
 
-		if (var27 != 5
-				&& (renderblocks.renderAllFaces || par1Block
-						.shouldSideBeRendered(iblockaccess, par2 + 1, par3,
-								par4, 5))) {
-			var5.setBrightness(par1Block.maxZ < 1.0D ? var25 : par1Block
-					.getMixedBrightnessForBlock(iblockaccess, par2 + 1, par3,
-							par4));
-			var5.setColorOpaque_F(var12, var12, var12);
+		if (blockTexture != 5 && (renderblocks.renderAllFaces || par1Block.shouldSideBeRendered(iblockaccess, x + 1, y, z, 5))) {
+			tessellator.setBrightness(par1Block.maxZ < 1.0D ? mixedBrightness : par1Block.getMixedBrightnessForBlock(iblockaccess, x + 1, y, z));
+			tessellator.setColorOpaque_F(var12, var12, var12);
 			renderblocks.flipTexture = var64 == 5;
-			renderblocks.renderSouthFace(par1Block, par2,
-					par3, par4, par1Block.getBlockTexture(
-							iblockaccess, par2, par3, par4, 5));
+			renderblocks.renderSouthFace(par1Block, x, y, z, par1Block.getBlockTexture(iblockaccess, x, y, z, 5));
 		}
 
 		renderblocks.flipTexture = false;
