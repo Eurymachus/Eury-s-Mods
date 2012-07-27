@@ -27,6 +27,12 @@ public class PacketPayload {
 		return result;
 	}
 
+	public static double[] concat(double[] first, double[] second) {
+		double[] result = Arrays.copyOf(first, first.length + second.length);
+		System.arraycopy(second, 0, result, first.length, second.length);
+		return result;
+	}
+
 	public static boolean[] concat(boolean[] first, boolean[] second) {
 		boolean[] result = Arrays.copyOf(first, first.length + second.length);
 		System.arraycopy(second, 0, result, first.length, second.length);
@@ -47,6 +53,11 @@ public class PacketPayload {
 	 * Array of String values
 	 */
 	private String[] stringPayload;
+
+	/**
+	 * Array of double values
+	 */
+	private double[] doublePayload;
 
 	/**
 	 * Array of boolean values
@@ -75,6 +86,17 @@ public class PacketPayload {
 	public int getFloatSize() {
 		if (this.floatPayload != null)
 			return this.floatPayload.length;
+		return 0;
+	}
+
+	/**
+	 * Retrieves the doublePayload size
+	 * 
+	 * @return doublePayload.length or 0 if null
+	 */
+	public int getDoubleSize() {
+		if (this.doublePayload != null)
+			return this.doublePayload.length;
 		return 0;
 	}
 
@@ -129,6 +151,23 @@ public class PacketPayload {
 	public boolean setFloatPayload(int index, float newFloat) {
 		if (this.floatPayload != null && index < this.getFloatSize()) {
 			this.floatPayload[index] = newFloat;
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Adds a new double value to doublePayload
+	 * 
+	 * @param index
+	 *            The index in the array
+	 * @param newDouble
+	 *            The value to be added
+	 * @return true if successful or false if unsuccessful
+	 */
+	public boolean setDoublePayload(int index, double newDouble) {
+		if (this.doublePayload != null && index < this.getDoubleSize()) {
+			this.doublePayload[index] = newDouble;
 			return true;
 		}
 		return false;
@@ -195,6 +234,19 @@ public class PacketPayload {
 	}
 
 	/**
+	 * Retrieves a double value stored in doublePayload
+	 * 
+	 * @param index
+	 *            The index in the array
+	 * @return doublePayload[index] or 0 if null
+	 */
+	public double getDoublePayload(int index) {
+		if (this.doublePayload != null && index < this.getDoubleSize())
+			return this.doublePayload[index];
+		return 0;
+	}
+
+	/**
 	 * Retrieves a String value stored in stringPayload
 	 * 
 	 * @param index
@@ -241,6 +293,26 @@ public class PacketPayload {
 		this.boolPayload = new boolean[boolSize];
 	}
 
+	/**
+	 * Constructor Create a new PacketPayload
+	 * 
+	 * @param intSize
+	 *            The size of the new intPayload array
+	 * @param floatSize
+	 *            The size of the new floatPayload array
+	 * @param stringSize
+	 *            The size of the new stringPayload array
+	 * @param boolSize
+	 *            The size of the new boolPayload array
+	 * @param doubleSize
+	 *            The size of the new doublePayload array
+	 */
+	public PacketPayload(int intSize, int floatSize, int stringSize,
+			int boolSize, int doubleSize) {
+		this(intSize, floatSize, stringSize, boolSize);
+		this.doublePayload = new double[doubleSize];
+	}
+
 	public void append(PacketPayload other) {
 		if (other == null)
 			return;
@@ -249,6 +321,8 @@ public class PacketPayload {
 			this.intPayload = concat(this.intPayload, other.intPayload);
 		if (other.floatPayload.length > 0)
 			this.floatPayload = concat(this.floatPayload, other.floatPayload);
+		if (other.doublePayload.length > 0)
+			this.doublePayload = concat(this.doublePayload, other.doublePayload);
 		if (other.stringPayload.length > 0)
 			this.stringPayload = concat(this.stringPayload, other.stringPayload);
 		if (other.boolPayload.length > 0)
@@ -274,6 +348,9 @@ public class PacketPayload {
 		if (floatPayload.length > 0)
 			System.arraycopy(floatPayload, index.floatIndex,
 					payload.floatPayload, 0, payload.floatPayload.length);
+		if (doublePayload.length > 0)
+			System.arraycopy(doublePayload, index.doubleIndex,
+					payload.doublePayload, 0, payload.doublePayload.length);
 		if (stringPayload.length > 0)
 			System.arraycopy(stringPayload, index.stringIndex,
 					payload.stringPayload, 0, payload.stringPayload.length);

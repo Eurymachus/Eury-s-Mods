@@ -6,7 +6,7 @@ import net.minecraft.src.ModLoader;
 import net.minecraft.src.EurysMods.core.ICore;
 
 public class EurysCore {
-	public static String version = "v1.1";
+	public static String version = "v1.2";
 	public static ICore EurysCore;
 	private static boolean initialized = false;
 

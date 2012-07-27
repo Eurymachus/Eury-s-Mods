@@ -85,6 +85,7 @@ public class PacketUpdate extends EurysPacket {
 			data.writeInt(0);
 			data.writeInt(0);
 			data.writeInt(0);
+			data.writeInt(0);
 			return;
 		}
 
@@ -92,6 +93,7 @@ public class PacketUpdate extends EurysPacket {
 		data.writeInt(this.payload.getFloatSize());
 		data.writeInt(this.payload.getStringSize());
 		data.writeInt(this.payload.getBoolSize());
+		data.writeInt(this.payload.getDoubleSize());
 
 		for (int i = 0; i < this.payload.getIntSize(); i++)
 			data.writeInt(this.payload.getIntPayload(i));
@@ -101,6 +103,8 @@ public class PacketUpdate extends EurysPacket {
 			data.writeUTF(this.payload.getStringPayload(i));
 		for (int i = 0; i < this.payload.getBoolSize(); i++)
 			data.writeBoolean(this.payload.getBoolPayload(i));
+		for (int i = 0; i < this.payload.getDoubleSize(); i++)
+			data.writeDouble(this.payload.getDoublePayload(i));
 	}
 
 	@Override
@@ -116,9 +120,10 @@ public class PacketUpdate extends EurysPacket {
 		int floatSize = data.readInt();
 		int stringSize = data.readInt();
 		int boolSize = data.readInt();
+		int doubleSize = data.readInt();
 
 		this.payload = new PacketPayload(intSize, floatSize, stringSize,
-				boolSize);
+				boolSize, doubleSize);
 
 		for (int i = 0; i < this.payload.getIntSize(); i++)
 			this.payload.setIntPayload(i, data.readInt());
@@ -128,6 +133,8 @@ public class PacketUpdate extends EurysPacket {
 			this.payload.setStringPayload(i, data.readUTF());
 		for (int i = 0; i < this.payload.getBoolSize(); i++)
 			this.payload.setBoolPayload(i, data.readBoolean());
+		for (int i = 0; i < this.payload.getDoubleSize(); i++)
+			this.payload.setDoublePayload(i, data.readDouble());
 	}
 
 	public boolean targetExists(World world) {
