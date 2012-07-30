@@ -35,11 +35,10 @@ public class PaintingChooser {
 		PChooserCore.addRecipes();
 	}
 
-	public static void openGui(World world, EntityPlayer entityplayer, ArrayList numberOfPaintings, EntityPaintings entityPaintings) {
+	public static void openGui(World world, EntityPlayer entityplayer, EntityPaintings entitypaintings, ArrayList artList) {
 		if (!world.isRemote) {
-			PacketPaintingGui guiPacket = new PacketPaintingGui(entityPaintings);
+			PacketPaintingGui guiPacket = new PacketPaintingGui(entitypaintings, artList);
 			PChooser.getProxy().sendPacket(entityplayer, guiPacket.getPacket());
 		}
 	}
-
 }

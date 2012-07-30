@@ -1,6 +1,9 @@
 package net.minecraft.src.PaintingChooser.network;
 
+import java.util.ArrayList;
+
 import net.minecraft.src.Entity;
+import net.minecraft.src.EnumArt;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.EurysMods.network.PacketIds;
@@ -14,31 +17,43 @@ public class PacketPaintingGui extends PacketPainting {
 		super(PacketIds.PAINTING_GUI);
 	}
 
-	public PacketPaintingGui(EntityPaintings entitypaintings) {
+	public PacketPaintingGui(EntityPaintings entitypaintings, ArrayList artList) {
 		this();
-		this.payload = new PacketPayload(2, 0, 0, 0);
+		this.payload = new PacketPayload(2, 0, artList.size(), 0);
 		this.xPosition = entitypaintings.xPosition;
 		this.yPosition = entitypaintings.yPosition;
 		this.zPosition = entitypaintings.zPosition;
 		this.setEntityId(entitypaintings.entityId);
 		ModLoader.getLogger().warning("EntityID: " + this.getEntityId());
-		this.setDirection(entitypaintings.direction);
+		this.setArtList(artList);
 		this.isChunkDataPacket = true;
 	}
 
 	public void setEntityId(int entityId) {
 		this.payload.setIntPayload(0, entityId);
 	}
-
-	public void setDirection(int direction) {
-		this.payload.setIntPayload(1, direction);
-	}
 	
 	public int getEntityId() {
 		return this.payload.getIntPayload(0);
 	}
 	
-	public int getDirection() {
-		return this.payload.getIntPayload(1);
+	public void setArtList(ArrayList artList) {
+		for (int i = 0; i < artList.size(); i++) {
+			EnumArt art = (EnumArt)artList.get(i);
+			this.payload.setStringPayload(i, art.title);
+		}
+	}
+	
+	public ArrayList getArtList() {
+		ArrayList artList = new ArrayList();
+		EnumArt[] art = EnumArt.values();
+		for (int i = 0; i < this.payload.getStringSize(); i++) {
+			for (int j = 0; j < art.length; j++) {
+				if (this.payload.getStringPayload(i).equals(art[j].sizeY)) {
+					artList.add(art[j]);
+				}
+			}
+		}
+		return artList;
 	}
 }

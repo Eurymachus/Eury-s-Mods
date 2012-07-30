@@ -24,32 +24,16 @@ public class PacketHandles implements IPaintingPacketHandling {
 	@Override
 	public void handleGuiPacket(PacketUpdate packet, EntityPlayer entityplayer,
 			World world) {
-		int entityId = ((PacketPaintingGui)packet).getEntityId();
-		int direction = ((PacketPaintingGui)packet).getDirection();
-		Entity entity = PaintingChooser.getEntityByID(entityId);
-		if (entity != null) {
-			EntityPaintings entitypaintings = (EntityPaintings)entity;
-			ArrayList artList = new ArrayList();
-	        EnumArt[] enumart = EnumArt.values();
-	        int enumartlength = enumart.length;
-
-	        for (int i = 0; i < enumartlength; ++i)
-	        {
-	            EnumArt currentArt = enumart[i];
-	            entitypaintings.art = currentArt;
-	            entitypaintings.setDirection(direction);
-
-	            if (entitypaintings.onValidSurface())
-	            {
-	                artList.add(currentArt);
-	            }
-	        }
-
-	        if (artList.size() > 0)
-	        {
-	        	entitypaintings.art = (EnumArt)artList.get(0);
-	        	ModLoader.openGUI(entityplayer, new GuiPainting(artList, entitypaintings));
-	        }
+		if (packet instanceof PacketPaintingGui) {
+			PacketPaintingGui guiPacket = (PacketPaintingGui)packet;
+			int entityId = guiPacket.getEntityId();
+			Entity entity = PaintingChooser.getEntityByID(entityId);
+			ModLoader.getLogger().warning("Entity: " + entity);
+			if (entity != null && entity instanceof EntityPaintings) {
+				EntityPaintings entitypaintings = (EntityPaintings)entity;
+				ArrayList artList = guiPacket.getArtList();
+	        	ModLoader.openGUI(entityplayer, new GuiPainting(entitypaintings, artList));
+			}
 		}
 	}
 

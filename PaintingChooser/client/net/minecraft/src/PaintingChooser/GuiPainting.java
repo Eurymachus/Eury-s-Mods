@@ -16,10 +16,10 @@ public class GuiPainting extends GuiScreen
     private ArrayList possiblePaintings;
     public EnumArt allArt;
 
-    public GuiPainting(ArrayList var1, EntityPaintings var2)
+    public GuiPainting(EntityPaintings entitypaintings, ArrayList artList)
     {
-        this.myPainting = var2;
-        this.possiblePaintings = var1;
+        this.myPainting = entitypaintings;
+        this.possiblePaintings = artList;
         this.selected = EnumArt.Kebab;
     }
 

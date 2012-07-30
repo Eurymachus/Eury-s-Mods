@@ -41,16 +41,17 @@ public class EntityPaintings extends EntityPainting
 
         if (artList.size() > 0)
         {
-            this.art = (EnumArt)artList.get(1);
-            PaintingChooser.openGui(world, entityplayer, artList, this);
+            this.art = (EnumArt)artList.get(0);
+            PaintingChooser.openGui(world, entityplayer, this, artList);
         }
-
+        
         this.setDirection(facing);
     }
 
-    public void setPainting(EnumArt var1)
+    public void setPainting(EnumArt enumart)
     {
-        this.art = var1;
+    	ModLoader.getLogger().warning("Setting Painting to: " + enumart.title);
+        this.art = enumart;
         this.setDirection(this.direction);
     }
 
