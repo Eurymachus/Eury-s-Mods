@@ -1,7 +1,11 @@
 package net.minecraft.src;
 
+import java.util.Map;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Elevators.ElevatorsCore;
+import net.minecraft.src.Elevators.EntityElevator;
+import net.minecraft.src.Elevators.RenderElevator;
 import net.minecraft.src.forge.NetworkMod;
 
 public class mod_Elevator extends NetworkMod {
@@ -45,6 +49,11 @@ public class mod_Elevator extends NetworkMod {
 		}
 
 		return true;
+	}
+
+	@Override
+	public void addRenderer(Map var1) {
+		var1.put(EntityElevator.class, new RenderElevator());
 	}
 
 	@Override

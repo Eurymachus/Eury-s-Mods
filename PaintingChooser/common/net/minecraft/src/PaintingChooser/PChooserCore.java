@@ -12,6 +12,7 @@ import net.minecraft.src.ModLoader;
 import net.minecraft.src.ShapedRecipes;
 import net.minecraft.src.mod_PaintingChooser;
 import net.minecraft.src.EurysMods.EurysCore;
+import net.minecraft.src.PaintingChooser.network.NetworkConnection;
 import net.minecraft.src.forge.Configuration;
 import net.minecraft.src.forge.MinecraftForge;
 
@@ -27,11 +28,11 @@ public class PChooserCore {
 
 	public static void initialize() {
 		PaintingChooser.initialize();
+		MinecraftForge.registerConnectionHandler(new NetworkConnection());
 	}
 	
 	public static void addItems() {
-		entityPaintingsID = ModLoader.getUniqueEntityId();
-		itemPaintingsID = configurationProperties();
+		entityPaintingsID = configurationProperties();
 		MinecraftForge.registerEntity(EntityPaintings.class, mod_PaintingChooser.instance, entityPaintingsID, 16, 16, false);
 		itemPaintings = (new ItemPaintings(itemPaintingsID - 256)).setItemName("itemPaintings");
 	}
@@ -62,6 +63,8 @@ public class PChooserCore {
 	
 	public static int configurationProperties() {
 		configuration.load();
+		entityPaintingsID = Integer.parseInt(configuration
+				.getOrCreateIntProperty("entityPaintingsID", Configuration.CATEGORY_GENERAL, 221).value);
 		itemPaintingsID = Integer.parseInt(configuration
 				.getOrCreateIntProperty("itemPaintingsID", Configuration.CATEGORY_ITEM, 7006).value);
 		configuration.save();

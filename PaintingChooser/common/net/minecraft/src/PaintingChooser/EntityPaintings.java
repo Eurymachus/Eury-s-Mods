@@ -14,10 +14,6 @@ public class EntityPaintings extends EntityPainting
     public EntityPaintings(World world)
     {
         super(world);
-        this.tickCounter1 = 0;
-        this.direction = 0;
-        this.yOffset = 0.0F;
-        this.setSize(0.5F, 0.5F);
     }
 
     public EntityPaintings(World world, EntityPlayer entityplayer, int x, int y, int z, int facing)
@@ -45,7 +41,7 @@ public class EntityPaintings extends EntityPainting
 
         if (artList.size() > 0)
         {
-            this.art = (EnumArt)artList.get(0);
+            this.art = (EnumArt)artList.get(1);
             PaintingChooser.openGui(world, entityplayer, artList, this);
         }
 

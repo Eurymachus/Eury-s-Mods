@@ -1,6 +1,7 @@
 package net.minecraft.src.PaintingChooser.network;
 
 import net.minecraft.src.Entity;
+import net.minecraft.src.ModLoader;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.EurysMods.network.PacketIds;
 import net.minecraft.src.EurysMods.network.PacketPayload;
@@ -15,12 +16,12 @@ public class PacketPaintingGui extends PacketPainting {
 
 	public PacketPaintingGui(EntityPaintings entitypaintings) {
 		this();
-
 		this.payload = new PacketPayload(2, 0, 0, 0);
 		this.xPosition = entitypaintings.xPosition;
 		this.yPosition = entitypaintings.yPosition;
 		this.zPosition = entitypaintings.zPosition;
 		this.setEntityId(entitypaintings.entityId);
+		ModLoader.getLogger().warning("EntityID: " + this.getEntityId());
 		this.setDirection(entitypaintings.direction);
 		this.isChunkDataPacket = true;
 	}

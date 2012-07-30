@@ -1,6 +1,10 @@
 package net.minecraft.src;
 
+import java.util.Map;
+
+import net.minecraft.src.PaintingChooser.EntityPaintings;
 import net.minecraft.src.PaintingChooser.PChooserCore;
+import net.minecraft.src.PaintingChooser.RenderPaintings;
 import net.minecraft.src.forge.NetworkMod;
 
 public class mod_PaintingChooser extends NetworkMod {
@@ -37,5 +41,10 @@ public class mod_PaintingChooser extends NetworkMod {
 	@Override
 	public boolean serverSideRequired() {
 		return false;
+	}
+
+	@Override
+	public void addRenderer(Map rendermap) {
+		rendermap.put(EntityPaintings.class, new RenderPaintings());
 	}
 }

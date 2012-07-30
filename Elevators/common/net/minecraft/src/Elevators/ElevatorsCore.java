@@ -31,7 +31,7 @@ public class ElevatorsCore {
 
 	public static String version = "1.6.0";
 	private static Props props = new Props((new File(Elevators.minecraftDir
-			+ "config/" + "mod_Elevator.cfg")).getPath());
+			+ "config/" + "Elevator.cfg")).getPath());
 	public static HashMap elevatorRequests = new HashMap();
 	static int OFFSET = 256;
 	static byte NOUPDATE = -1;
@@ -83,9 +83,6 @@ public class ElevatorsCore {
 		ModLoader.registerEntityID(EntityElevator.class, "ironclad_elevator",
 				elevator_entityID);
 		MinecraftForge.registerConnectionHandler(new NetworkConnection());
-		// ModLoaderMp.registerEntityTrackerEntry(EntityElevator.class,
-		// elevator_entityID);
-		// ModLoaderMp.registerEntityTracker(EntityElevator.class, 160, 1);
 	}
 
 	public static void addItems() {

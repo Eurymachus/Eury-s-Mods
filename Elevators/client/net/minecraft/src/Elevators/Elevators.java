@@ -90,10 +90,6 @@ public class Elevators {
 		}
 	}
 
-	public void addRenderer(Map var1) {
-		var1.put(EntityElevator.class, new RenderElevator());
-	}
-
 	public static void sendPacketToAll(PacketUpdate packet, int x, int y, int z) {
 	}
 }

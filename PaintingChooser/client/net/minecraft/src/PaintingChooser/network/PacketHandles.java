@@ -27,7 +27,7 @@ public class PacketHandles implements IPaintingPacketHandling {
 		int entityId = ((PacketPaintingGui)packet).getEntityId();
 		int direction = ((PacketPaintingGui)packet).getDirection();
 		Entity entity = PaintingChooser.getEntityByID(entityId);
-		if (entity instanceof EntityPaintings) {
+		if (entity != null) {
 			EntityPaintings entitypaintings = (EntityPaintings)entity;
 			ArrayList artList = new ArrayList();
 	        EnumArt[] enumart = EnumArt.values();
