@@ -14,4 +14,6 @@ public class PacketIds {
 	public static final int MTPPLATE_UPDATE = 4;
 	public static final int MTDOOR_UPDATE = 5;
 	public static final int MTBED_UPDATE = 6;
+	public static final int PAINTING_UPDATE = 7;
+	public static final int PAINTING_GUI = 8;
 }

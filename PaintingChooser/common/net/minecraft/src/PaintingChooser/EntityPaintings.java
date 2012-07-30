@@ -4,49 +4,52 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.minecraft.src.*;
+import net.minecraft.src.EurysMods.network.PacketPayload;
 
 public class EntityPaintings extends EntityPainting
 {
     private int tickCounter1;
+    protected EntityPlayer owner;
 
-    public EntityPaintings(World par1World)
+    public EntityPaintings(World world)
     {
-        super(par1World);
+        super(world);
         this.tickCounter1 = 0;
         this.direction = 0;
         this.yOffset = 0.0F;
         this.setSize(0.5F, 0.5F);
     }
 
-    public EntityPaintings(World par1World, int par2, int par3, int par4, int par5)
+    public EntityPaintings(World world, EntityPlayer entityplayer, int x, int y, int z, int facing)
     {
-        this(par1World);
-        this.xPosition = par2;
-        this.yPosition = par3;
-        this.zPosition = par4;
-        ArrayList var6 = new ArrayList();
-        EnumArt[] var7 = EnumArt.values();
-        int var8 = var7.length;
+        this(world);
+        this.xPosition = x;
+        this.yPosition = y;
+        this.zPosition = z;
+        this.owner = entityplayer;
+        ArrayList artList = new ArrayList();
+        EnumArt[] enumart = EnumArt.values();
+        int enumartlength = enumart.length;
 
-        for (int var9 = 0; var9 < var8; ++var9)
+        for (int i = 0; i < enumartlength; ++i)
         {
-            EnumArt var10 = var7[var9];
-            this.art = var10;
-            this.setDirection(par5);
+            EnumArt currentArt = enumart[i];
+            this.art = currentArt;
+            this.setDirection(facing);
 
             if (this.onValidSurface())
             {
-                var6.add(var10);
+                artList.add(currentArt);
             }
         }
 
-        if (var6.size() > 0)
+        if (artList.size() > 0)
         {
-            this.art = (EnumArt)var6.get(0);
-            PaintingChooser.openGui(par1World,var6, this);
+            this.art = (EnumArt)artList.get(0);
+            PaintingChooser.openGui(world, entityplayer, artList, this);
         }
 
-        this.setDirection(par5);
+        this.setDirection(facing);
     }
 
     public void setPainting(EnumArt var1)

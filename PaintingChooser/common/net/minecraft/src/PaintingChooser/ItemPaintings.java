@@ -53,7 +53,7 @@ public class ItemPaintings extends Item
             }
             else
             {
-                EntityPaintings var9 = new EntityPaintings(par3World, par4, par5, par6, var8);
+                EntityPaintings var9 = new EntityPaintings(par3World, par2EntityPlayer, par4, par5, par6, var8);
 
                 if (var9.onValidSurface())
                 {
