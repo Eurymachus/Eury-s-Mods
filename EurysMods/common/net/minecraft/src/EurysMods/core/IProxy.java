@@ -7,6 +7,8 @@ import net.minecraft.src.World;
 import net.minecraft.src.forge.NetworkMod;
 
 public interface IProxy {
+	public boolean isClient = false;
+
 	public void sendPacket(EntityPlayer entityplayer, Packet packet);
 
 	public void sendPacketToAll(Packet packet, int x, int y, int z,

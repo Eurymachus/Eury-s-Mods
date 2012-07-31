@@ -23,8 +23,7 @@ public class RenderPaintings extends Render
         EnumArt var10 = par1EntityPaintings.art;
         float var11 = 0.0625F;
         GL11.glScalef(var11, var11, var11);
-        if (var10 != null)
-        	this.func_159_a(par1EntityPaintings, var10.sizeX, var10.sizeY, var10.offsetX, var10.offsetY);
+       	this.func_159_a(par1EntityPaintings, var10.sizeX, var10.sizeY, var10.offsetX, var10.offsetY);
         GL11.glDisable(GL12.GL_RESCALE_NORMAL);
         GL11.glPopMatrix();
     }

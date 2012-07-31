@@ -34,7 +34,7 @@ public class PChooserCore {
 	public static void addItems() {
 		entityPaintingsID = configurationProperties();
 		itemPaintings = (new ItemPaintings(itemPaintingsID - 256)).setItemName("itemPaintings");
-		MinecraftForge.registerEntity(EntityPaintings.class, mod_PaintingChooser.instance, entityPaintingsID, 16, 16, false);
+		MinecraftForge.registerEntity(EntityPaintings.class, mod_PaintingChooser.instance, entityPaintingsID, 16, 16, true);
 	}
 
 	public static void addNames() {
@@ -64,7 +64,7 @@ public class PChooserCore {
 	public static int configurationProperties() {
 		configuration.load();
 		entityPaintingsID = Integer.parseInt(configuration
-				.getOrCreateIntProperty("entityPaintingsID", Configuration.CATEGORY_GENERAL, 221).value);
+				.getOrCreateIntProperty("entityPaintingsID", Configuration.CATEGORY_GENERAL, ModLoader.getUniqueEntityId()).value);
 		itemPaintingsID = Integer.parseInt(configuration
 				.getOrCreateIntProperty("itemPaintingsID", Configuration.CATEGORY_ITEM, 7006).value);
 		configuration.save();

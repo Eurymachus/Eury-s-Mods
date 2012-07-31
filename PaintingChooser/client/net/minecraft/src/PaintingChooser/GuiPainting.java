@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.src.*;
+import net.minecraft.src.PaintingChooser.network.PacketUpdatePainting;
 
 import org.lwjgl.opengl.GL11;
 
@@ -104,6 +105,16 @@ public class GuiPainting extends GuiScreen
             this.mc.thePlayer.closeScreen();
         }
     }
+    
+    protected void setPainting(EnumArt enumart) {
+    	if (!this.mc.theWorld.isRemote) {
+            this.myPainting.setPainting(enumart);
+    	} else {
+    		PacketUpdatePainting paintingPacket = new PacketUpdatePainting(this.myPainting, "SETPAINTING");
+    		paintingPacket.setArtTitle(enumart.title);
+    		PaintingChooser.PChooser.getProxy().sendPacket(this.mc.thePlayer, paintingPacket.getPacket());
+    	}
+    }
 
     /**
      * Fired when a control is clicked. This is the equivalent of ActionListener.actionPerformed(ActionEvent e).
@@ -114,157 +125,157 @@ public class GuiPainting extends GuiScreen
         {
             if (var1.id == 0)
             {
-                this.myPainting.setPainting((EnumArt)this.possiblePaintings.get((new Random()).nextInt(this.possiblePaintings.size())));
+                this.setPainting((EnumArt)this.possiblePaintings.get((new Random()).nextInt(this.possiblePaintings.size())));
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 1)
             {
-                this.myPainting.setPainting(EnumArt.Kebab);
+                this.setPainting(EnumArt.Kebab);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 2)
             {
-                this.myPainting.setPainting(EnumArt.Aztec);
+                this.setPainting(EnumArt.Aztec);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 3)
             {
-                this.myPainting.setPainting(EnumArt.Alban);
+                this.setPainting(EnumArt.Alban);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 4)
             {
-                this.myPainting.setPainting(EnumArt.Aztec2);
+                this.setPainting(EnumArt.Aztec2);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 5)
             {
-                this.myPainting.setPainting(EnumArt.Bomb);
+                this.setPainting(EnumArt.Bomb);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 6)
             {
-                this.myPainting.setPainting(EnumArt.Plant);
+                this.setPainting(EnumArt.Plant);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 7)
             {
-                this.myPainting.setPainting(EnumArt.Wasteland);
+                this.setPainting(EnumArt.Wasteland);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 8)
             {
-                this.myPainting.setPainting(EnumArt.Pool);
+                this.setPainting(EnumArt.Pool);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 9)
             {
-                this.myPainting.setPainting(EnumArt.Courbet);
+                this.setPainting(EnumArt.Courbet);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 10)
             {
-                this.myPainting.setPainting(EnumArt.Sea);
+                this.setPainting(EnumArt.Sea);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 11)
             {
-                this.myPainting.setPainting(EnumArt.Sunset);
+                this.setPainting(EnumArt.Sunset);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 12)
             {
-                this.myPainting.setPainting(EnumArt.Creebet);
+                this.setPainting(EnumArt.Creebet);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 13)
             {
-                this.myPainting.setPainting(EnumArt.Wanderer);
+                this.setPainting(EnumArt.Wanderer);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 14)
             {
-                this.myPainting.setPainting(EnumArt.Graham);
+                this.setPainting(EnumArt.Graham);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 15)
             {
-                this.myPainting.setPainting(EnumArt.Match);
+                this.setPainting(EnumArt.Match);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 16)
             {
-                this.myPainting.setPainting(EnumArt.Bust);
+                this.setPainting(EnumArt.Bust);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 17)
             {
-                this.myPainting.setPainting(EnumArt.Stage);
+                this.setPainting(EnumArt.Stage);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 18)
             {
-                this.myPainting.setPainting(EnumArt.Void);
+                this.setPainting(EnumArt.Void);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 19)
             {
-                this.myPainting.setPainting(EnumArt.SkullAndRoses);
+                this.setPainting(EnumArt.SkullAndRoses);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 20)
             {
-                this.myPainting.setPainting(EnumArt.Fighters);
+                this.setPainting(EnumArt.Fighters);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 21)
             {
-                this.myPainting.setPainting(EnumArt.Pointer);
+                this.setPainting(EnumArt.Pointer);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 22)
             {
-                this.myPainting.setPainting(EnumArt.Pigscene);
+                this.setPainting(EnumArt.Pigscene);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 23)
             {
-                this.myPainting.setPainting(EnumArt.BurningSkull);
+                this.setPainting(EnumArt.BurningSkull);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 24)
             {
-                this.myPainting.setPainting(EnumArt.Skeleton);
+                this.setPainting(EnumArt.Skeleton);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
 
             if (var1.id == 25)
             {
-                this.myPainting.setPainting(EnumArt.DonkeyKong);
+                this.setPainting(EnumArt.DonkeyKong);
                 this.mc.displayGuiScreen((GuiScreen)null);
             }
         }

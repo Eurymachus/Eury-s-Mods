@@ -24,7 +24,6 @@ public class PacketPaintingGui extends PacketPainting {
 		this.yPosition = entitypaintings.yPosition;
 		this.zPosition = entitypaintings.zPosition;
 		this.setEntityId(entitypaintings.entityId);
-		ModLoader.getLogger().warning("EntityID: " + this.getEntityId());
 		this.setArtList(artList);
 		this.isChunkDataPacket = true;
 	}
@@ -49,7 +48,7 @@ public class PacketPaintingGui extends PacketPainting {
 		EnumArt[] art = EnumArt.values();
 		for (int i = 0; i < this.payload.getStringSize(); i++) {
 			for (int j = 0; j < art.length; j++) {
-				if (this.payload.getStringPayload(i).equals(art[j].sizeY)) {
+				if (this.payload.getStringPayload(i).equals(art[j].title)) {
 					artList.add(art[j]);
 				}
 			}

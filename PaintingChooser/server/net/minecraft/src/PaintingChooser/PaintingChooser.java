@@ -2,6 +2,7 @@ package net.minecraft.src.PaintingChooser;
 
 import java.util.ArrayList;
 
+import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.World;
@@ -33,6 +34,23 @@ public class PaintingChooser {
 		PChooserCore.addNames();
 		EurysCore.console(PChooser.getModName(), "Registering recipes...");
 		PChooserCore.addRecipes();
+	}
+
+	public static Entity getEntityByID(World world, int entityId) {
+		for (int i = 0; i < world.loadedEntityList
+				.size(); ++i) {
+			Entity entity = (Entity) world.loadedEntityList
+					.get(i);
+
+			if (entity == null) {
+				return null;
+			}
+
+			if (entity.entityId == entityId) {
+				return entity;
+			}
+		}
+		return null;
 	}
 
 	public static void openGui(World world, EntityPlayer entityplayer, EntityPaintings entitypaintings, ArrayList artList) {

@@ -38,24 +38,23 @@ public class PaintingChooser {
 		PChooserCore.addRecipes();
 	}
 
-	public static Entity getEntityByID(int var0) {
-		if (var0 == ModLoader.getMinecraftInstance().thePlayer.entityId) {
+	public static Entity getEntityByID(World world, int entityId) {
+		if (entityId == ModLoader.getMinecraftInstance().thePlayer.entityId) {
 			return ModLoader.getMinecraftInstance().thePlayer;
 		} else {
-			for (int var1 = 0; var1 < ModLoader.getMinecraftInstance().theWorld.loadedEntityList
-					.size(); ++var1) {
-				Entity var2 = (Entity) ModLoader.getMinecraftInstance().theWorld.loadedEntityList
-						.get(var1);
+			for (int i = 0; i < world.loadedEntityList
+					.size(); ++i) {
+				Entity entity = (Entity) world.loadedEntityList
+						.get(i);
 
-				if (var2 == null) {
+				if (entity == null) {
 					return null;
 				}
 
-				if (var2.entityId == var0) {
-					return var2;
+				if (entity.entityId == entityId) {
+					return entity;
 				}
 			}
-
 			return null;
 		}
 	}

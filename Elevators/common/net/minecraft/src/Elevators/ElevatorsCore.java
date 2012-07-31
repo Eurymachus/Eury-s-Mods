@@ -125,7 +125,7 @@ public class ElevatorsCore {
 		killBelow = props.getBoolean("kill_below");
 		invertKeys = props.getBoolean("invertElevatorKeys", false);
 		strictShaft = props.getBoolean("entireShaftMustBeClear", true);
-		elevator_entityID = props.getInt("elevator_entityID", 220);
+		elevator_entityID = props.getInt("elevator_entityID", ModLoader.getUniqueEntityId());
 		max_elevator_Y = props.getInt("Max_Elevator_Y", 255);
 		guiElevatorID = props.getInt("Elevator_GUI_ID");
 		topTexture = props.getInt("Elevator_Top_Texture");
