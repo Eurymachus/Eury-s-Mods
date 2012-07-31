@@ -22,6 +22,28 @@ public class EntityPaintings extends EntityPainting
         super(world, x, y, z, facing);
         this.owner = entityplayer.username;
     }
+    
+    public EntityPaintings(World world, EntityPlayer entityplayer, int x, int y, int z, int facing, String title) {
+        this(world);
+        this.xPosition = x;
+        this.yPosition = y;
+        this.zPosition = z;
+        EnumArt[] var7 = EnumArt.values();
+        int var8 = var7.length;
+
+        for (int var9 = 0; var9 < var8; ++var9)
+        {
+            EnumArt var10 = var7[var9];
+
+            if (var10.title.equals(title))
+            {
+                this.art = var10;
+                break;
+            }
+        }
+
+        this.setDirection(facing);
+    }
 
     public void setPainting(EnumArt enumart)
     {
@@ -46,16 +68,20 @@ public class EntityPaintings extends EntityPainting
             {
                 this.setDead();
                 this.worldObj.spawnEntityInWorld(new EntityItem(this.worldObj, this.posX, this.posY, this.posZ, new ItemStack(PChooserCore.itemPaintings)));
+            } else {
+        		this.updatePainting();
             }
         }
     }
 
-    private void updatePainting() {
+    public void updatePainting() {
 		if (!PaintingChooser.PChooser.getProxy().isClient) {
-			ModLoader.getLogger().warning("Art: " + this.art.title);
-			PacketUpdatePainting paintingPacket = new PacketUpdatePainting(this, "UPDATEPAINTING");
-			paintingPacket.setArtTitle(this.art.title);
-			PaintingChooser.PChooser.getProxy().sendPacketToAll(paintingPacket.getPacket(), this.xPosition, this.yPosition, this.zPosition, 16, mod_PaintingChooser.instance);
+			if (this != null && this.art != null) {
+				ModLoader.getLogger().warning("Art: " + this.art.title + " Direction: " + this.direction);
+				PacketUpdatePainting paintingPacket = new PacketUpdatePainting(this, "UPDATEPAINTING");
+				paintingPacket.setArtTitle(this.art.title);
+				PaintingChooser.PChooser.getProxy().sendPacketToAll(paintingPacket.getPacket(), this.xPosition, this.yPosition, this.zPosition, 16, mod_PaintingChooser.instance);
+			}
 		}
 	}
 
@@ -106,28 +132,31 @@ public class EntityPaintings extends EntityPainting
     @Override
     public boolean interact(EntityPlayer entityplayer)
     {
-    	if (this.owner == entityplayer.username) {
-	    	if (entityplayer.getCurrentEquippedItem() != null && entityplayer.getCurrentEquippedItem().itemID == PChooserCore.itemPaintings.shiftedIndex) {
-	    		EnumArt currentArt = this.art;
-	            ArrayList artList = new ArrayList();
-	            EnumArt[] enumartvalues = EnumArt.values();
-	            int enumartsize = enumartvalues.length;
+    	if (!this.worldObj.isRemote) {
+    		EnumArt currentArt = this.art;
+    		int direction = this.direction;
+            ArrayList artList = new ArrayList();
+            EnumArt[] var7 = EnumArt.values();
+            int var8 = var7.length;
 
-	            for (int i = 0; i < enumartsize; ++i)
-	            {
-	                EnumArt newArt = enumartvalues[i];
-	                this.art = newArt;
-	                this.setDirection(this.direction);
+            for (int var9 = 0; var9 < var8; ++var9)
+            {
+                EnumArt var10 = var7[var9];
+                this.art = var10;
+                this.setDirection(direction);
 
-	                if (this.onValidSurface())
-	                {
-	                    artList.add(newArt);
-	                }
-	            }
-	            this.art = currentArt;
-	            PaintingChooser.openGui(entityplayer.worldObj, entityplayer, this, artList);
-	            return true;	
-	    	}
+                if (this.onValidSurface())
+                {
+                    artList.add(var10);
+                }
+            }
+            this.art = currentArt;
+            this.setDirection(direction);
+            
+            if (artList.size() > 0) {
+            	PaintingChooser.openGui(this.worldObj, entityplayer, this, artList);
+            }
+    		return true;
     	}
     	return false;
     }

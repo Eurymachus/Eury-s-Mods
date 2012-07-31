@@ -34,7 +34,7 @@ public class PChooserCore {
 	public static void addItems() {
 		entityPaintingsID = configurationProperties();
 		itemPaintings = (new ItemPaintings(itemPaintingsID - 256)).setItemName("itemPaintings");
-		MinecraftForge.registerEntity(EntityPaintings.class, mod_PaintingChooser.instance, entityPaintingsID, 16, 16, true);
+		//MinecraftForge.registerEntity(EntityPaintings.class, mod_PaintingChooser.instance, entityPaintingsID, 16, 16, false);
 	}
 
 	public static void addNames() {

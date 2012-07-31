@@ -3,6 +3,7 @@ package net.minecraft.src.PaintingChooser;
 import java.util.ArrayList;
 
 import net.minecraft.src.Entity;
+import net.minecraft.src.EntityPainting;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.World;
@@ -53,7 +54,7 @@ public class PaintingChooser {
 		return null;
 	}
 
-	public static void openGui(World world, EntityPlayer entityplayer, EntityPaintings entitypaintings, ArrayList artList) {
+	public static void openGui(World world, EntityPlayer entityplayer, EntityPainting entitypaintings, ArrayList artList) {
 		if (!world.isRemote) {
 			PacketPaintingGui guiPacket = new PacketPaintingGui(entitypaintings, artList);
 			PChooser.getProxy().sendPacket(entityplayer, guiPacket.getPacket());

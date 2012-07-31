@@ -1,6 +1,7 @@
 package net.minecraft.src.PaintingChooser.network;
 
 import net.minecraft.src.Entity;
+import net.minecraft.src.EntityPainting;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.EurysMods.network.PacketIds;
 import net.minecraft.src.EurysMods.network.PacketPayload;
@@ -13,7 +14,7 @@ public class PacketUpdatePainting extends PacketPainting {
 		super(PacketIds.PAINTING_UPDATE);
 	}
 
-	public PacketUpdatePainting(EntityPaintings entitypaintings, String command) {
+	public PacketUpdatePainting(EntityPainting entitypaintings, String command) {
 		this();
 
 		this.payload = new PacketPayload(2, 0, 2, 0);

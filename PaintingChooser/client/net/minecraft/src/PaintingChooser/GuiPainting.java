@@ -13,11 +13,11 @@ public class GuiPainting extends GuiScreen
     private EnumArt selected;
     private int xSize = 248;
     private int ySize = 207;
-    private EntityPaintings myPainting;
+    private EntityPainting myPainting;
     private ArrayList possiblePaintings;
     public EnumArt allArt;
 
-    public GuiPainting(EntityPaintings entitypaintings, ArrayList artList)
+    public GuiPainting(EntityPainting entitypaintings, ArrayList artList)
     {
         this.myPainting = entitypaintings;
         this.possiblePaintings = artList;
@@ -100,15 +100,14 @@ public class GuiPainting extends GuiScreen
     {
         if (var2 == 1 || var2 == this.mc.gameSettings.keyBindInventory.keyCode)
         {
-            this.myPainting.dropItem(PChooserCore.itemPaintings.shiftedIndex, 1);
-            this.myPainting.setDead();
+        	if (PaintingChooser.PChooser.getProxy().isClient) {}
             this.mc.thePlayer.closeScreen();
         }
     }
     
     protected void setPainting(EnumArt enumart) {
     	if (!this.mc.theWorld.isRemote) {
-            this.myPainting.setPainting(enumart);
+            ((EntityPaintings)this.myPainting).setPainting(enumart);
     	} else {
     		PacketUpdatePainting paintingPacket = new PacketUpdatePainting(this.myPainting, "SETPAINTING");
     		paintingPacket.setArtTitle(enumart.title);

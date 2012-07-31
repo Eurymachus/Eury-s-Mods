@@ -3,11 +3,13 @@ package net.minecraft.src.PaintingChooser.network;
 import java.util.ArrayList;
 
 import net.minecraft.src.Entity;
+import net.minecraft.src.EntityPainting;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EnumArt;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
+import net.minecraft.src.WorldClient;
 import net.minecraft.src.EurysMods.network.IPacketHandling;
 import net.minecraft.src.EurysMods.network.PacketUpdate;
 import net.minecraft.src.MultiTexturedBeds.TileEntityMTBed;
@@ -29,8 +31,8 @@ public class PacketHandles implements IPaintingPacketHandling {
 			int entityId = guiPacket.getEntityId();
 			Entity entity = PaintingChooser.getEntityByID(world, entityId);
 			ModLoader.getLogger().warning("Entity: " + entity);
-			if (entity != null && entity instanceof EntityPaintings) {
-				EntityPaintings entitypaintings = (EntityPaintings)entity;
+			if (entity != null && entity instanceof EntityPainting) {
+				EntityPainting entitypaintings = (EntityPainting)entity;
 				ArrayList artList = guiPacket.getArtList();
 	        	ModLoader.openGUI(entityplayer, new GuiPainting(entitypaintings, artList));
 			}
@@ -45,17 +47,8 @@ public class PacketHandles implements IPaintingPacketHandling {
 			int entityId = paintingPacket.getEntityId();
 			int direction = paintingPacket.getDirection();
 			String artTitle = paintingPacket.getArtTitle();
-			ModLoader.getLogger().warning("Packet Art Title: " + artTitle);
-			Entity entity = PaintingChooser.getEntityByID(world, entityId);
-			if (entity != null && entity instanceof EntityPaintings) {
-				EntityPaintings entitypaintings = (EntityPaintings)entity;
-				EnumArt[] enumart = EnumArt.values();
-				for (int i = 0; i < enumart.length; i++) {
-					if (enumart[i].title.equals(artTitle)) {
-						entitypaintings.art = enumart[i];
-					}
-				}
-			}
+			EntityPaintings painting = new EntityPaintings(world, entityplayer, packet.xPosition, packet.yPosition, packet.zPosition, direction, artTitle);
+			((WorldClient)world).addEntityToWorld(entityId, painting);
 		}
 	}
 }

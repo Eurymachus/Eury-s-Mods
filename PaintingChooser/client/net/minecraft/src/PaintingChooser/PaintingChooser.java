@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Entity;
+import net.minecraft.src.EntityPainting;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.World;
@@ -59,7 +60,7 @@ public class PaintingChooser {
 		}
 	}
 	
-	public static void openGui(World world, EntityPlayer entityplayer, EntityPaintings entitypaintings, ArrayList artList) {
+	public static void openGui(World world, EntityPlayer entityplayer, EntityPainting entitypaintings, ArrayList artList) {
 		if (!world.isRemote) {
 			ModLoader.getMinecraftInstance().displayGuiScreen(new GuiPainting(entitypaintings, artList));
 		}

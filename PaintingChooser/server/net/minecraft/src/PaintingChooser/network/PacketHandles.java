@@ -1,6 +1,7 @@
 package net.minecraft.src.PaintingChooser.network;
 
 import net.minecraft.src.Entity;
+import net.minecraft.src.EntityPainting;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.EnumArt;
 import net.minecraft.src.TileEntity;
@@ -30,12 +31,13 @@ public class PacketHandles implements IPaintingPacketHandling {
 			int entityId = paintingPacket.getEntityId();
 			int direction = paintingPacket.getDirection();
 			Entity entity = PaintingChooser.getEntityByID(world, entityId);
-			if (entity != null && entity instanceof EntityPaintings) {
-				EntityPaintings entitypaintings = (EntityPaintings)entity;
+			if (entity != null && entity instanceof EntityPainting) {
+				EntityPainting entitypaintings = (EntityPainting)entity;
 				EnumArt[] enumart = EnumArt.values();
 				for (int i = 0; i < enumart.length; i++) {
 					if (enumart[i].title.equals(paintingPacket.getArtTitle())) {
-						entitypaintings.setPainting(enumart[i]);
+						((EntityPaintings)entitypaintings).setPainting(enumart[i]);
+						((EntityPaintings)entitypaintings).updatePainting();
 					}
 				}
 			}

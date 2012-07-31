@@ -3,6 +3,7 @@ package net.minecraft.src.PaintingChooser.network;
 import java.util.ArrayList;
 
 import net.minecraft.src.Entity;
+import net.minecraft.src.EntityPainting;
 import net.minecraft.src.EnumArt;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.TileEntity;
@@ -17,7 +18,7 @@ public class PacketPaintingGui extends PacketPainting {
 		super(PacketIds.PAINTING_GUI);
 	}
 
-	public PacketPaintingGui(EntityPaintings entitypaintings, ArrayList artList) {
+	public PacketPaintingGui(EntityPainting entitypaintings, ArrayList artList) {
 		this();
 		this.payload = new PacketPayload(2, 0, artList.size(), 0);
 		this.xPosition = entitypaintings.xPosition;
