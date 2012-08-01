@@ -7,10 +7,12 @@ import net.minecraft.src.EntityPainting;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.World;
+import net.minecraft.src.mod_PaintingChooser;
 import net.minecraft.src.EurysMods.*;
 import net.minecraft.src.EurysMods.core.ICore;
 import net.minecraft.src.PaintingChooser.network.PacketHandles;
 import net.minecraft.src.PaintingChooser.network.PacketPaintingGui;
+import net.minecraft.src.PaintingChooser.network.PacketUpdatePainting;
 
 public class PaintingChooser {
 
@@ -58,6 +60,14 @@ public class PaintingChooser {
 		if (!world.isRemote) {
 			PacketPaintingGui guiPacket = new PacketPaintingGui(entitypaintings, artList);
 			PChooser.getProxy().sendPacket(entityplayer, guiPacket.getPacket());
+		}
+	}
+
+	public static void notifyPlayers(EntityPainting entitypainting) {
+		if (entitypainting != null && entitypainting.art != null) {
+			PacketUpdatePainting paintingPacket = new PacketUpdatePainting(entitypainting, "UPDATEPAINTING");
+			paintingPacket.setArtTitle(entitypainting.art.title);
+			PaintingChooser.PChooser.getProxy().sendPacketToAll(paintingPacket.getPacket(), entitypainting.xPosition, entitypainting.yPosition, entitypainting.zPosition, 16, mod_PaintingChooser.instance);
 		}
 	}
 }

@@ -18,7 +18,7 @@ public class ItemPaintings extends Item
      * Callback for item usage. If the item does something special on right clicking, he will have one of those. Return
      * True if something happen and false if it don't. This is for ITEMS, not BLOCKS !
      */
-    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int par4, int par5, int par6, int par7)
+    public boolean onItemUse(ItemStack par1ItemStack, EntityPlayer par2EntityPlayer, World par3World, int x, int y, int z, int par7)
     {
         if (par7 == 0)
         {
@@ -47,13 +47,24 @@ public class ItemPaintings extends Item
                 var8 = 3;
             }
 
-            if (!par2EntityPlayer.canPlayerEdit(par4, par5, par6))
+            if (!par2EntityPlayer.canPlayerEdit(x, y, z))
             {
                 return false;
             }
             else
             {
-                EntityPaintings var9 = new EntityPaintings(par3World, par2EntityPlayer, par4, par5, par6, var8);
+            	Entity entity;
+            	for (int i = 0; i < par3World.loadedEntityList.size(); i++) {
+            		Entity loadedEntity = (Entity)par3World.loadedEntityList.get(i);
+            		if (loadedEntity instanceof EntityPainting) {
+            			EntityPainting painting = (EntityPainting)loadedEntity;
+            			if (painting.xPosition-x < 1 && painting.yPosition-y < 1 && painting.zPosition-z < 1) {
+            				ModLoader.getLogger().warning("PAINTING IS HERE");
+            				return true;
+            			}
+            		}
+            	}
+                EntityPaintings var9 = new EntityPaintings(par3World, par2EntityPlayer, x, y, z, var8);
 
                 if (var9.onValidSurface())
                 {

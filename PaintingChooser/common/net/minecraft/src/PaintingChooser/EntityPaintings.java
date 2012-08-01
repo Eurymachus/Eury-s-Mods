@@ -129,7 +129,7 @@ public class EntityPaintings extends EntityPainting
     /**
      * Called when a player interacts with a mob. e.g. gets milk from a cow, gets into the saddle on a pig.
      */
-    @Override
+/*    @Override
     public boolean interact(EntityPlayer entityplayer)
     {
     	if (!this.worldObj.isRemote) {
@@ -159,7 +159,7 @@ public class EntityPaintings extends EntityPainting
     		return true;
     	}
     	return false;
-    }
+    }*/
     
     @Override
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)

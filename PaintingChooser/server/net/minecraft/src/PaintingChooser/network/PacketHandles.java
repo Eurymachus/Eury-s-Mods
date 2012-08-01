@@ -32,12 +32,13 @@ public class PacketHandles implements IPaintingPacketHandling {
 			int direction = paintingPacket.getDirection();
 			Entity entity = PaintingChooser.getEntityByID(world, entityId);
 			if (entity != null && entity instanceof EntityPainting) {
-				EntityPainting entitypaintings = (EntityPainting)entity;
+				EntityPainting entitypainting = (EntityPainting)entity;
 				EnumArt[] enumart = EnumArt.values();
 				for (int i = 0; i < enumart.length; i++) {
 					if (enumart[i].title.equals(paintingPacket.getArtTitle())) {
-						((EntityPaintings)entitypaintings).setPainting(enumart[i]);
-						((EntityPaintings)entitypaintings).updatePainting();
+						entitypainting.art = enumart[i];
+						entitypainting.setDirection(((EntityPainting)entity).direction);
+						PaintingChooser.notifyPlayers(entitypainting);
 					}
 				}
 			}

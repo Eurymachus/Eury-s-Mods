@@ -30,11 +30,8 @@ public class PacketHandles implements IPaintingPacketHandling {
 			PacketPaintingGui guiPacket = (PacketPaintingGui)packet;
 			int entityId = guiPacket.getEntityId();
 			Entity entity = PaintingChooser.getEntityByID(world, entityId);
-			ModLoader.getLogger().warning("Entity: " + entity);
 			if (entity != null && entity instanceof EntityPainting) {
-				EntityPainting entitypaintings = (EntityPainting)entity;
-				ArrayList artList = guiPacket.getArtList();
-	        	ModLoader.openGUI(entityplayer, new GuiPainting(entitypaintings, artList));
+	        	ModLoader.openGUI(entityplayer, new GuiPainting((EntityPainting)entity, guiPacket.getArtList()));
 			}
 		}
 	}
@@ -47,7 +44,7 @@ public class PacketHandles implements IPaintingPacketHandling {
 			int entityId = paintingPacket.getEntityId();
 			int direction = paintingPacket.getDirection();
 			String artTitle = paintingPacket.getArtTitle();
-			EntityPaintings painting = new EntityPaintings(world, entityplayer, packet.xPosition, packet.yPosition, packet.zPosition, direction, artTitle);
+			EntityPainting painting = new EntityPainting(world, packet.xPosition, packet.yPosition, packet.zPosition, direction, artTitle);
 			((WorldClient)world).addEntityToWorld(entityId, painting);
 		}
 	}

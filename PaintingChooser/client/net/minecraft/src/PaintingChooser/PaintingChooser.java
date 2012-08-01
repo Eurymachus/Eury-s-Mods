@@ -60,9 +60,9 @@ public class PaintingChooser {
 		}
 	}
 	
-	public static void openGui(World world, EntityPlayer entityplayer, EntityPainting entitypaintings, ArrayList artList) {
+	public static void openGui(World world, EntityPlayer entityplayer, EntityPainting entitypainting, ArrayList artList) {
 		if (!world.isRemote) {
-			ModLoader.getMinecraftInstance().displayGuiScreen(new GuiPainting(entitypaintings, artList));
+			ModLoader.getMinecraftInstance().displayGuiScreen(new GuiPainting(entitypainting, artList));
 		}
 	}
 

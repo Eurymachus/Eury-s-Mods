@@ -107,7 +107,8 @@ public class GuiPainting extends GuiScreen
     
     protected void setPainting(EnumArt enumart) {
     	if (!this.mc.theWorld.isRemote) {
-            ((EntityPaintings)this.myPainting).setPainting(enumart);
+            this.myPainting.art = enumart;
+            this.myPainting.setDirection(this.myPainting.direction);
     	} else {
     		PacketUpdatePainting paintingPacket = new PacketUpdatePainting(this.myPainting, "SETPAINTING");
     		paintingPacket.setArtTitle(enumart.title);
