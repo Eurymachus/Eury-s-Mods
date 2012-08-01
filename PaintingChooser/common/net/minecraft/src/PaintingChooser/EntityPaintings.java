@@ -19,8 +19,36 @@ public class EntityPaintings extends EntityPainting
 
     public EntityPaintings(World world, EntityPlayer entityplayer, int x, int y, int z, int facing)
     {
-        super(world, x, y, z, facing);
+        this(world);
+        this.xPosition = x;
+        this.yPosition = y;
+        this.zPosition = z;
+        ArrayList artList = new ArrayList();
+        EnumArt[] enumart = EnumArt.values();
+        int enumartlength = enumart.length;
+
+        for (int var9 = 0; var9 < enumartlength; ++var9)
+        {
+            EnumArt newArt = enumart[var9];
+            this.art = newArt;
+            this.setDirection(facing);
+
+            if (this.onValidSurface())
+            {
+                artList.add(newArt);
+            }
+        }
+
+        if (artList.size() > 0)
+        {
+            this.art = (EnumArt)artList.get(this.rand.nextInt(artList.size()));
+        }
+
+        this.setDirection(facing);
         this.owner = entityplayer.username;
+        if (artList.size() > 0) {
+        	PaintingChooser.openGui(this.worldObj, entityplayer, this, artList);
+        }
     }
     
     public EntityPaintings(World world, EntityPlayer entityplayer, int x, int y, int z, int facing, String title) {
@@ -28,18 +56,22 @@ public class EntityPaintings extends EntityPainting
         this.xPosition = x;
         this.yPosition = y;
         this.zPosition = z;
-        EnumArt[] var7 = EnumArt.values();
-        int var8 = var7.length;
-
-        for (int var9 = 0; var9 < var8; ++var9)
-        {
-            EnumArt var10 = var7[var9];
-
-            if (var10.title.equals(title))
-            {
-                this.art = var10;
-                break;
-            }
+        if (title.equals("")) {
+        	this.art = null;
+        } else {
+	        EnumArt[] var7 = EnumArt.values();
+	        int var8 = var7.length;
+	
+	        for (int var9 = 0; var9 < var8; ++var9)
+	        {
+	            EnumArt var10 = var7[var9];
+	
+	            if (var10.title.equals(title))
+	            {
+	                this.art = var10;
+	                break;
+	            }
+	        }
         }
 
         this.setDirection(facing);
@@ -58,8 +90,8 @@ public class EntityPaintings extends EntityPainting
     public void onUpdate()
     {
     	if (firstTick == false) {
-    		firstTick = true;
     		this.updatePainting();
+    		firstTick = true;
     	}
         if (this.tickCounter1++ == 100 && !this.worldObj.isRemote)
         {
@@ -77,9 +109,14 @@ public class EntityPaintings extends EntityPainting
     public void updatePainting() {
 		if (!PaintingChooser.PChooser.getProxy().isClient) {
 			if (this != null && this.art != null) {
-				ModLoader.getLogger().warning("Art: " + this.art.title + " Direction: " + this.direction);
-				PacketUpdatePainting paintingPacket = new PacketUpdatePainting(this, "UPDATEPAINTING");
-				paintingPacket.setArtTitle(this.art.title);
+				PacketUpdatePainting paintingPacket = new PacketUpdatePainting(this);
+				if (!firstTick) {
+					paintingPacket.setCommand("FIRSTPAINTING");
+					paintingPacket.setArtTitle("");
+				} else {
+					paintingPacket.setCommand("UPDATEPAINTING");
+					paintingPacket.setArtTitle(this.art.title);
+				}
 				PaintingChooser.PChooser.getProxy().sendPacketToAll(paintingPacket.getPacket(), this.xPosition, this.yPosition, this.zPosition, 16, mod_PaintingChooser.instance);
 			}
 		}
@@ -133,30 +170,32 @@ public class EntityPaintings extends EntityPainting
     public boolean interact(EntityPlayer entityplayer)
     {
     	if (!this.worldObj.isRemote) {
-    		EnumArt currentArt = this.art;
-    		int direction = this.direction;
-            ArrayList artList = new ArrayList();
-            EnumArt[] var7 = EnumArt.values();
-            int var8 = var7.length;
-
-            for (int var9 = 0; var9 < var8; ++var9)
-            {
-                EnumArt var10 = var7[var9];
-                this.art = var10;
-                this.setDirection(direction);
-
-                if (this.onValidSurface())
-                {
-                    artList.add(var10);
-                }
-            }
-            this.art = currentArt;
-            this.setDirection(direction);
-            
-            if (artList.size() > 0) {
-            	PaintingChooser.openGui(this.worldObj, entityplayer, this, artList);
-            }
-    		return true;
+    		if (entityplayer.username.equals(this.owner)) {
+	    		EnumArt currentArt = this.art;
+	    		int direction = this.direction;
+	            ArrayList artList = new ArrayList();
+	            EnumArt[] var7 = EnumArt.values();
+	            int var8 = var7.length;
+	
+	            for (int var9 = 0; var9 < var8; ++var9)
+	            {
+	                EnumArt var10 = var7[var9];
+	                this.art = var10;
+	                this.setDirection(direction);
+	
+	                if (this.onValidSurface())
+	                {
+	                    artList.add(var10);
+	                }
+	            }
+	            this.art = currentArt;
+	            this.setDirection(direction);
+	            
+	            if (artList.size() > 0) {
+	            	PaintingChooser.openGui(this.worldObj, entityplayer, this, artList);
+	            }
+	    		return true;
+	    	}
     	}
     	return false;
     }*/

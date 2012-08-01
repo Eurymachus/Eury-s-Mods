@@ -53,17 +53,6 @@ public class ItemPaintings extends Item
             }
             else
             {
-            	Entity entity;
-            	for (int i = 0; i < par3World.loadedEntityList.size(); i++) {
-            		Entity loadedEntity = (Entity)par3World.loadedEntityList.get(i);
-            		if (loadedEntity instanceof EntityPainting) {
-            			EntityPainting painting = (EntityPainting)loadedEntity;
-            			if (painting.xPosition-x < 1 && painting.yPosition-y < 1 && painting.zPosition-z < 1) {
-            				ModLoader.getLogger().warning("PAINTING IS HERE");
-            				return true;
-            			}
-            		}
-            	}
                 EntityPaintings var9 = new EntityPaintings(par3World, par2EntityPlayer, x, y, z, var8);
 
                 if (var9.onValidSurface())

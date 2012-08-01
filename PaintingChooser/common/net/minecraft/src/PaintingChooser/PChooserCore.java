@@ -33,8 +33,8 @@ public class PChooserCore {
 	
 	public static void addItems() {
 		entityPaintingsID = configurationProperties();
-		itemPaintings = (new ItemPaintingChooser(itemPaintingsID - 256)).setItemName("itemPaintings");
-		//MinecraftForge.registerEntity(EntityPaintings.class, mod_PaintingChooser.instance, entityPaintingsID, 16, 16, false);
+		itemPaintings = (new ItemPaintings(itemPaintingsID - 256)).setItemName("itemPaintings");
+		ModLoader.registerEntityID(EntityPaintings.class, "Choosable Painting", entityPaintingsID);
 	}
 
 	public static void addNames() {
@@ -57,8 +57,8 @@ public class PChooserCore {
 	}
 
 	public static void addRecipes() {
-		//removeRecipe(Item.painting.shiftedIndex);
-        ModLoader.addRecipe(new ItemStack(itemPaintings, 1), new Object[] {"#X#", '#', Item.stick, 'X', Block.cloth});
+		removeRecipe(Item.painting.shiftedIndex);
+        ModLoader.addRecipe(new ItemStack(itemPaintings, 1), new Object[] {"###", "#X#", "###", '#', Item.stick, 'X', Block.cloth});
 	}
 	
 	public static int configurationProperties() {

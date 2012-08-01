@@ -18,7 +18,6 @@ public class mod_PaintingChooser extends NetworkMod {
 	@Override
 	public void modsLoaded() {
 		if (ModLoader.isModLoaded("mod_EurysMods")) {
-			instance = this;
 			PChooserCore.initialize();
 		} else {
 			ModLoader.getLogger().warning(
@@ -27,6 +26,7 @@ public class mod_PaintingChooser extends NetworkMod {
 	}
 
 	public mod_PaintingChooser() {
+		instance = this;
 	}
 
 	@Override

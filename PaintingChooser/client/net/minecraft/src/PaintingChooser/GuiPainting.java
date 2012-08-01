@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import net.minecraft.src.*;
+import net.minecraft.src.PaintingChooser.network.PacketPaintingGui;
 import net.minecraft.src.PaintingChooser.network.PacketUpdatePainting;
 
 import org.lwjgl.opengl.GL11;
@@ -100,7 +101,13 @@ public class GuiPainting extends GuiScreen
     {
         if (var2 == 1 || var2 == this.mc.gameSettings.keyBindInventory.keyCode)
         {
-        	if (PaintingChooser.PChooser.getProxy().isClient) {}
+        	if (PaintingChooser.PChooser.getProxy().isClient) {
+        		this.myPainting.setDead();
+        	}
+        	if (!PaintingChooser.PChooser.getProxy().isClient) {
+        		PacketPaintingGui guiPacket = new PacketPaintingGui(this.myPainting, 999);
+        		PaintingChooser.PChooser.getProxy().sendPacket(mc.thePlayer, guiPacket.getPacket());
+        	}
             this.mc.thePlayer.closeScreen();
         }
     }

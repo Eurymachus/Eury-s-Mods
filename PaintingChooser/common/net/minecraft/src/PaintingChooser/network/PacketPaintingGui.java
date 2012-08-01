@@ -2,14 +2,10 @@ package net.minecraft.src.PaintingChooser.network;
 
 import java.util.ArrayList;
 
-import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPainting;
 import net.minecraft.src.EnumArt;
-import net.minecraft.src.ModLoader;
-import net.minecraft.src.TileEntity;
 import net.minecraft.src.EurysMods.network.PacketIds;
 import net.minecraft.src.EurysMods.network.PacketPayload;
-import net.minecraft.src.MultiTexturedBeds.TileEntityMTBed;
 import net.minecraft.src.PaintingChooser.EntityPaintings;
 
 public class PacketPaintingGui extends PacketPainting {
@@ -25,16 +21,36 @@ public class PacketPaintingGui extends PacketPainting {
 		this.yPosition = entitypaintings.yPosition;
 		this.zPosition = entitypaintings.zPosition;
 		this.setEntityId(entitypaintings.entityId);
+		this.setKillCode(0);
 		this.setArtList(artList);
+		this.isChunkDataPacket = true;
+	}
+
+	public PacketPaintingGui(EntityPainting entitypaintings, int i) {
+		this();
+		this.payload = new PacketPayload(2, 0, 0, 0);
+		this.xPosition = entitypaintings.xPosition;
+		this.yPosition = entitypaintings.yPosition;
+		this.zPosition = entitypaintings.zPosition;
+		this.setEntityId(entitypaintings.entityId);
+		this.setKillCode(i);
 		this.isChunkDataPacket = true;
 	}
 
 	public void setEntityId(int entityId) {
 		this.payload.setIntPayload(0, entityId);
 	}
+
+	private void setKillCode(int i) {
+		this.payload.setIntPayload(1, i);
+	}
 	
 	public int getEntityId() {
 		return this.payload.getIntPayload(0);
+	}
+	
+	public int getKillCode() {
+		return this.payload.getIntPayload(1);
 	}
 	
 	public void setArtList(ArrayList artList) {
