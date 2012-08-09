@@ -20,7 +20,7 @@ import net.minecraft.src.Material;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.World;
-import net.minecraft.src.mod_Elevator;
+import net.minecraft.src.mod_EurysElevators;
 import net.minecraft.src.Elevators.network.NetworkConnection;
 import net.minecraft.src.Elevators.network.PacketElevatorGui;
 import net.minecraft.src.EurysMods.network.PacketUpdate;
@@ -80,7 +80,7 @@ public class ElevatorsCore {
 
 	public static void initialize() {
 		Elevators.initialize();
-		ModLoader.registerEntityID(EntityElevator.class, "ironclad_elevator",
+		ModLoader.registerEntityID(EntityElevator.class, "entity.block.elevator",
 				elevator_entityID);
 		MinecraftForge.registerConnectionHandler(new NetworkConnection());
 	}
@@ -171,7 +171,7 @@ public class ElevatorsCore {
 		ModLoader.registerBlock(ElevatorCaller);
 		ModLoader.registerBlock(Transient);
 		MinecraftForge.registerEntity(EntityElevator.class,
-				mod_Elevator.instance, elevator_entityID, 16, 16, true);
+				mod_EurysElevators.instance, elevator_entityID, 16, 16, true);
 		ModLoader.registerTileEntity(TileEntityElevator.class, "ironelv");
 		ModLoader.addName(Elevator, "Elevator");
 		ModLoader.addName(ElevatorButton, "Elevator Button");
@@ -314,20 +314,20 @@ public class ElevatorsCore {
 		}
 	}
 
-	public static boolean isEntityOnBlock(World var0, ChunkPosition var1,
-			Entity var2) {
-		AxisAlignedBB var3 = Elevator.getCollisionBoundingBoxFromPool(var0,
-				var1.x, var1.y, var1.z);
-		say("box bounds: " + var3.minX + ", " + var3.minY + ", " + var3.minZ
-				+ " : " + var3.maxX + ", " + var3.maxY + ", " + var3.maxZ);
-		var3.maxY += 0.5D;
-		List var4 = var0.getEntitiesWithinAABBExcludingEntity((Entity) null,
-				var3);
-		return var4.contains(var2);
+	public static boolean isEntityOnBlock(World world, ChunkPosition chunkPos,
+			Entity entity) {
+		AxisAlignedBB axisABB = Elevator.getCollisionBoundingBoxFromPool(world,
+				chunkPos.x, chunkPos.y, chunkPos.z);
+		say("box bounds: " + axisABB.minX + ", " + axisABB.minY + ", " + axisABB.minZ
+				+ " : " + axisABB.maxX + ", " + axisABB.maxY + ", " + axisABB.maxZ);
+		axisABB.maxY += 0.5D;
+		List entities = world.getEntitiesWithinAABBExcludingEntity((Entity) null,
+				axisABB);
+		return entities.contains(entity);
 	}
 
-	public static String pos2Str(ChunkPosition var0) {
-		return var0.x + ", " + var0.y + ", " + var0.z;
+	public static String pos2Str(ChunkPosition chunkPos) {
+		return chunkPos.x + ", " + chunkPos.y + ", " + chunkPos.z;
 	}
 
 	public static boolean isNamed(int var0, String[] var1) {
@@ -419,78 +419,78 @@ public class ElevatorsCore {
 										.valueOf(var4.getRenderType())))));
 	}
 
-	public static boolean isBlockLedgeMaterial(World var0, int var1, int var2,
-			int var3) {
-		Block var4 = Block.blocksList[var0.getBlockId(var1, var2, var3)];
-		return var4 == null ? false
-				: (solid_disallowed_blockIDs.contains(Integer.valueOf(var0
-						.getBlockId(var1, var2, var3))) ? false
-						: (var4.blockMaterial.isGroundCover() ? false
-								: (var4.blockID == Elevator.blockID ? false
+	public static boolean isBlockLedgeMaterial(World world, int x, int y,
+			int z) {
+		Block block = Block.blocksList[world.getBlockId(x, y, z)];
+		return block == null ? false
+				: (solid_disallowed_blockIDs.contains(Integer.valueOf(world
+						.getBlockId(x, y, z))) ? false
+						: (block.blockMaterial.isGroundCover() ? false
+								: (block.blockID == Elevator.blockID ? false
 										: (solid_allowed_blockIDs
-												.contains(Integer.valueOf(var0
-														.getBlockId(var1, var2,
-																var3))) ? true
-												: (var4.isOpaqueCube() ? true
-														: var4.renderAsNormalBlock())))));
+												.contains(Integer.valueOf(world
+														.getBlockId(x, y,
+																z))) ? true
+												: (block.isOpaqueCube() ? true
+														: block.renderAsNormalBlock())))));
 	}
 
-	public static void refreshElevator(World var0, ChunkPosition var1) {
-		refreshElevator(var0, var1, 2);
+	public static void refreshElevator(World world, ChunkPosition chunkPos) {
+		refreshElevator(world, chunkPos, 2);
 	}
 
-	public static void refreshElevator(World var0, ChunkPosition var1, int var2) {
-		int var3 = var0.getBlockId(var1.x, var1.y, var1.z);
+	public static void refreshElevator(World world, ChunkPosition chunkPos, int delay) {
+		int elevatorID = world.getBlockId(chunkPos.x, chunkPos.y, chunkPos.z);
 
-		if (var3 == Elevator.blockID) {
-			var0.scheduleBlockUpdate(var1.x, var1.y, var1.z, var3, var2);
+		if (elevatorID == Elevator.blockID) {
+			world.scheduleBlockUpdate(chunkPos.x, chunkPos.y, chunkPos.z, elevatorID, delay);
 		}
 	}
 
-	public static void elevator_requestFloor(World var0, ChunkPosition var1,
-			int var2) {
-		TileEntityElevator var3 = BlockElevator.getTileEntity(var0, var1.x,
-				var1.y, var1.z);
+	public static void elevator_requestFloor(World world, ChunkPosition chunkPos,
+			int floor) {
+		TileEntityElevator tileentityelevator = BlockElevator.getTileEntity(world, chunkPos.x,
+				chunkPos.y, chunkPos.z);
 
-		if (var3 != null) {
-			if (var3.requestFloor(var2)) {
-				say("Destination set: " + var3.getDestination());
-				refreshElevator(var0, var1, 10);
+		if (tileentityelevator != null) {
+			if (tileentityelevator.requestFloor(floor)) {
+				say("Destination set: " + tileentityelevator.getDestination());
+				refreshElevator(world, chunkPos, 10);
 			}
 		}
 	}
 
-	public static void elevator_demandY(World var0, ChunkPosition var1, int var2) {
-		TileEntityElevator var3 = BlockElevator.getTileEntity(var0, var1.x,
-				var1.y, var1.z);
+	public static void elevator_demandY(World world, ChunkPosition chunkPos, int floor) {
+		TileEntityElevator tileentityelevator = BlockElevator.getTileEntity(world, chunkPos.x,
+				chunkPos.y, chunkPos.z);
 
-		if (var3 != null) {
-			if (var3.demandY(var2)) {
-				say("Destination set: " + var3.getDestination());
-				refreshElevator(var0, var1, 10);
+		if (tileentityelevator != null) {
+			if (tileentityelevator.demandY(floor)) {
+				say("Destination set: " + tileentityelevator.getDestination());
+				refreshElevator(world, chunkPos, 10);
 			}
 		}
 	}
 
-	public static void elevator_reset(World var0, ChunkPosition var1) {
-		TileEntityElevator var2 = BlockElevator.getTileEntity(var0, var1.x,
-				var1.y, var1.z);
+	public static void elevator_reset(World world, ChunkPosition chunkPos) {
+		TileEntityElevator tileentityelevator = BlockElevator.getTileEntity(world, chunkPos.x,
+				chunkPos.y, chunkPos.z);
 
-		if (var2 != null) {
-			if (var2.reset()) {
-				say("Destination set: " + var2.getDestination());
-				refreshElevator(var0, var1, 10);
+		if (tileentityelevator != null) {
+			if (tileentityelevator.reset()) {
+				say("Destination set: " + tileentityelevator.getDestination());
+				refreshElevator(world, chunkPos, 10);
 			}
 		}
 	}
 
-	public static void elevator_powerOn(World var0, ChunkPosition var1) {
-		TileEntityElevator var2 = BlockElevator.getTileEntity(var0, var1.x,
-				var1.y, var1.z);
+	public static void elevator_powerOn(World world, ChunkPosition chunkPos) {
+		TileEntityElevator tileentityelevator = BlockElevator.getTileEntity(world, chunkPos.x,
+				chunkPos.y, chunkPos.z);
 
-		if (var2 != null) {
-			var2.setFirstRefresh();
-			refreshElevator(var0, var1, 10);
+		if (tileentityelevator != null) {
+			tileentityelevator.setFirstRefresh();
+			refreshElevator(world, chunkPos, 10);
 		}
 	}
 }

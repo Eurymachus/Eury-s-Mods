@@ -3,7 +3,7 @@ package net.minecraft.src;
 import net.minecraft.src.Elevators.ElevatorsCore;
 import net.minecraft.src.forge.NetworkMod;
 
-public class mod_Elevator extends NetworkMod {
+public class mod_EurysElevators extends NetworkMod {
 	public static NetworkMod instance;
 
 	@Override
@@ -23,7 +23,7 @@ public class mod_Elevator extends NetworkMod {
 		return "after:mod_MinecraftForge;after:mod_EurysMods";
 	}
 
-	public mod_Elevator() {
+	public mod_EurysElevators() {
 		instance = this;
 	}
 

@@ -11,7 +11,7 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.GuiScreen;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.mod_Elevator;
+import net.minecraft.src.mod_EurysElevators;
 import net.minecraft.src.Elevators.network.PacketHandles;
 import net.minecraft.src.EurysMods.ClientCore;
 import net.minecraft.src.EurysMods.ClientProxy;
@@ -42,8 +42,8 @@ public class Elevators {
 		ElevatorsCore.addItems();
 		// ModLoaderMp.registerNetClientHandlerEntity(EntityElevator.class,
 		// elevator_entityID);
-		ModLoader.setInGUIHook(mod_Elevator.instance, true, true);
-		ModLoader.setInGameHook(mod_Elevator.instance, true, true);
+		ModLoader.setInGUIHook(mod_EurysElevators.instance, true, true);
+		ModLoader.setInGameHook(mod_EurysElevators.instance, true, true);
 		EurysCore.console(Core.getModName(), "Naming items...");
 		// ElevatorsCore.addNames();
 		EurysCore.console(Core.getModName(), "Registering recipes...");

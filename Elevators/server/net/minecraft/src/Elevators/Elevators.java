@@ -23,7 +23,7 @@ public class Elevators {
 			return;
 		initialized = true;
 		Core = new ServerCore(new ServerProxy(), new PacketHandles());
-		Core.setModName("DynamicElevators");
+		Core.setModName("Elevators");
 		Core.setModChannel("ELEVATOR");
 		load();
 	}
