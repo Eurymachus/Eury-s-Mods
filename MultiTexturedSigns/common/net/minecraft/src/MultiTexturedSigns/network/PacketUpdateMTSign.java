@@ -1,29 +1,19 @@
 package net.minecraft.src.MultiTexturedSigns.network;
 
-import net.minecraft.src.TileEntity;
-import net.minecraft.src.EurysMods.network.PacketIds;
+import net.minecraft.src.EurysMods.network.PacketTileEntityMT;
+import net.minecraft.src.MultiTexturedSigns.MultiTexturedSigns;
 import net.minecraft.src.MultiTexturedSigns.TileEntityMTSign;
 
-public class PacketUpdateMTSign extends PacketMTS {
-	public String[] signLines;
+public class PacketUpdateMTSign extends PacketTileEntityMT {
+	private String[] signLines;
 
 	public PacketUpdateMTSign() {
-		super(PacketIds.MTSIGN_UPDATE);
+		super(MultiTexturedSigns.MTS.getModChannel());
 	}
 
 	public PacketUpdateMTSign(TileEntityMTSign tileentitymtsign) {
-		super(PacketIds.MTSIGN_UPDATE);
-
+		super(MultiTexturedSigns.MTS.getModChannel(), tileentitymtsign);
 		this.payload = tileentitymtsign.getPacketPayload();
-		TileEntity entity = tileentitymtsign;
-		this.xPosition = entity.xCoord;
-		this.yPosition = entity.yCoord;
-		this.zPosition = entity.zCoord;
-		this.isChunkDataPacket = true;
-	}
-
-	public void setItemDamage(int itemDamage) {
-		this.payload.setIntPayload(0, itemDamage);
 	}
 
 	public void setMtSignText(String[] signText) {
@@ -31,10 +21,6 @@ public class PacketUpdateMTSign extends PacketMTS {
 			this.payload.setStringPayload(i, signText[i]);
 			;
 		}
-	}
-
-	public int getItemDamage() {
-		return this.payload.getIntPayload(0);
 	}
 
 	public String[] getMtSignText() {

@@ -33,7 +33,7 @@ public class NetworkConnection implements INetworkConnections {
 
 			int packetID = data.read();
 			switch (packetID) {
-			case PacketIds.MTBUTTON_UPDATE:
+			case PacketIds.TILE:
 				PacketUpdateMTButton packetButton = new PacketUpdateMTButton();
 				packetButton.readData(data);
 				MultiTexturedButtons.Core.getPacketHandler()

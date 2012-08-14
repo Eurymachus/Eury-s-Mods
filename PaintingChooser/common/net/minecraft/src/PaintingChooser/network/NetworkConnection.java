@@ -30,17 +30,18 @@ public class NetworkConnection implements INetworkConnections {
 					.getPlayer(network);
 			int packetID = data.read();
 			switch (packetID) {
-			case PacketIds.PAINTING_UPDATE:
+			case PacketIds.ENTITY:
 				PacketUpdatePainting packetPainting = new PacketUpdatePainting();
 				packetPainting.readData(data);
-				((IPaintingPacketHandling)PaintingChooser.PChooser.getPacketHandler())
-						.handlePacket(packetPainting, entityplayer, world);
+				((IPaintingPacketHandling) PaintingChooser.PChooser
+						.getPacketHandler()).handlePacket(packetPainting,
+						entityplayer, world);
 				break;
-			case PacketIds.PAINTING_GUI:
+			case PacketIds.GUI:
 				PacketPaintingGui packetPaintingGui = new PacketPaintingGui();
 				packetPaintingGui.readData(data);
-				PaintingChooser.PChooser.getPacketHandler()
-						.handleGuiPacket(packetPaintingGui, entityplayer, world);
+				PaintingChooser.PChooser.getPacketHandler().handleGuiPacket(
+						packetPaintingGui, entityplayer, world);
 				break;
 			}
 		} catch (Exception ex) {

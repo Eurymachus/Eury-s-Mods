@@ -48,7 +48,7 @@ public class MultiTexturedLevers {
 		TileEntity tileentity = blockaccess.getBlockTileEntity(x, y, z);
 		if (tileentity != null && tileentity instanceof TileEntityMTLever) {
 			TileEntityMTLever tileentitymtlever = (TileEntityMTLever) tileentity;
-			return tileentitymtlever.getMetaValue();
+			return tileentitymtlever.getTextureValue();
 		}
 		return 0;
 	}

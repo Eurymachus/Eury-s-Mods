@@ -14,6 +14,7 @@ import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.Elevators.network.PacketElevator;
 import net.minecraft.src.EurysMods.network.PacketPayload;
+import net.minecraft.src.EurysMods.network.PacketTileEntity;
 
 public class TileEntityElevator extends TileEntity {
 	private Map properties = new HashMap();
@@ -450,7 +451,7 @@ public class TileEntityElevator extends TileEntity {
 		this.enableMobilePower = var1.getBoolean("mobilePower");
 	}
 
-	public void handleUpdatePacket(PacketElevator elevatorPacket, World world) {
+	public void handleUpdatePacket(World world, PacketTileEntity packet) {
 	}
 
 	public PacketPayload getPacketPayload() {

@@ -85,7 +85,7 @@ public class ItemMTBed extends ItemBed implements ITextureProvider {
 							&& tileentity instanceof TileEntityMTBed) {
 						((TileEntityMTBed) tileentity).setBedPiece(0);
 						((TileEntityMTBed) tileentity)
-								.setMetaValue(par1ItemStack.getItemDamage());
+								.setTextureValue(par1ItemStack.getItemDamage());
 						tileentity.onInventoryChanged();
 					}
 
@@ -98,7 +98,8 @@ public class ItemMTBed extends ItemBed implements ITextureProvider {
 								&& tileentity1 instanceof TileEntityMTBed) {
 							((TileEntityMTBed) tileentity1).setBedPiece(1);
 							((TileEntityMTBed) tileentity1)
-									.setMetaValue(par1ItemStack.getItemDamage());
+									.setTextureValue(par1ItemStack
+											.getItemDamage());
 							tileentity1.onInventoryChanged();
 						}
 					}

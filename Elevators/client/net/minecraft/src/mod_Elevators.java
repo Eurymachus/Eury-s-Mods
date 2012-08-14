@@ -8,7 +8,7 @@ import net.minecraft.src.Elevators.EntityElevator;
 import net.minecraft.src.Elevators.RenderElevator;
 import net.minecraft.src.forge.NetworkMod;
 
-public class mod_EurysElevators extends NetworkMod {
+public class mod_Elevators extends NetworkMod {
 	public static NetworkMod instance;
 
 	public String getVersion() {
@@ -21,7 +21,7 @@ public class mod_EurysElevators extends NetworkMod {
 		}
 	}
 
-	public mod_EurysElevators() {
+	public mod_Elevators() {
 		instance = this;
 	}
 	

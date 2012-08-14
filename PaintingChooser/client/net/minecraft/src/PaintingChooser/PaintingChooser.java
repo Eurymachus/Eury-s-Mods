@@ -43,10 +43,8 @@ public class PaintingChooser {
 		if (entityId == ModLoader.getMinecraftInstance().thePlayer.entityId) {
 			return ModLoader.getMinecraftInstance().thePlayer;
 		} else {
-			for (int i = 0; i < world.loadedEntityList
-					.size(); ++i) {
-				Entity entity = (Entity) world.loadedEntityList
-						.get(i);
+			for (int i = 0; i < world.loadedEntityList.size(); ++i) {
+				Entity entity = (Entity) world.loadedEntityList.get(i);
 
 				if (entity == null) {
 					return null;
@@ -59,10 +57,12 @@ public class PaintingChooser {
 			return null;
 		}
 	}
-	
-	public static void openGui(World world, EntityPlayer entityplayer, EntityPainting entitypainting, ArrayList artList) {
+
+	public static void openGui(World world, EntityPlayer entityplayer,
+			EntityPainting entitypainting, ArrayList artList) {
 		if (!world.isRemote) {
-			ModLoader.getMinecraftInstance().displayGuiScreen(new GuiPainting(entitypainting, artList));
+			ModLoader.getMinecraftInstance().displayGuiScreen(
+					new GuiPainting(entitypainting, artList));
 		}
 	}
 

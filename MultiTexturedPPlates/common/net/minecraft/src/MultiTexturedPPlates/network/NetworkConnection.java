@@ -32,7 +32,7 @@ public class NetworkConnection implements INetworkConnections {
 					.getPlayer(network);
 			int packetID = data.read();
 			switch (packetID) {
-			case PacketIds.MTPPLATE_UPDATE:
+			case PacketIds.TILE:
 				PacketUpdateMTPPlate packetPPlate = new PacketUpdateMTPPlate();
 				packetPPlate.readData(data);
 				MultiTexturedPPlates.Core.getPacketHandler()

@@ -11,6 +11,7 @@ import net.minecraft.src.World;
 import net.minecraft.src.Elevators.Elevators;
 import net.minecraft.src.Elevators.ElevatorsCore;
 import net.minecraft.src.EurysMods.network.INetworkConnections;
+import net.minecraft.src.EurysMods.network.PacketIds;
 import net.minecraft.src.forge.MessageManager;
 
 public class NetworkConnection implements INetworkConnections {
@@ -29,23 +30,23 @@ public class NetworkConnection implements INetworkConnections {
 					network);
 			int packetID = data.read();
 			switch (packetID) {
-			case 0:
-				PacketUpdateElevator packetElevator = new PacketUpdateElevator();
-				packetElevator.readData(data);
-				((ElevatorsPacketHandling) Elevators.Core.getPacketHandler())
-						.handlePacket(packetElevator, entityplayer, world);
-				break;
-			case 1:
+			case PacketIds.GUI:
 				PacketElevatorGui packetElevatorGui = new PacketElevatorGui();
 				packetElevatorGui.readData(data);
 				((ElevatorsPacketHandling) Elevators.Core.getPacketHandler())
 						.handlePacket(packetElevatorGui, entityplayer, world);
 				break;
-			case 2:
+			case PacketIds.UPDATE:
 				PacketUpdateRiders packetRiders = new PacketUpdateRiders();
 				packetRiders.readData(data);
 				((ElevatorsPacketHandling) Elevators.Core.getPacketHandler())
 						.handlePacket(packetRiders, entityplayer, world);
+				break;
+			case PacketIds.ENTITY:
+				PacketUpdateElevators packetElevators = new PacketUpdateElevators();
+				packetElevators.readData(data);
+				((ElevatorsPacketHandling) Elevators.Core.getPacketHandler())
+						.handlePacket(packetElevators, entityplayer, world);
 				break;
 			}
 		} catch (Exception ex) {

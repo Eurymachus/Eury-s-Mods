@@ -3,13 +3,13 @@ package net.minecraft.src.Elevators.network;
 import net.minecraft.src.EurysMods.network.PacketIds;
 import net.minecraft.src.EurysMods.network.PacketPayload;
 
-public class PacketUpdateRiders extends PacketElevator {
+public class PacketUpdateElevators extends PacketElevator {
 
-	public PacketUpdateRiders() {
-		super(PacketIds.UPDATE);
+	public PacketUpdateElevators() {
+		super(PacketIds.ENTITY);
 	}
 
-	public PacketUpdateRiders(String command, int[] entityIDs,
+	public PacketUpdateElevators(String command, int[] entityIDs,
 			float[] entityYCoords) {
 		this();
 		this.payload = new PacketPayload(entityIDs.length,
@@ -35,7 +35,7 @@ public class PacketUpdateRiders extends PacketElevator {
 		}
 	}
 
-	public PacketUpdateRiders(String command, int[] entityIDs,
+	public PacketUpdateElevators(String command, int[] entityIDs,
 			float[] entityYCoords, double[] entitysData) {
 		this();
 		this.payload = new PacketPayload(entityIDs.length,

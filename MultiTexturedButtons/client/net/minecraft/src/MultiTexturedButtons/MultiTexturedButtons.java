@@ -43,7 +43,7 @@ public class MultiTexturedButtons {
 		TileEntity tileentity = blockAccess.getBlockTileEntity(x, y, z);
 		if (tileentity != null && tileentity instanceof TileEntityMTButton) {
 			TileEntityMTButton tileentitymtbutton = (TileEntityMTButton) tileentity;
-			return tileentitymtbutton.getMetaValue();
+			return tileentitymtbutton.getTextureValue();
 		}
 		return 0;
 	}

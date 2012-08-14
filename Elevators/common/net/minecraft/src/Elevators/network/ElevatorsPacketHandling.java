@@ -3,12 +3,13 @@ package net.minecraft.src.Elevators.network;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.World;
 import net.minecraft.src.EurysMods.network.IPacketHandling;
+import net.minecraft.src.EurysMods.network.PacketTileEntity;
 import net.minecraft.src.EurysMods.network.PacketUpdate;
 
 public interface ElevatorsPacketHandling extends IPacketHandling {
 
 	@Override
-	public void handleTileEntityPacket(PacketUpdate packet,
+	public void handleTileEntityPacket(PacketTileEntity packet,
 			EntityPlayer entityplayer, World world);
 
 	@Override

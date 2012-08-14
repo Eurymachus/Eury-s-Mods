@@ -6,6 +6,6 @@ import net.minecraft.src.EurysMods.network.IPacketHandling;
 import net.minecraft.src.EurysMods.network.PacketUpdate;
 
 public interface IPaintingPacketHandling extends IPacketHandling {
-	public void handlePacket(PacketUpdate packet,
-			EntityPlayer entityplayer, World world);
+	public void handlePacket(PacketUpdate packet, EntityPlayer entityplayer,
+			World world);
 }

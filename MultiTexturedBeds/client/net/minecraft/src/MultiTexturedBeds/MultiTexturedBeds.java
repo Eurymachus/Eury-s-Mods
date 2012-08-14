@@ -1,8 +1,6 @@
 package net.minecraft.src.MultiTexturedBeds;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.src.Block;
-import net.minecraft.src.Direction;
 import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.IBlockAccess;
 import net.minecraft.src.ModLoader;
@@ -49,10 +47,11 @@ public class MultiTexturedBeds {
 			int z) {
 		TileEntity tileentity = blockAccess.getBlockTileEntity(x, y, z);
 		if (tileentity != null && tileentity instanceof TileEntityMTBed) {
-			return ((TileEntityMTBed) tileentity).getMetaValue();
+			return ((TileEntityMTBed) tileentity).getTextureValue();
 		}
 		return 0;
 	}
+
 	public static int getMouseOver() {
 		if (mc.objectMouseOver != null) {
 			int xPosition = mc.objectMouseOver.blockX;
@@ -101,7 +100,7 @@ public class MultiTexturedBeds {
 	public static boolean isBlockFootOfBed(World world, int x, int y, int z) {
 		TileEntity tileentity = world.getBlockTileEntity(x, y, z);
 		if (tileentity != null && tileentity instanceof TileEntityMTBed) {
-			if (((TileEntityMTBed)tileentity).getBedPiece() == 1)
+			if (((TileEntityMTBed) tileentity).getBedPiece() == 1)
 				return true;
 		}
 		return false;

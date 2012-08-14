@@ -81,7 +81,7 @@ public class TileEntityMTSignRenderer extends TileEntitySpecialRenderer {
 			if (mtstileentitysign != null) {
 				renderTileEntitySignAt(mtstileentitysign, d, d1, d2, f,
 						MultiTexturedSigns.getSignTexture(mtstileentitysign
-								.getMetaValue()));
+								.getTextureValue()));
 			}
 		}
 	}

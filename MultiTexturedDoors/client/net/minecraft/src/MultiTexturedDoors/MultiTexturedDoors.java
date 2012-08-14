@@ -48,7 +48,7 @@ public class MultiTexturedDoors {
 		if (tileentity != null) {
 			if (tileentity instanceof TileEntityMTDoor) {
 				TileEntityMTDoor tileentitymtdoor = (TileEntityMTDoor) tileentity;
-				return tileentitymtdoor.getMetaValue();
+				return tileentitymtdoor.getTextureValue();
 			}
 		}
 		return 1000;

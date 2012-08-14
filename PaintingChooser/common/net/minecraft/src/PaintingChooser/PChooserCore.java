@@ -10,7 +10,6 @@ import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.ShapedRecipes;
-import net.minecraft.src.mod_PaintingChooser;
 import net.minecraft.src.EurysMods.EurysCore;
 import net.minecraft.src.PaintingChooser.network.NetworkConnection;
 import net.minecraft.src.forge.Configuration;
@@ -30,11 +29,13 @@ public class PChooserCore {
 		PaintingChooser.initialize();
 		MinecraftForge.registerConnectionHandler(new NetworkConnection());
 	}
-	
+
 	public static void addItems() {
 		entityPaintingsID = configurationProperties();
-		itemPaintings = (new ItemPaintings(itemPaintingsID - 256)).setItemName("itemPaintings");
-		ModLoader.registerEntityID(EntityPaintings.class, "Choosable Painting", entityPaintingsID);
+		itemPaintings = (new ItemPaintings(itemPaintingsID - 256))
+				.setItemName("itemPaintings");
+		ModLoader.registerEntityID(EntityPaintings.class, "Choosable Painting",
+				entityPaintingsID);
 	}
 
 	public static void addNames() {
@@ -52,21 +53,29 @@ public class PChooserCore {
 					recipelist.remove(i);
 			}
 		} catch (Exception e) {
-			EurysCore.console(PaintingChooser.PChooser.getModName(), "Could not access or remove from Minecraft Recipe List!", 1);
+			EurysCore
+					.console(
+							PaintingChooser.PChooser.getModName(),
+							"Could not access or remove from Minecraft Recipe List!",
+							1);
 		}
 	}
 
 	public static void addRecipes() {
 		removeRecipe(Item.painting.shiftedIndex);
-        ModLoader.addRecipe(new ItemStack(itemPaintings, 1), new Object[] {"###", "#X#", "###", '#', Item.stick, 'X', Block.cloth});
+		ModLoader.addRecipe(new ItemStack(itemPaintings, 1), new Object[] {
+				"###", "#X#", "###", '#', Item.stick, 'X', Block.cloth });
 	}
-	
+
 	public static int configurationProperties() {
 		configuration.load();
 		entityPaintingsID = Integer.parseInt(configuration
-				.getOrCreateIntProperty("entityPaintingsID", Configuration.CATEGORY_GENERAL, ModLoader.getUniqueEntityId()).value);
+				.getOrCreateIntProperty("entityPaintingsID",
+						Configuration.CATEGORY_GENERAL,
+						ModLoader.getUniqueEntityId()).value);
 		itemPaintingsID = Integer.parseInt(configuration
-				.getOrCreateIntProperty("itemPaintingsID", Configuration.CATEGORY_ITEM, 7006).value);
+				.getOrCreateIntProperty("itemPaintingsID",
+						Configuration.CATEGORY_ITEM, 7006).value);
 		configuration.save();
 		return entityPaintingsID;
 	}

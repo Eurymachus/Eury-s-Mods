@@ -122,7 +122,7 @@ public class ItemMTDoor extends Item implements ITextureProvider {
 		TileEntity tileentity = par0World.getBlockTileEntity(par1, par2, par3);
 		if (tileentity != null && tileentity instanceof TileEntityMTDoor) {
 			TileEntityMTDoor tileentitymtdoor = (TileEntityMTDoor) tileentity;
-			tileentitymtdoor.setMetaValue(damage);
+			tileentitymtdoor.setTextureValue(damage);
 			tileentitymtdoor.setDoorPiece(0);
 			tileentitymtdoor.onInventoryChanged();
 		}
@@ -132,7 +132,7 @@ public class ItemMTDoor extends Item implements ITextureProvider {
 				par3);
 		if (tileentity1 != null && tileentity1 instanceof TileEntityMTDoor) {
 			TileEntityMTDoor tileentitymtdoor1 = (TileEntityMTDoor) tileentity1;
-			tileentitymtdoor1.setMetaValue(damage);
+			tileentitymtdoor1.setTextureValue(damage);
 			tileentitymtdoor1.setDoorPiece(1);
 			tileentitymtdoor1.onInventoryChanged();
 		}

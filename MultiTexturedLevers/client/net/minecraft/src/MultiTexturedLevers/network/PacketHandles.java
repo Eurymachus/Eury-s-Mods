@@ -4,22 +4,22 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.EurysMods.network.IPacketHandling;
+import net.minecraft.src.EurysMods.network.PacketTileEntity;
+import net.minecraft.src.EurysMods.network.PacketTileEntityMT;
 import net.minecraft.src.EurysMods.network.PacketUpdate;
 import net.minecraft.src.MultiTexturedLevers.TileEntityMTLever;
 
 public class PacketHandles implements IPacketHandling {
 	@Override
-	public void handleTileEntityPacket(PacketUpdate packet,
+	public void handleTileEntityPacket(PacketTileEntity packet,
 			EntityPlayer entityplayer, World world) {
-		if (packet != null && packet instanceof PacketUpdateMTLever) {
-			PacketUpdateMTLever leverPacket = (PacketUpdateMTLever) packet;
-			if (!leverPacket.targetExists(world))
-				return;
-			TileEntity tileentity = leverPacket.getTarget(world);
+		if (packet != null && packet.targetExists(world)) {
+			TileEntity tileentity = packet.getTileEntity(world);
 			if ((tileentity != null)
 					&& (tileentity instanceof TileEntityMTLever)) {
 				TileEntityMTLever tileentitymtlever = (TileEntityMTLever) tileentity;
-				tileentitymtlever.handleUpdatePacket(leverPacket, world);
+				tileentitymtlever.handleUpdatePacket(world,
+						(PacketTileEntityMT) packet);
 			}
 		}
 	}

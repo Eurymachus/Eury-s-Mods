@@ -89,7 +89,7 @@ public class ItemMTPPlate extends ItemBlock {
 					if (tileentity != null
 							&& tileentity instanceof TileEntityMTPPlate) {
 						TileEntityMTPPlate tileentitymtpplate = (TileEntityMTPPlate) tileentity;
-						tileentitymtpplate.setMetaValue(itemstack
+						tileentitymtpplate.setTextureValue(itemstack
 								.getItemDamage());
 						switch (itemstack.getItemDamage()) {
 						case 0:

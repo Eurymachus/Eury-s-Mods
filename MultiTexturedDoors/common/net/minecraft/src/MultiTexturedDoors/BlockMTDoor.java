@@ -170,7 +170,7 @@ public class BlockMTDoor extends BlockDoor implements ITextureProvider,
 		if (tileentity != null && tileentity instanceof TileEntityMTDoor) {
 			int doorPiece = ((TileEntityMTDoor) tileentity).getDoorPiece();
 			if (doorPiece == 0) {
-				int door = ((TileEntityMTDoor) tileentity).getMetaValue();
+				int door = ((TileEntityMTDoor) tileentity).getTextureValue();
 				ItemStack itemstack = new ItemStack(MTDCore.mtDoorItem, 1, door);
 				EntityItem entityitem = new EntityItem(world, i, j, k,
 						new ItemStack(itemstack.itemID, 1,

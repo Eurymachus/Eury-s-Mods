@@ -1,10 +1,11 @@
 package net.minecraft.src.Elevators.network;
 
+import net.minecraft.src.EurysMods.network.PacketIds;
 import net.minecraft.src.EurysMods.network.PacketPayload;
 
 public class PacketElevatorGui extends PacketElevator {
 	public PacketElevatorGui() {
-		super(1);
+		super(PacketIds.GUI);
 	}
 
 	public PacketElevatorGui(String command, int[] intData,

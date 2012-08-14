@@ -2,12 +2,13 @@ package net.minecraft.src.MultiTexturedSigns;
 
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.Packet;
-import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
+import net.minecraft.src.EurysMods.core.TileEntityMT;
 import net.minecraft.src.EurysMods.network.PacketPayload;
+import net.minecraft.src.EurysMods.network.PacketTileEntityMT;
 import net.minecraft.src.MultiTexturedSigns.network.PacketUpdateMTSign;
 
-public class TileEntityMTSign extends TileEntity {
+public class TileEntityMTSign extends TileEntityMT {
 	public String mtSignText[] = { "", "", "", "" };
 	public int mtsLineBeingEdited;
 	private boolean mtsIsEditable;
@@ -15,8 +16,6 @@ public class TileEntityMTSign extends TileEntity {
 	public boolean getIsEditAble() {
 		return mtsIsEditable;
 	}
-
-	private int metaValue;
 
 	public String[] getMtSignText() {
 		return this.mtSignText;
@@ -28,14 +27,6 @@ public class TileEntityMTSign extends TileEntity {
 		}
 	}
 
-	public int getMetaValue() {
-		return this.metaValue;
-	}
-
-	public void setMetaValue(int meta) {
-		this.metaValue = meta;
-	}
-
 	public TileEntityMTSign() {
 		mtsLineBeingEdited = -1;
 		mtsIsEditable = true;
@@ -44,7 +35,6 @@ public class TileEntityMTSign extends TileEntity {
 	@Override
 	public void writeToNBT(NBTTagCompound nbttagcompound) {
 		super.writeToNBT(nbttagcompound);
-		nbttagcompound.setInteger("metaValue", metaValue);
 		nbttagcompound.setString("mtsText1", mtSignText[0]);
 		nbttagcompound.setString("mtsText2", mtSignText[1]);
 		nbttagcompound.setString("mtsText3", mtSignText[2]);
@@ -55,7 +45,6 @@ public class TileEntityMTSign extends TileEntity {
 	public void readFromNBT(NBTTagCompound nbttagcompound) {
 		mtsIsEditable = true;
 		super.readFromNBT(nbttagcompound);
-		metaValue = nbttagcompound.getInteger("metaValue");
 		for (int i = 0; i < 4; i++) {
 			mtSignText[i] = nbttagcompound.getString((new StringBuilder())
 					.append("mtsText").append(i + 1).toString());
@@ -66,27 +55,21 @@ public class TileEntityMTSign extends TileEntity {
 	}
 
 	public PacketPayload getPacketPayload() {
-		PacketPayload p = new PacketPayload(1, 0, 4, 0);
-		p.setIntPayload(0, this.metaValue);
+		PacketPayload p = new PacketPayload(0, 0, 4, 0);
 		for (int i = 0; i < this.mtSignText.length; i++) {
 			p.setStringPayload(i, this.mtSignText[i]);
 		}
 		return p;
 	}
 
-	public Packet getDescriptionPacket() {
-		return getUpdatePacket();
-	}
-
+	@Override
 	public Packet getUpdatePacket() {
 		return new PacketUpdateMTSign(this).getPacket();
 	}
 
-	public void handleUpdatePacket(PacketUpdateMTSign packet, World world) {
-		setMetaValue(packet.getItemDamage());
-		setMtSignText(packet.getMtSignText());
-		onInventoryChanged();
-		world.markBlockNeedsUpdate(packet.xPosition, packet.yPosition,
-				packet.zPosition);
+	@Override
+	public void handleUpdatePacket(World world, PacketTileEntityMT packet) {
+		this.setMtSignText(((PacketUpdateMTSign) packet).getMtSignText());
+		super.handleUpdatePacket(world, packet);
 	}
 }

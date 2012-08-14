@@ -10,7 +10,7 @@ import net.minecraft.src.forge.NetworkMod;
 
 public class ClientProxy implements IProxy {
 	public boolean isClient = true;
-	
+
 	@Override
 	public void sendPacket(EntityPlayer entityplayer, Packet packet) {
 		ModLoader.getMinecraftInstance().getSendQueue().addToSendQueue(packet);

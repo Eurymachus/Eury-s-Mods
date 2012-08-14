@@ -4,7 +4,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 
 /**
@@ -16,7 +15,7 @@ import net.minecraft.src.World;
  * @author Eurymachus
  * 
  */
-public class PacketUpdate extends EurysPacket {
+public abstract class PacketUpdate extends EurysPacket {
 	private int packetId;
 
 	public PacketPayload payload;
@@ -110,10 +109,6 @@ public class PacketUpdate extends EurysPacket {
 	@Override
 	public void readData(DataInputStream data) throws IOException {
 
-		/*
-		 * this.xPosition = data.readInt(); this.yPosition = data.readInt();
-		 * this.zPosition = data.readInt();
-		 */
 		this.setPosition(data.readInt(), data.readInt(), data.readInt());
 
 		int intSize = data.readInt();
@@ -137,15 +132,7 @@ public class PacketUpdate extends EurysPacket {
 			this.payload.setDoublePayload(i, data.readDouble());
 	}
 
-	public boolean targetExists(World world) {
-		return world
-				.blockExists(this.xPosition, this.yPosition, this.zPosition);
-	}
-
-	public TileEntity getTarget(World world) {
-		return world.getBlockTileEntity(this.xPosition, this.yPosition,
-				this.zPosition);
-	}
+	public abstract boolean targetExists(World world);
 
 	@Override
 	public int getID() {

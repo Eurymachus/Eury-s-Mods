@@ -1,24 +1,26 @@
 package net.minecraft.src.PaintingChooser.network;
 
 import net.minecraft.src.EntityPainting;
+import net.minecraft.src.EurysMods.network.PacketEntity;
 import net.minecraft.src.EurysMods.network.PacketIds;
 import net.minecraft.src.EurysMods.network.PacketPayload;
+import net.minecraft.src.PaintingChooser.PaintingChooser;
 
-public class PacketUpdatePainting extends PacketPainting {
+public class PacketUpdatePainting extends PacketEntity {
 
 	public PacketUpdatePainting() {
-		super(PacketIds.PAINTING_UPDATE);
+		super();
+		this.channel = PaintingChooser.PChooser.getModChannel();
 	}
 
 	public PacketUpdatePainting(EntityPainting entitypaintings) {
 		this();
-
-		this.payload = new PacketPayload(2, 0, 2, 0);
+		this.payload = new PacketPayload(1, 0, 2, 0);
 		this.xPosition = entitypaintings.xPosition;
 		this.yPosition = entitypaintings.yPosition;
 		this.zPosition = entitypaintings.zPosition;
-		this.setEntityId(entitypaintings.entityId);
 		this.setDirection(entitypaintings.direction);
+		this.setEntityId(entitypaintings.entityId);
 		this.isChunkDataPacket = true;
 	}
 
@@ -26,7 +28,7 @@ public class PacketUpdatePainting extends PacketPainting {
 		this(entitypaintings);
 		this.setCommand(command);
 	}
-	
+
 	public void setCommand(String command) {
 		this.payload.setStringPayload(0, command);
 	}
@@ -35,22 +37,14 @@ public class PacketUpdatePainting extends PacketPainting {
 		this.payload.setStringPayload(1, title);
 	}
 
-	public void setEntityId(int entityId) {
-		this.payload.setIntPayload(0, entityId);
+	public void setDirection(int direction) {
+		this.payload.setIntPayload(0, direction);
 	}
 
-	public void setDirection(int direction) {
-		this.payload.setIntPayload(1, direction);
-	}
-	
-	public int getEntityId() {
+	public int getDirection() {
 		return this.payload.getIntPayload(0);
 	}
-	
-	public int getDirection() {
-		return this.payload.getIntPayload(1);
-	}
-	
+
 	public String getCommand() {
 		return this.payload.getStringPayload(0);
 	}

@@ -2,8 +2,6 @@ package net.minecraft.src.MultiTexturedBeds;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import net.minecraft.src.Block;
 import net.minecraft.src.CraftingManager;
@@ -91,28 +89,48 @@ public class MTBedsCore {
 					recipelist.remove(i);
 			}
 		} catch (Exception e) {
-			EurysCore.console(MultiTexturedBeds.MTBed.getModName(), "Could not access or remove from Minecraft Recipe List!", 1);
+			EurysCore
+					.console(
+							MultiTexturedBeds.MTBed.getModName(),
+							"Could not access or remove from Minecraft Recipe List!",
+							1);
 		}
 	}
 
 	public static void addRecipes() {
 		removeRecipe(Item.bed.shiftedIndex);
-		ModLoader.addRecipe(blackBed, new Object[] {"###", "XXX", '#', new ItemStack(Block.cloth, 1, 15), 'X', Block.planks});
-		ModLoader.addRecipe(redBed, new Object[] {"###", "XXX", '#', new ItemStack(Block.cloth, 1, 14), 'X', Block.planks});
-		ModLoader.addRecipe(greenBed, new Object[] {"###", "XXX", '#', new ItemStack(Block.cloth, 1, 13), 'X', Block.planks});
-		ModLoader.addRecipe(brownBed, new Object[] {"###", "XXX", '#', new ItemStack(Block.cloth, 1, 12), 'X', Block.planks});
-		ModLoader.addRecipe(blueBed, new Object[] {"###", "XXX", '#', new ItemStack(Block.cloth, 1, 11), 'X', Block.planks});
-		ModLoader.addRecipe(purpleBed, new Object[] {"###", "XXX", '#', new ItemStack(Block.cloth, 1, 10), 'X', Block.planks});
-		ModLoader.addRecipe(cyanBed, new Object[] {"###", "XXX", '#', new ItemStack(Block.cloth, 1, 9), 'X', Block.planks});
-		ModLoader.addRecipe(silverBed, new Object[] {"###", "XXX", '#', new ItemStack(Block.cloth, 1, 8), 'X', Block.planks});
-		ModLoader.addRecipe(grayBed, new Object[] {"###", "XXX", '#', new ItemStack(Block.cloth, 1, 7), 'X', Block.planks});
-		ModLoader.addRecipe(pinkBed, new Object[] {"###", "XXX", '#', new ItemStack(Block.cloth, 1, 6), 'X', Block.planks});
-		ModLoader.addRecipe(limeBed, new Object[] {"###", "XXX", '#', new ItemStack(Block.cloth, 1, 5), 'X', Block.planks});
-		ModLoader.addRecipe(yellowBed, new Object[] {"###", "XXX", '#', new ItemStack(Block.cloth, 1, 4), 'X', Block.planks});
-		ModLoader.addRecipe(lightBlueBed, new Object[] {"###", "XXX", '#', new ItemStack(Block.cloth, 1, 3), 'X', Block.planks});
-		ModLoader.addRecipe(magentaBed, new Object[] {"###", "XXX", '#', new ItemStack(Block.cloth, 1, 2), 'X', Block.planks});
-		ModLoader.addRecipe(orangeBed, new Object[] {"###", "XXX", '#', new ItemStack(Block.cloth, 1, 1), 'X', Block.planks});
-		ModLoader.addRecipe(whiteBed, new Object[] {"###", "XXX", '#', new ItemStack(Block.cloth, 1, 0), 'X', Block.planks});
+		ModLoader.addRecipe(blackBed, new Object[] { "###", "XXX", '#',
+				new ItemStack(Block.cloth, 1, 15), 'X', Block.planks });
+		ModLoader.addRecipe(redBed, new Object[] { "###", "XXX", '#',
+				new ItemStack(Block.cloth, 1, 14), 'X', Block.planks });
+		ModLoader.addRecipe(greenBed, new Object[] { "###", "XXX", '#',
+				new ItemStack(Block.cloth, 1, 13), 'X', Block.planks });
+		ModLoader.addRecipe(brownBed, new Object[] { "###", "XXX", '#',
+				new ItemStack(Block.cloth, 1, 12), 'X', Block.planks });
+		ModLoader.addRecipe(blueBed, new Object[] { "###", "XXX", '#',
+				new ItemStack(Block.cloth, 1, 11), 'X', Block.planks });
+		ModLoader.addRecipe(purpleBed, new Object[] { "###", "XXX", '#',
+				new ItemStack(Block.cloth, 1, 10), 'X', Block.planks });
+		ModLoader.addRecipe(cyanBed, new Object[] { "###", "XXX", '#',
+				new ItemStack(Block.cloth, 1, 9), 'X', Block.planks });
+		ModLoader.addRecipe(silverBed, new Object[] { "###", "XXX", '#',
+				new ItemStack(Block.cloth, 1, 8), 'X', Block.planks });
+		ModLoader.addRecipe(grayBed, new Object[] { "###", "XXX", '#',
+				new ItemStack(Block.cloth, 1, 7), 'X', Block.planks });
+		ModLoader.addRecipe(pinkBed, new Object[] { "###", "XXX", '#',
+				new ItemStack(Block.cloth, 1, 6), 'X', Block.planks });
+		ModLoader.addRecipe(limeBed, new Object[] { "###", "XXX", '#',
+				new ItemStack(Block.cloth, 1, 5), 'X', Block.planks });
+		ModLoader.addRecipe(yellowBed, new Object[] { "###", "XXX", '#',
+				new ItemStack(Block.cloth, 1, 4), 'X', Block.planks });
+		ModLoader.addRecipe(lightBlueBed, new Object[] { "###", "XXX", '#',
+				new ItemStack(Block.cloth, 1, 3), 'X', Block.planks });
+		ModLoader.addRecipe(magentaBed, new Object[] { "###", "XXX", '#',
+				new ItemStack(Block.cloth, 1, 2), 'X', Block.planks });
+		ModLoader.addRecipe(orangeBed, new Object[] { "###", "XXX", '#',
+				new ItemStack(Block.cloth, 1, 1), 'X', Block.planks });
+		ModLoader.addRecipe(whiteBed, new Object[] { "###", "XXX", '#',
+				new ItemStack(Block.cloth, 1, 0), 'X', Block.planks });
 	}
 
 	public static int configurationProperties() {

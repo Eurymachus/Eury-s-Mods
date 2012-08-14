@@ -75,7 +75,7 @@ public class MultiTexturedSigns {
 		TileEntity tileentity = blockAccess.getBlockTileEntity(x, y, z);
 		if (tileentity != null && tileentity instanceof TileEntityMTSign) {
 			TileEntityMTSign tileentitymtsign = (TileEntityMTSign) tileentity;
-			return tileentitymtsign.getMetaValue();
+			return tileentitymtsign.getTextureValue();
 		}
 		return 0;
 	}

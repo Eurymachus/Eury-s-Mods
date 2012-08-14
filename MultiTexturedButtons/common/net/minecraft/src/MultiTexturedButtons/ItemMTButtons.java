@@ -87,7 +87,8 @@ public class ItemMTButtons extends ItemBlock// implements ITextureProvider
 				if (tileentity != null
 						&& tileentity instanceof TileEntityMTButton) {
 					TileEntityMTButton tileentitymtbutton = (TileEntityMTButton) tileentity;
-					tileentitymtbutton.setMetaValue(itemstack.getItemDamage());
+					tileentitymtbutton.setTextureValue(itemstack
+							.getItemDamage());
 					tileentitymtbutton.onInventoryChanged();
 				}
 			}

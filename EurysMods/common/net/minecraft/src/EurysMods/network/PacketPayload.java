@@ -358,4 +358,10 @@ public class PacketPayload {
 			System.arraycopy(boolPayload, index.boolIndex, payload.boolPayload,
 					0, payload.boolPayload.length);
 	}
+
+	public void addIntValue(int newValue) {
+		int[] newInt = new int[1];
+		newInt[0] = newValue;
+		append(newInt);
+	}
 }

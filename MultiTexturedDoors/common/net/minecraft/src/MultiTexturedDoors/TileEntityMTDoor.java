@@ -2,22 +2,14 @@ package net.minecraft.src.MultiTexturedDoors;
 
 import net.minecraft.src.NBTTagCompound;
 import net.minecraft.src.Packet;
-import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
+import net.minecraft.src.EurysMods.core.TileEntityMT;
 import net.minecraft.src.EurysMods.network.PacketPayload;
+import net.minecraft.src.EurysMods.network.PacketTileEntityMT;
 import net.minecraft.src.MultiTexturedDoors.network.PacketUpdateMTDoor;
 
-public class TileEntityMTDoor extends TileEntity {
-	public int metaValue;
+public class TileEntityMTDoor extends TileEntityMT {
 	public int doorPiece;
-
-	public int getMetaValue() {
-		return this.metaValue;
-	}
-
-	public void setMetaValue(int meta) {
-		this.metaValue = meta;
-	}
 
 	public int getDoorPiece() {
 		return this.doorPiece;
@@ -30,37 +22,30 @@ public class TileEntityMTDoor extends TileEntity {
 	@Override
 	public void writeToNBT(NBTTagCompound nbttagcompound) {
 		super.writeToNBT(nbttagcompound);
-		nbttagcompound.setInteger("metaValue", this.getMetaValue());
 		nbttagcompound.setInteger("doorPiece", this.getDoorPiece());
 	}
 
 	@Override
 	public void readFromNBT(NBTTagCompound nbttagcompound) {
 		super.readFromNBT(nbttagcompound);
-		this.setMetaValue(nbttagcompound.getInteger("metaValue"));
 		this.setDoorPiece(nbttagcompound.getInteger("doorPiece"));
 	}
 
 	public PacketPayload getPacketPayload() {
 		PacketPayload p = new PacketPayload(2, 0, 0, 0);
-		p.setIntPayload(0, this.metaValue);
-		p.setIntPayload(1, this.doorPiece);
+		p.setIntPayload(0, this.getTextureValue());
+		p.setIntPayload(1, this.getDoorPiece());
 		return p;
 	}
 
-	public Packet getDescriptionPacket() {
-		return getUpdatePacket();
-	}
-
+	@Override
 	public Packet getUpdatePacket() {
 		return new PacketUpdateMTDoor(this).getPacket();
 	}
 
-	public void handleUpdatePacket(PacketUpdateMTDoor packet, World world) {
-		this.setMetaValue(packet.getItemDamage());
-		this.setDoorPiece(packet.getDoorPiece());
-		this.onInventoryChanged();
-		world.markBlockNeedsUpdate(packet.xPosition, packet.yPosition,
-				packet.zPosition);
+	@Override
+	public void handleUpdatePacket(World world, PacketTileEntityMT packet) {
+		this.setDoorPiece(((PacketUpdateMTDoor) packet).getDoorPiece());
+		super.handleUpdatePacket(world, packet);
 	}
 }

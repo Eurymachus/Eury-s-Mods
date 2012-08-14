@@ -1,12 +1,12 @@
 package net.minecraft.src.EurysMods.network;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
 import net.minecraft.src.Packet;
 import net.minecraft.src.Packet250CustomPayload;
-import net.minecraft.src.forge.packets.ForgePacket;
 
 /**
  * Packet Information Base
@@ -14,7 +14,7 @@ import net.minecraft.src.forge.packets.ForgePacket;
  * @author Eurymachus
  * 
  */
-public abstract class EurysPacket extends ForgePacket {
+public abstract class EurysPacket {
 	/**
 	 * Only true for Packet51MapChunk, Packet52MultiBlockChange,
 	 * Packet53BlockChange and Packet59ComplexEntity. Used to separate them into
@@ -33,11 +33,25 @@ public abstract class EurysPacket extends ForgePacket {
 		this.zPosition = z;
 	}
 
+	public abstract void writeData(DataOutputStream data) throws IOException;
+
+	public abstract void readData(DataInputStream data) throws IOException;
+
+	public abstract int getID();
+
+	public String toString(boolean full) {
+		return toString();
+	}
+
+	@Override
+	public String toString() {
+		return getID() + " " + getClass().getSimpleName();
+	}
+
 	/**
 	 * Retrieves the Custom Packet and Payload data as a Forge
 	 * Packet250CustomPayload
 	 */
-	@Override
 	public Packet getPacket() {
 		ByteArrayOutputStream bytes = new ByteArrayOutputStream();
 		DataOutputStream data = new DataOutputStream(bytes);
@@ -48,7 +62,7 @@ public abstract class EurysPacket extends ForgePacket {
 			e.printStackTrace();
 		}
 		Packet250CustomPayload packet = new Packet250CustomPayload();
-		packet.channel = channel;
+		packet.channel = this.channel;
 		packet.data = bytes.toByteArray();
 		packet.length = packet.data.length;
 		packet.isChunkDataPacket = this.isChunkDataPacket;

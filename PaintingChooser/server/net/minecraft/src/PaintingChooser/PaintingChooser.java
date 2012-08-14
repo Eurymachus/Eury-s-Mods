@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import net.minecraft.src.Entity;
 import net.minecraft.src.EntityPainting;
 import net.minecraft.src.EntityPlayer;
-import net.minecraft.src.ModLoader;
 import net.minecraft.src.World;
 import net.minecraft.src.mod_PaintingChooser;
-import net.minecraft.src.EurysMods.*;
+import net.minecraft.src.EurysMods.EurysCore;
+import net.minecraft.src.EurysMods.ServerCore;
+import net.minecraft.src.EurysMods.ServerProxy;
 import net.minecraft.src.EurysMods.core.ICore;
 import net.minecraft.src.PaintingChooser.network.PacketHandles;
 import net.minecraft.src.PaintingChooser.network.PacketPaintingGui;
@@ -40,10 +41,8 @@ public class PaintingChooser {
 	}
 
 	public static Entity getEntityByID(World world, int entityId) {
-		for (int i = 0; i < world.loadedEntityList
-				.size(); ++i) {
-			Entity entity = (Entity) world.loadedEntityList
-					.get(i);
+		for (int i = 0; i < world.loadedEntityList.size(); ++i) {
+			Entity entity = (Entity) world.loadedEntityList.get(i);
 
 			if (entity == null) {
 				return null;
@@ -56,18 +55,24 @@ public class PaintingChooser {
 		return null;
 	}
 
-	public static void openGui(World world, EntityPlayer entityplayer, EntityPainting entitypaintings, ArrayList artList) {
+	public static void openGui(World world, EntityPlayer entityplayer,
+			EntityPainting entitypaintings, ArrayList artList) {
 		if (!world.isRemote) {
-			PacketPaintingGui guiPacket = new PacketPaintingGui(entitypaintings, artList);
+			PacketPaintingGui guiPacket = new PacketPaintingGui(0,
+					entitypaintings, artList);
 			PChooser.getProxy().sendPacket(entityplayer, guiPacket.getPacket());
 		}
 	}
 
 	public static void notifyPlayers(EntityPainting entitypainting) {
 		if (entitypainting != null && entitypainting.art != null) {
-			PacketUpdatePainting paintingPacket = new PacketUpdatePainting(entitypainting, "UPDATEPAINTING");
+			PacketUpdatePainting paintingPacket = new PacketUpdatePainting(
+					entitypainting, "UPDATEPAINTING");
 			paintingPacket.setArtTitle(entitypainting.art.title);
-			PaintingChooser.PChooser.getProxy().sendPacketToAll(paintingPacket.getPacket(), entitypainting.xPosition, entitypainting.yPosition, entitypainting.zPosition, 16, mod_PaintingChooser.instance);
+			PaintingChooser.PChooser.getProxy().sendPacketToAll(
+					paintingPacket.getPacket(), entitypainting.xPosition,
+					entitypainting.yPosition, entitypainting.zPosition, 16,
+					mod_PaintingChooser.instance);
 		}
 	}
 }

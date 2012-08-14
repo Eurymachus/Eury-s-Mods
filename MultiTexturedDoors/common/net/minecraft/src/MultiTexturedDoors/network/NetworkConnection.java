@@ -31,7 +31,7 @@ public class NetworkConnection implements INetworkConnections {
 
 			int packetID = data.read();
 			switch (packetID) {
-			case PacketIds.MTDOOR_UPDATE:
+			case PacketIds.TILE:
 				PacketUpdateMTDoor packetDoor = new PacketUpdateMTDoor();
 				packetDoor.readData(data);
 				MultiTexturedDoors.Core

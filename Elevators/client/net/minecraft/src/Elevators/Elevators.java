@@ -1,6 +1,7 @@
 package net.minecraft.src.Elevators;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +12,7 @@ import net.minecraft.src.EntityPlayer;
 import net.minecraft.src.GuiScreen;
 import net.minecraft.src.ItemStack;
 import net.minecraft.src.ModLoader;
-import net.minecraft.src.mod_EurysElevators;
+import net.minecraft.src.mod_Elevators;
 import net.minecraft.src.Elevators.network.PacketHandles;
 import net.minecraft.src.EurysMods.ClientCore;
 import net.minecraft.src.EurysMods.ClientProxy;
@@ -40,14 +41,13 @@ public class Elevators {
 	public static void load() {
 		EurysCore.console(Core.getModName(), "Registering items...");
 		ElevatorsCore.addItems();
-		// ModLoaderMp.registerNetClientHandlerEntity(EntityElevator.class,
-		// elevator_entityID);
-		ModLoader.setInGUIHook(mod_EurysElevators.instance, true, true);
-		ModLoader.setInGameHook(mod_EurysElevators.instance, true, true);
+		ElevatorsCore.additionalProps();
+		ModLoader.setInGUIHook(mod_Elevators.instance, true, true);
+		ModLoader.setInGameHook(mod_Elevators.instance, true, true);
 		EurysCore.console(Core.getModName(), "Naming items...");
-		// ElevatorsCore.addNames();
+		ElevatorsCore.addNames();
 		EurysCore.console(Core.getModName(), "Registering recipes...");
-		// ElevatorsCore.addRecipes();
+		ElevatorsCore.addRecipes();
 	}
 
 	public static void openGUI(EntityPlayer entityplayer,
@@ -91,5 +91,24 @@ public class Elevators {
 	}
 
 	public static void sendPacketToAll(PacketUpdate packet, int x, int y, int z) {
+	}
+
+	public static void ejectRiders(EntityElevator entityElevator) {
+		Iterator var1 = entityElevator.mountedEntities.iterator();
+
+		while (var1.hasNext()) {
+			Entity var2 = (Entity) var1.next();
+			entityElevator.riddenByEntity = var2;
+			var2.mountEntity((Entity) null);
+		}
+
+		entityElevator.mountedEntities.clear();
+	}
+
+	public static void updateAllConjoined(EntityElevator entityElevator) {
+	}
+
+	public static void updateRiderPosition(int[] entityIDs,
+			float[] entityYCoords, EntityElevator entityElevator) {
 	}
 }

@@ -30,7 +30,7 @@ public class NetworkConnection implements INetworkConnections {
 					.getPlayer(network);
 			int packetID = data.read();
 			switch (packetID) {
-			case PacketIds.MTBED_UPDATE:
+			case PacketIds.TILE:
 				PacketUpdateMTBed packetBed = new PacketUpdateMTBed();
 				packetBed.readData(data);
 				MultiTexturedBeds.MTBed.getPacketHandler()

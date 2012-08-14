@@ -1,7 +1,6 @@
 package net.minecraft.src.MultiTexturedBeds;
 
 import net.minecraft.src.IBlockAccess;
-import net.minecraft.src.ModLoader;
 import net.minecraft.src.TileEntity;
 import net.minecraft.src.World;
 import net.minecraft.src.EurysMods.EurysCore;
@@ -39,7 +38,7 @@ public class MultiTexturedBeds {
 			int z) {
 		TileEntity tileentity = blockAccess.getBlockTileEntity(x, y, z);
 		if (tileentity != null && tileentity instanceof TileEntityMTBed) {
-			return ((TileEntityMTBed) tileentity).getMetaValue();
+			return ((TileEntityMTBed) tileentity).getTextureValue();
 		}
 		return 0;
 	}
@@ -51,7 +50,7 @@ public class MultiTexturedBeds {
 	public static boolean isBlockFootOfBed(World world, int x, int y, int z) {
 		TileEntity tileentity = world.getBlockTileEntity(x, y, z);
 		if (tileentity != null && tileentity instanceof TileEntityMTBed) {
-			if (((TileEntityMTBed)tileentity).getBedPiece() == 1)
+			if (((TileEntityMTBed) tileentity).getBedPiece() == 1)
 				return true;
 		}
 		return false;

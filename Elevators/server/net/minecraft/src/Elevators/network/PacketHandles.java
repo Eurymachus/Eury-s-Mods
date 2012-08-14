@@ -9,22 +9,19 @@ import net.minecraft.src.World;
 import net.minecraft.src.Elevators.BlockElevator;
 import net.minecraft.src.Elevators.ElevatorsCore;
 import net.minecraft.src.Elevators.TileEntityElevator;
+import net.minecraft.src.EurysMods.network.PacketTileEntity;
 import net.minecraft.src.EurysMods.network.PacketUpdate;
 
 public class PacketHandles implements ElevatorsPacketHandling {
 	@Override
-	public void handleTileEntityPacket(PacketUpdate packet,
+	public void handleTileEntityPacket(PacketTileEntity packet,
 			EntityPlayer player, World world) {
-		if (packet != null && packet instanceof PacketElevator) {
-			PacketElevator elevatorPacket = (PacketElevator) packet;
-			EntityPlayerMP entityplayermp = null;
-			if (!elevatorPacket.targetExists(world))
-				return;
-			TileEntity tileentity = elevatorPacket.getTarget(world);
+		if (packet != null && packet.targetExists(world)) {
+			TileEntity tileentity = packet.getTileEntity(world);
 			if ((tileentity != null)
 					&& (tileentity instanceof TileEntityElevator)) {
 				TileEntityElevator tileentityelevator = (TileEntityElevator) tileentity;
-				tileentityelevator.handleUpdatePacket(elevatorPacket, world);
+				tileentityelevator.handleUpdatePacket(world, packet);
 			}
 		}
 	}

@@ -20,9 +20,10 @@ import net.minecraft.src.Material;
 import net.minecraft.src.MathHelper;
 import net.minecraft.src.ModLoader;
 import net.minecraft.src.World;
-import net.minecraft.src.mod_EurysElevators;
+import net.minecraft.src.mod_Elevators;
 import net.minecraft.src.Elevators.network.NetworkConnection;
 import net.minecraft.src.Elevators.network.PacketElevatorGui;
+import net.minecraft.src.Elevators.network.PacketUpdateRiders;
 import net.minecraft.src.EurysMods.network.PacketUpdate;
 import net.minecraft.src.forge.DimensionManager;
 import net.minecraft.src.forge.MinecraftForge;
@@ -106,10 +107,36 @@ public class ElevatorsCore {
 		disallowed_blockIDs = new HashSet();
 		solid_allowed_blockIDs = new HashSet();
 		solid_disallowed_blockIDs = new HashSet();
-		universalLoad();
 		newBlocks.add(new ItemStack(ElevatorsCore.ElevatorButton));
 		newBlocks.add(new ItemStack(ElevatorsCore.ElevatorCaller));
 		newBlocks.add(new ItemStack(ElevatorsCore.Elevator));
+		ModLoader.registerBlock(Elevator, ItemElevator.class);
+		Item.itemsList[Elevator.blockID] = null;
+		Item.itemsList[Elevator.blockID] = (new ItemElevator(Elevator.blockID
+				- OFFSET)).setItemName("ElevatorItem");
+		ModLoader.registerBlock(ElevatorButton);
+		ModLoader.registerBlock(ElevatorCaller);
+		ModLoader.registerBlock(Transient);
+		MinecraftForge.registerEntity(EntityElevator.class,
+				mod_Elevators.instance, elevator_entityID, 16, 16, true);
+		ModLoader.registerTileEntity(TileEntityElevator.class, "ironelv");
+	}
+	
+	public static void addNames() {
+		ModLoader.addName(Elevator, "Elevator");
+		ModLoader.addName(ElevatorButton, "Elevator Button");
+		ModLoader.addName(ElevatorCaller, "Elevator Caller");
+		ModLoader.addName(Transient, "You shouldn\'t have this!");
+	}
+	
+	public static void addRecipes() {
+		ModLoader.addRecipe(new ItemStack(ElevatorButton, 1), new Object[] {
+				"I", "I", 'I', Item.ingotIron });
+		ModLoader.addRecipe(new ItemStack(Elevator, 4), new Object[] { "IDI",
+				"IRI", "III", 'I', Item.ingotIron, 'D', Item.diamond, 'R',
+				Item.redstone });
+		ModLoader.addRecipe(new ItemStack(ElevatorCaller, 1), new Object[] {
+				"SSS", "SRS", "SSS", 'S', Block.stone, 'R', Item.redstone });
 	}
 
 	public static void configuration() {
@@ -161,29 +188,7 @@ public class ElevatorsCore {
 		props.getString("basement_title", "Basement Level");
 	}
 
-	public static void universalLoad() {
-		say("Starting in verbose mode!");
-		ModLoader.registerBlock(Elevator, ItemElevator.class);
-		Item.itemsList[Elevator.blockID] = null;
-		Item.itemsList[Elevator.blockID] = (new ItemElevator(Elevator.blockID
-				- OFFSET)).setItemName("ElevatorItem");
-		ModLoader.registerBlock(ElevatorButton);
-		ModLoader.registerBlock(ElevatorCaller);
-		ModLoader.registerBlock(Transient);
-		MinecraftForge.registerEntity(EntityElevator.class,
-				mod_EurysElevators.instance, elevator_entityID, 16, 16, true);
-		ModLoader.registerTileEntity(TileEntityElevator.class, "ironelv");
-		ModLoader.addName(Elevator, "Elevator");
-		ModLoader.addName(ElevatorButton, "Elevator Button");
-		ModLoader.addName(ElevatorCaller, "Elevator Caller");
-		ModLoader.addName(Transient, "You shouldn\'t have this!");
-		ModLoader.addRecipe(new ItemStack(ElevatorButton, 1), new Object[] {
-				"I", "I", 'I', Item.ingotIron });
-		ModLoader.addRecipe(new ItemStack(Elevator, 4), new Object[] { "IDI",
-				"IRI", "III", 'I', Item.ingotIron, 'D', Item.diamond, 'R',
-				Item.redstone });
-		ModLoader.addRecipe(new ItemStack(ElevatorCaller, 1), new Object[] {
-				"SSS", "SRS", "SSS", 'S', Block.stone, 'R', Item.redstone });
+	public static void additionalProps() {
 		popIntSetFromString(disallowed_renderTypes,
 				props.getString("opening_disallowed_renderTypes"),
 				"0, 10, 11, 13, 14, 16, 17, 18, 24, 25, 26");
@@ -256,33 +261,32 @@ public class ElevatorsCore {
 
 	public static void sendRiderUpdates(PacketUpdate packet, int x, int y, int z) {
 		Elevators.sendPacketToAll(packet, x, y, z);
-		/*			Elevators.Core.getProxy().sendPacketToAll(packet.getPacket(),
-					packet.xPosition, packet.yPosition, packet.zPosition, 16,
-					mod_Elevator.instance);
-		} catch (Exception var2) {
-			say("An error occurred while sending update packets", true);
-		}*/
+	}
+
+	public static void sendElevatorUpdates(PacketUpdate packet,
+			int x, int y, int z) {
+		Elevators.sendPacketToAll(packet, x, y, z);
 	}
 
 	public static boolean requestGUIMapping(ChunkPosition chunkpos,
 			EntityPlayer entityplayer, String[] floorMap, boolean[] properties) {
-		int var4 = entityplayer.entityId;
+		int entityId = entityplayer.entityId;
 
 		if (chunkpos == null) {
 			return false;
 		} else {
-			Block var5 = Block.blocksList[entityplayer.worldObj.getBlockId(
+			Block block = Block.blocksList[entityplayer.worldObj.getBlockId(
 					chunkpos.x, chunkpos.y, chunkpos.z)];
 
-			if (var5 != null && var5.blockID == Elevator.blockID) {
-				BlockElevator var6 = (BlockElevator) var5;
+			if (block != null && block.blockID == Elevator.blockID) {
+				BlockElevator var6 = (BlockElevator) block;
 				TileEntityElevator var7 = BlockElevator.getTileEntity(
 						entityplayer.worldObj, chunkpos.x, chunkpos.y,
 						chunkpos.z);
 
 				if (var7 != null) {
-					elevatorRequests.put(Integer.valueOf(var4), chunkpos);
-					int[] guiData = new int[] { var4, var7.numFloors(),
+					elevatorRequests.put(Integer.valueOf(entityId), chunkpos);
+					int[] guiData = new int[] { entityId, var7.numFloors(),
 							var7.curFloor() };
 					double[] doubleData = new double[] { 5.0D, 5.0D, 5.0D };
 
@@ -301,7 +305,7 @@ public class ElevatorsCore {
 							guiPacket.getPacket());
 					say("Received elevator request from "
 							+ entityplayer.username + ". Request was given ID#"
-							+ var4);
+							+ entityId);
 					return true;
 				} else {
 					say("Unable to find mapping for player "

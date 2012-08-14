@@ -42,6 +42,7 @@ public class EntityElevator extends Entity {
 	private boolean conjoinedHasBeenSet = false;
 	private boolean isClient;
 	boolean slowingDown = false;
+	public boolean updateSent = false;
 
 	public EntityElevator(World var1) {
 		super(var1);
@@ -105,8 +106,6 @@ public class EntityElevator extends Entity {
 		if (!this.isDead) {
 			int[] entityIDs = new int[this.mountedEntities.size()];
 			float[] entityYCoords = new float[this.mountedEntities.size()];
-			// Packet250CustomPayload var3 = new Packet250CustomPayload();
-			// var3.packetType = 238;
 
 			if (!this.mountedEntities.isEmpty() && !this.worldObj.isRemote) {
 				this.mountedEntities.remove((Object) null);
@@ -133,94 +132,38 @@ public class EntityElevator extends Entity {
 					}
 				}
 			}
-
-			PacketUpdateRiders ridersPacket = new PacketUpdateRiders(
-					"UPDATE_RIDERS", entityIDs, entityYCoords);
-			// var3.dataInt = var1;
-			// var3.dataFloat = var2;
-			ElevatorsCore.sendRiderUpdates(ridersPacket, (int)this.posX, (int)this.posY, (int)this.posZ);
+			Elevators.updateRiderPosition(entityIDs, entityYCoords, this);
 		}
 	}
 
 	private void ejectRiders() {
-		if (!this.mountedEntities.isEmpty()) {
-			int i = 0;
-			int[] entityIDs = new int[this.mountedEntities.size()];
-			float[] entityYCoords = new float[this.mountedEntities.size()];
-
-			for (Iterator entities = this.mountedEntities.iterator(); entities
-					.hasNext(); ++i) {
-				Entity entity = (Entity) entities.next();
-				entity.setPosition(entity.posX, this.posY
-						+ entity.height + entity.getYOffset(),
-						entity.posZ);
-				entity.ridingEntity = null;
-				entityIDs[i] = entity.entityId;
-				entityYCoords[i] = (float) entity.posY;
-				// var1.dataInt[var2] = var4.entityId;
-				// var1.dataFloat[var2] = (float)var4.posY;
-			}
-
-			PacketUpdateRiders ridersPacket = new PacketUpdateRiders(
-					"DISMOUNT_RIDERS", entityIDs, entityYCoords);
-			// Packet250CustomPayload var1 = new Packet250CustomPayload();
-			// var1.packetType = 239;
-			// var1.dataInt = new int[this.mountedEntities.size()];
-			// var1.dataFloat = new float[this.mountedEntities.size()];
-			ElevatorsCore.sendRiderUpdates(ridersPacket, (int)this.posX, (int)this.posY, (int)this.posZ);
-		}
+		Elevators.ejectRiders(this);
 	}
 
 	private void updateAllConjoined() {
-		Iterator elevators = this.conjoinedelevators.iterator();
-		HashSet elevatorHash = new HashSet();
-		elevatorHash.addAll(this.conjoinedelevators);
+/*		EntityElevator elevatorceiling = this.ceiling;
 
-		while (elevators.hasNext()) {
-			EntityElevator entityelevator = (EntityElevator) elevators.next();
-			entityelevator.prevPosY = entityelevator.posY;
-			entityelevator.boundingBox.offset(0.0D, this.motionY, 0.0D);
-			entityelevator.setPosition(entityelevator.posX,
-					entityelevator.boundingBox.minY
-							+ entityelevator.yOffset
-							- entityelevator.ySize,
-					entityelevator.posZ, true);
-			EntityElevator elevatorceiling = entityelevator.ceiling;
-
-			if (elevatorceiling != null) {
-				elevatorceiling.prevPosY = entityelevator.posY;
-				elevatorceiling.boundingBox.offset(0.0D, this.motionY, 0.0D);
-				elevatorceiling.setPosition(elevatorceiling.posX,
-						elevatorceiling.boundingBox.minY
-								+ elevatorceiling.yOffset
-								- elevatorceiling.ySize,
-						elevatorceiling.posZ, true);
-				ElevatorsCore.say("" + elevatorceiling.metadata);
-				elevatorHash.add(elevatorceiling);
-			}
-		}
-
-		int[] entityIDs = new int[elevatorHash.size()];
-		float[] entityYCoords = new float[elevatorHash.size()];
-		double[] entitysData = new double[elevatorHash.size()];
-		int i = 0;
-
-		for (elevators = elevatorHash.iterator(); elevators.hasNext(); ++i) {
-			EntityElevator elevator = (EntityElevator) elevators.next();
-			entityIDs[i] = elevator.entityId;
-			entityYCoords[i] = (float) elevator.posY;
-			entitysData[i] = elevator.metadata;
-			ElevatorsCore.say(elevator.entityId + ": " + elevator.metadata);
-		}
-
-		PacketUpdateRiders ridersPacket = new PacketUpdateRiders(
-				"UPDATE_RIDERS", entityIDs, entityYCoords, entitysData);
-		// Packet250CustomPayload var10 = new Packet250CustomPayload();
-		// var10.packetType = 238;
-		// var10.dataInt = var8;
-		// var10.dataFloat = var9;
-		// var10.dataDouble = var5;
-		ElevatorsCore.sendRiderUpdates(ridersPacket, (int)this.posX, (int)this.posY, (int)this.posZ);
+		if (elevatorceiling != null) {
+			elevatorceiling.prevPosY = this.posY;
+			elevatorceiling.boundingBox.offset(0.0D, this.motionY, 0.0D);
+			elevatorceiling.setPosition(elevatorceiling.posX,
+					elevatorceiling.boundingBox.minY
+							+ elevatorceiling.yOffset
+							- elevatorceiling.ySize,
+					elevatorceiling.posZ, true);
+			ElevatorsCore.say("" + elevatorceiling.metadata);
+			elevatorHash.add(elevatorceiling);
+		} else {*/
+			this.updateSent = false;
+			this.prevPosY = this.posY;
+			this.boundingBox.offset(0.0D, this.motionY, 0.0D);
+			this.setPosition(this.posX,
+					this.boundingBox.minY
+							+ this.yOffset
+							- this.ySize,
+					this.posZ, true);
+//		/}
+		Elevators.updateAllConjoined(this);
 	}
 
 	public void setEmerHalt(boolean var1) {
@@ -489,7 +432,7 @@ public class EntityElevator extends Entity {
 					if (this.waitToAccelerate < 10) {
 						this.elevatorSpeed = 0.0F;
 					} else {
-						this.elevatorSpeed = 0.016F;
+						this.elevatorSpeed = this.minElevatorMovingSpeed;
 					}
 
 					++this.waitToAccelerate;
@@ -500,10 +443,10 @@ public class EntityElevator extends Entity {
 
 					this.say("Waiting to accelerate");
 				} else {
-					float var10 = this.elevatorSpeed + 0.01F;
+					float var10 = this.elevatorSpeed + this.elevatorAccel;
 
-					if (var10 > 0.4F) {
-						var10 = 0.4F;
+					if (var10 > this.maxElevatorSpeed) {
+						var10 = this.maxElevatorSpeed;
 					}
 
 					float var12 = (var10 * var10 - 2.5600003E-4F) / 0.02F + 0.125F;
@@ -515,16 +458,16 @@ public class EntityElevator extends Entity {
 									.abs((float) (this.destY - this.posY)) >= var12) {
 						this.elevatorSpeed = var10;
 					} else {
-						this.elevatorSpeed -= 0.01F;
+						this.elevatorSpeed -= this.elevatorAccel;
 						this.slowingDown = true;
 					}
 
-					if (this.elevatorSpeed > 0.4F) {
-						this.elevatorSpeed = 0.4F;
+					if (this.elevatorSpeed > this.maxElevatorSpeed) {
+						this.elevatorSpeed = this.maxElevatorSpeed;
 					}
 
-					if (this.elevatorSpeed < 0.016F) {
-						this.elevatorSpeed = 0.016F;
+					if (this.elevatorSpeed < this.minElevatorMovingSpeed) {
+						this.elevatorSpeed = this.minElevatorMovingSpeed;
 					}
 				}
 
@@ -549,7 +492,7 @@ public class EntityElevator extends Entity {
 					return;
 				}
 
-				if (MathHelper.abs((float) this.motionY) < 0.016F
+				if (MathHelper.abs((float) this.motionY) < this.minElevatorMovingSpeed
 						&& this.stillcount++ > 10) {
 					this.killAllConjoined();
 				} else {

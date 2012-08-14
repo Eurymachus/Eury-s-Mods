@@ -78,7 +78,7 @@ public class ItemMTLever extends Item implements ITextureProvider {
 					if (tileentity != null
 							&& tileentity instanceof TileEntityMTLever) {
 						TileEntityMTLever tileentitymtbutton = (TileEntityMTLever) tileentity;
-						tileentitymtbutton.setMetaValue(itemstack
+						tileentitymtbutton.setTextureValue(itemstack
 								.getItemDamage());
 						tileentitymtbutton.onInventoryChanged();
 					}

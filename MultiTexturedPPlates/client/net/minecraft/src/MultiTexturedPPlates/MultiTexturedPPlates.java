@@ -42,7 +42,7 @@ public class MultiTexturedPPlates {
 		TileEntity tileentity = blockaccess.getBlockTileEntity(x, y, z);
 		if (tileentity != null && tileentity instanceof TileEntityMTPPlate) {
 			TileEntityMTPPlate tileentitymtpplate = (TileEntityMTPPlate) tileentity;
-			return tileentitymtpplate.getMetaValue();
+			return tileentitymtpplate.getTextureValue();
 		}
 		return 0;
 	}

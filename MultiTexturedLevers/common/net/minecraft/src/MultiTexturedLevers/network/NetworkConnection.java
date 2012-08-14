@@ -31,8 +31,8 @@ public class NetworkConnection implements INetworkConnections {
 
 			int packetID = data.read();
 			switch (packetID) {
-			case PacketIds.MTLEVER_UPDATE:
-				PacketUpdateMTLever packetLever = new PacketUpdateMTLever();
+			case PacketIds.TILE:
+				PacketMTL packetLever = new PacketMTL();
 				packetLever.readData(data);
 				MultiTexturedLevers.Core.getPacketHandler()
 						.handleTileEntityPacket(packetLever, entityplayer,

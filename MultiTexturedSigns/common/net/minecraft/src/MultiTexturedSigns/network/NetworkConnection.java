@@ -30,14 +30,14 @@ public class NetworkConnection implements INetworkConnections {
 					.getPlayer(network);
 			int packetID = data.read();
 			switch (packetID) {
-			case PacketIds.MTSIGN_UPDATE:
+			case PacketIds.TILE:
 				PacketUpdateMTSign packetSign = new PacketUpdateMTSign();
 				packetSign.readData(data);
 				MultiTexturedSigns.MTS
 						.getPacketHandler()
 						.handleTileEntityPacket(packetSign, entityplayer, world);
 				break;
-			case PacketIds.MTSIGN_GUI:
+			case PacketIds.GUI:
 				PacketOpenGui packetGui = new PacketOpenGui();
 				packetGui.readData(data);
 				MultiTexturedSigns.MTS.getPacketHandler().handleGuiPacket(
